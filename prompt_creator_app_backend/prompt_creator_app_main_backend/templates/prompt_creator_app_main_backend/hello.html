@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ friendly_name }}</title>
+  </head>
+  <body style="padding: 1rem">
+    <h1>{{ friendly_name }}</h1>
+    <h2>The Django Server says hello at {{ now }} !</h2>
+    <div class="request-info">
+      <p>
+        This is an answer from to the database to the
+        <strong>{{ request.method }}</strong> request
+      </p>
+      <p>Served to: <code>{{ request.path }}</code></p>
+      <p>Full URL: <code>{{ request.build_absolute_uri }}</code></p>
+      {% if request.GET %}
+      <p>Query parameters: {{ request.GET.urlencode }}</p>
+      {% endif %}
+    </div>
+  </body>
+</html>
