@@ -22,6 +22,9 @@ export default function Navbar(): JSX.Element {
       <Link to="/" className="navbar-link" id="plansLink">
         Subscribe
       </Link>
+      <Link to="/test" className="navbar-link" id="testLink">
+        Test
+      </Link>
     </nav>
   );
 }
