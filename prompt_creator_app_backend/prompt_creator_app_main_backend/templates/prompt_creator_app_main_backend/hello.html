@@ -1,23 +1,1080 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ friendly_name }}</title>
+    <title>
+      PersonaCraft - O Prompt Definitivo para Criação de Personagens de IA
+    </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      .gradient-bg {
+        background: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%);
+      }
+      .hover-scale {
+        transition: transform 0.3s ease;
+      }
+      .hover-scale:hover {
+        transform: scale(1.03);
+      }
+      .glow {
+        box-shadow: 0 0 15px rgba(157, 80, 187, 0.5);
+      }
+      .feature-icon {
+        font-size: 2.5rem;
+        background: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .testimonial-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+    </style>
   </head>
-  <body style="padding: 1rem">
-    <h1>{{ friendly_name }}</h1>
-    <h2>The Django Server says hello at {{ now }} !</h2>
-    <div class="request-info">
-      <p>
-        This is an answer from to the database to the
-        <strong>{{ request.method }}</strong> request
-      </p>
-      <p>Served to: <code>{{ request.path }}</code></p>
-      <p>Full URL: <code>{{ request.build_absolute_uri }}</code></p>
-      {% if request.GET %}
-      <p>Query parameters: {{ request.GET.urlencode }}</p>
-      {% endif %}
-    </div>
+  <body class="bg-gray-900 text-white font-sans">
+    <!-- Header/Navbar -->
+    <header class="gradient-bg sticky top-0 z-50">
+      <nav class="container mx-auto px-6 py-4">
+        <div class="flex justify-between items-center">
+          <div class="flex items-center space-x-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-palette2"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M0 .5A.5.5 0 0 1 .5 0h5a.5.5 0 0 1 .5.5v5.277l4.147-4.131a.5.5 0 0 1 .707 0l3.535 3.536a.5.5 0 0 1 0 .708L10.261 10H15.5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5H3a3 3 0 0 1-2.121-.879A3 3 0 0 1 0 13.044m6-.21 7.328-7.3-2.829-2.828L6 7.188zM4.5 13a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0M15 15v-4H9.258l-4.015 4zM0 .5v12.495zm0 12.495V13z"
+              />
+            </svg>
+            <span class="text-xl font-bold">PersonaCraft</span>
+          </div>
+          <div class="hidden md:flex space-x-8" style="align-items: center">
+            <a href="#features" class="hover:text-purple-200 transition"
+              >Recursos</a
+            >
+            <a href="#how-it-works" class="hover:text-purple-200 transition"
+              >Como Funciona</a
+            >
+            <a href="#testimonials" class="hover:text-purple-200 transition"
+              >Depoimentos</a
+            >
+            <a href="#pricing" class="hover:text-purple-200 transition"
+              >Preços</a
+            >
+            <a
+              href="#pricing"
+              class="hover:text-purple-200 transition"
+              style="
+                border: 1px solid #999;
+                border-bottom-width: 3px;
+                border-right-width: 2px;
+                font-weight: 700;
+                padding: 0.5rem 1rem;
+                border-radius: 0.5rem;
+                background: linear-gradient(90deg, #302f, transparent);
+              "
+              >Experimente agora!</a
+            >
+          </div>
+          <button class="md:hidden text-white">
+            <i class="fas fa-bars text-2xl"></i>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg py-20">
+      <div
+        class="container mx-auto px-6 flex flex-col md:flex-row items-center"
+      >
+        <div class="md:w-1/2 mb-10 md:mb-0">
+          <h1 class="text-4xl md:text-6xl font-bold mb-6">
+            Crie Personagens de IA Incríveis com
+            <span class="text-purple-300">PersonaCraft</span>
+          </h1>
+          <p class="text-xl mb-8 text-gray-200">
+            O prompt definitivo para desenvolver personalidades ricas e
+            coerentes para seus assistentes de IA, chatbots e personagens
+            virtuais.
+          </p>
+          <div
+            class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4"
+          >
+            <a
+              href="#pricing"
+              class="bg-white text-purple-800 hover:bg-purple-100 font-bold py-3 px-8 rounded-full text-center transition duration-300 transform hover:scale-105"
+            >
+              Compre Agora <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+            <a
+              href="#features"
+              class="border-2 border-white text-white hover:bg-white hover:text-purple-800 font-bold py-3 px-8 rounded-full text-center transition duration-300 transform hover:scale-105"
+            >
+              Saiba Mais <i class="fas fa-info-circle ml-2"></i>
+            </a>
+          </div>
+        </div>
+        <div class="md:w-1/2 flex justify-center">
+          <div class="relative w-full max-w-md">
+            <div
+              class="absolute -top-6 -left-6 w-32 h-32 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70"
+            ></div>
+            <div
+              class="absolute -bottom-8 -right-8 w-32 h-32 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-70"
+            ></div>
+            <div class="relative bg-gray-800 p-6 rounded-2xl shadow-xl glow">
+              <div class="flex items-center mb-4">
+                <div class="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+              </div>
+              <div
+                class="bg-gray-900 p-4 rounded-lg font-mono text-sm h-64 overflow-y-auto"
+              >
+                <p class="text-green-400"># PersonaCraft Prompt v2.0</p>
+                <p class="text-gray-400">
+                  Você é um especialista em criação de personagens. Seu objetivo
+                  é ajudar a desenvolver personalidades ricas e coerentes para
+                  personagens de IA...
+                </p>
+                <p class="text-gray-400 mt-4">[INSTRUÇÕES]</p>
+                <p class="text-gray-300">
+                  1. Comece perguntando sobre o propósito do personagem...
+                </p>
+                <p class="text-gray-300">
+                  2. Explore traços de personalidade usando o modelo Big Five...
+                </p>
+                <p class="text-gray-300">
+                  3. Desenvolva backstory detalhada...
+                </p>
+                <p class="text-gray-300">4. Defina estilo de comunicação...</p>
+                <p class="text-purple-300 mt-4">[EXEMPLO DE SAÍDA]</p>
+                <p class="text-gray-300">Nome: Dr. Elias Vance</p>
+                <p class="text-gray-300">
+                  Personalidade: Analítico, compassivo, um pouco reservado...
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-gray-800">
+      <div class="container mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">
+          Recursos Exclusivos do
+          <span class="text-purple-400">PersonaCraft</span>
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+          <!-- Feature 1 -->
+          <div
+            class="bg-gray-900 p-8 rounded-xl hover-scale transition duration-300"
+          >
+            <div class="text-center mb-6">
+              <i class="fas fa-brain feature-icon"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-4 text-center">
+              Modelo de Personalidade Completo
+            </h3>
+            <p class="text-gray-400">
+              Utiliza o modelo Big Five (OCEAN) para criar perfis psicológicos
+              detalhados, garantindo personagens com traços consistentes e
+              críveis.
+            </p>
+          </div>
+
+          <!-- Feature 2 -->
+          <div
+            class="bg-gray-900 p-8 rounded-xl hover-scale transition duration-300"
+          >
+            <div class="text-center mb-6">
+              <i class="fas fa-book feature-icon"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-4 text-center">
+              Backstory Profunda
+            </h3>
+            <p class="text-gray-400">
+              Gera histórias de fundo ricas com eventos formativos, motivações e
+              conflitos internos que moldam o comportamento do personagem.
+            </p>
+          </div>
+
+          <!-- Feature 3 -->
+          <div
+            class="bg-gray-900 p-8 rounded-xl hover-scale transition duration-300"
+          >
+            <div class="text-center mb-6">
+              <i class="fas fa-comments feature-icon"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-4 text-center">
+              Estilo de Comunicação
+            </h3>
+            <p class="text-gray-400">
+              Define padrões de fala, vocabulário, tom e maneirismos únicos para
+              cada personagem, adaptados ao seu perfil psicológico.
+            </p>
+          </div>
+
+          <!-- Feature 4 -->
+          <div
+            class="bg-gray-900 p-8 rounded-xl hover-scale transition duration-300"
+          >
+            <div class="text-center mb-6">
+              <i class="fas fa-cogs feature-icon"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-4 text-center">
+              Sistema de Valores
+            </h3>
+            <p class="text-gray-400">
+              Mapeia crenças fundamentais, princípios éticos e dilemas morais
+              que guiam as decisões do personagem.
+            </p>
+          </div>
+
+          <!-- Feature 5 -->
+          <div
+            class="bg-gray-900 p-8 rounded-xl hover-scale transition duration-300"
+          >
+            <div class="text-center mb-6">
+              <i class="fas fa-magic feature-icon"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-4 text-center">
+              Arquétipos Adaptáveis
+            </h3>
+            <p class="text-gray-400">
+              Oferece 12 arquétipos fundamentais como base, com infinitas
+              variações e combinações para personagens únicos.
+            </p>
+          </div>
+
+          <!-- Feature 6 -->
+          <div
+            class="bg-gray-900 p-8 rounded-xl hover-scale transition duration-300"
+          >
+            <div class="text-center mb-6">
+              <i class="fas fa-random feature-icon"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-4 text-center">
+              Geração de Conflitos
+            </h3>
+            <p class="text-gray-400">
+              Cria tensões internas e externas naturais que adicionam
+              profundidade e oportunidades de desenvolvimento ao personagem.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 bg-gray-900">
+      <div class="container mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">
+          Como o <span class="text-purple-400">PersonaCraft</span> Transforma
+          Sua Criação
+        </h2>
+
+        <div class="flex flex-col md:flex-row items-center mb-16">
+          <div class="md:w-1/2 mb-10 md:mb-0">
+            <div class="bg-gray-800 p-6 rounded-xl glow">
+              <div class="flex items-center mb-4">
+                <div class="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+              </div>
+              <div
+                class="bg-gray-900 p-4 rounded-lg font-mono text-sm h-64 overflow-y-auto"
+              >
+                <p class="text-purple-400">
+                  PersonaCraft: Vamos criar seu personagem!
+                </p>
+                <p class="text-gray-400">
+                  1. Qual o propósito deste personagem? (Assistente, NPC,
+                  Terapeuta, etc.)
+                </p>
+                <p class="text-gray-400">
+                  2. Algum arquétipo específico? (Herói, Sábio, Rebelde...)
+                </p>
+                <p class="text-gray-400">
+                  3. Preferências de personalidade? (Extrovertido, Analítico,
+                  etc.)
+                </p>
+                <p class="text-gray-300 mt-4">
+                  > Assistente de estudos para universitários
+                </p>
+                <p class="text-gray-300">
+                  > Arquétipo do Mentor com toques de Cientista Louco
+                </p>
+                <p class="text-gray-300">
+                  > Inteligente, entusiasmado, um pouco distraído
+                </p>
+                <p class="text-green-400 mt-4">
+                  Ótimo! Criando perfil para "Professor Alviss"...
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="md:w-1/2 md:pl-12">
+            <h3 class="text-2xl font-bold mb-6">
+              Processo Interativo e Guiado
+            </h3>
+            <p class="text-gray-400 mb-6">
+              O PersonaCraft não é apenas um prompt estático - é uma estrutura
+              inteligente que guia você através de um processo de criação passo
+              a passo, fazendo perguntas relevantes para extrair o máximo de
+              potencial do seu personagem.
+            </p>
+            <ul class="space-y-4">
+              <li class="flex items-start">
+                <i class="fas fa-check-circle text-purple-400 mt-1 mr-3"></i>
+                <span class="text-gray-300"
+                  >Adapta-se ao seu nível de experiência - desde iniciantes até
+                  escritores profissionais</span
+                >
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check-circle text-purple-400 mt-1 mr-3"></i>
+                <span class="text-gray-300"
+                  >Oferece sugestões inteligentes quando você está em
+                  dúvida</span
+                >
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check-circle text-purple-400 mt-1 mr-3"></i>
+                <span class="text-gray-300"
+                  >Gera múltiplas variações para você escolher ou combinar</span
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="flex flex-col md:flex-row items-center mt-20">
+          <div class="md:w-1/2 mb-10 md:mb-0 order-1 md:order-2">
+            <div class="bg-gray-800 p-6 rounded-xl glow">
+              <div class="flex items-center mb-4">
+                <div class="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+              </div>
+              <div
+                class="bg-gray-900 p-4 rounded-lg font-mono text-sm h-64 overflow-y-auto"
+              >
+                <p class="text-purple-400">PersonaCraft: Perfil Completo</p>
+                <p class="text-yellow-300">Nome: Professor Alviss</p>
+                <p class="text-gray-300">
+                  Arquétipo: Mentor (80%) + Cientista Louco (20%)
+                </p>
+                <p class="text-gray-300">
+                  Personalidade: ENTP (Inventor) - Alto em Abertura e
+                  Extroversão
+                </p>
+                <p class="text-gray-300">
+                  Backstory: Ex-professor universitário que deixou a academia
+                  para...
+                </p>
+                <p class="text-gray-300">
+                  Estilo de Fala: Entusiasmado, usa analogias científicas, às
+                  vezes...
+                </p>
+                <p class="text-gray-300">
+                  Valores: Curiosidade > Conformidade, Aprendizado > Autoridade
+                </p>
+                <p class="text-gray-300">
+                  Conflito: Desejo de compartilhar conhecimento vs. Frustração
+                  com...
+                </p>
+                <p class="text-green-400">
+                  Deseja ajustar algum aspecto ou gerar variações?
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="md:w-1/2 md:pr-12 order-2 md:order-1">
+            <h3 class="text-2xl font-bold mb-6">
+              Resultados Profissionais em Minutos
+            </h3>
+            <p class="text-gray-400 mb-6">
+              Em vez de gastar horas tentando criar personagens coerentes, o
+              PersonaCraft gera perfis completos e prontos para uso em poucos
+              minutos, com:
+            </p>
+            <ul class="space-y-4">
+              <li class="flex items-start">
+                <i class="fas fa-star text-purple-400 mt-1 mr-3"></i>
+                <span class="text-gray-300"
+                  >Consistência psicológica em todas as interações</span
+                >
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-star text-purple-400 mt-1 mr-3"></i>
+                <span class="text-gray-300"
+                  >Profundidade emocional que engaja usuários</span
+                >
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-star text-purple-400 mt-1 mr-3"></i>
+                <span class="text-gray-300"
+                  >Flexibilidade para diferentes contextos e cenários</span
+                >
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-star text-purple-400 mt-1 mr-3"></i>
+                <span class="text-gray-300"
+                  >Detalhes únicos que diferenciam seus personagens</span
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 bg-gray-800">
+      <div class="container mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">
+          O Que Nossos Clientes Dizem
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Testimonial 1 -->
+          <div
+            class="testimonial-card p-6 rounded-xl hover-scale transition duration-300"
+          >
+            <div class="flex items-center mb-4">
+              <div
+                class="w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center text-xl font-bold mr-4"
+              >
+                JD
+              </div>
+              <div>
+                <h4 class="font-bold">Joana Dias</h4>
+                <p class="text-purple-300 text-sm">
+                  Desenvolvedora de Chatbots
+                </p>
+              </div>
+            </div>
+            <p class="text-gray-300">
+              "O PersonaCraft revolucionou nossa abordagem de criação de
+              personagens. Nossos chatbots agora têm personalidades tão ricas
+              que os usuários frequentemente esquecem que estão falando com uma
+              IA!"
+            </p>
+            <div class="flex mt-4 text-yellow-400">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+
+          <!-- Testimonial 2 -->
+          <div
+            class="testimonial-card p-6 rounded-xl hover-scale transition duration-300"
+          >
+            <div class="flex items-center mb-4">
+              <div
+                class="w-12 h-12 rounded-full bg-pink-500 flex items-center justify-center text-xl font-bold mr-4"
+              >
+                MR
+              </div>
+              <div>
+                <h4 class="font-bold">Marcos Rocha</h4>
+                <p class="text-purple-300 text-sm">Escritor de RPG</p>
+              </div>
+            </div>
+            <p class="text-gray-300">
+              "Como escritor, eu lutava para criar NPCs memoráveis. Com o
+              PersonaCraft, consigo gerar dezenas de personagens únicos em uma
+              tarde, cada um com personalidade e backstory convincentes."
+            </p>
+            <div class="flex mt-4 text-yellow-400">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+
+          <!-- Testimonial 3 -->
+          <div
+            class="testimonial-card p-6 rounded-xl hover-scale transition duration-300"
+          >
+            <div class="flex items-center mb-4">
+              <div
+                class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-xl font-bold mr-4"
+              >
+                AS
+              </div>
+              <div>
+                <h4 class="font-bold">Ana Souza</h4>
+                <p class="text-purple-300 text-sm">
+                  Produtora de Conteúdo Educativo
+                </p>
+              </div>
+            </div>
+            <p class="text-gray-300">
+              "Nossos tutores virtuais agora têm personalidades tão distintas
+              que os alunos desenvolvem preferências por um ou outro. O
+              engajamento com nosso material educativo aumentou 300%!"
+            </p>
+            <div class="flex mt-4 text-yellow-400">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 bg-gray-900">
+      <div class="container mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
+          Escolha Seu Plano
+        </h2>
+        <p class="text-xl text-center text-gray-400 mb-16">
+          Investimento único - Use para sempre
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <!-- Basic Plan -->
+          <div
+            class="bg-gray-800 rounded-xl p-8 hover-scale transition duration-300"
+          >
+            <h3 class="text-2xl font-bold mb-2 text-purple-300">Básico</h3>
+            <p class="text-gray-400 mb-6">
+              Para criadores individuais e pequenos projetos
+            </p>
+            <div class="text-4xl font-bold mb-6">R$ 47</div>
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-start">
+                <i class="fas fa-check text-purple-400 mt-1 mr-3"></i>
+                <span class="text-gray-300"
+                  >Prompt completo PersonaCraft v2.0</span
+                >
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-purple-400 mt-1 mr-3"></i>
+                <span class="text-gray-300">Guia de uso detalhado (PDF)</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-purple-400 mt-1 mr-3"></i>
+                <span class="text-gray-300"
+                  >10 templates de personagens populares</span
+                >
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-times text-gray-500 mt-1 mr-3"></i>
+                <span class="text-gray-500">Atualizações futuras</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-times text-gray-500 mt-1 mr-3"></i>
+                <span class="text-gray-500">Suporte prioritário</span>
+              </li>
+            </ul>
+            <button
+              class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300"
+            >
+              Comprar Agora
+            </button>
+          </div>
+
+          <!-- Pro Plan (Featured) -->
+          <div
+            class="bg-gray-800 rounded-xl p-8 border-2 border-purple-500 relative hover-scale transition duration-300"
+          >
+            <div
+              class="absolute top-0 right-0 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg"
+            >
+              MAIS POPULAR
+            </div>
+            <h3 class="text-2xl font-bold mb-2 text-purple-300">
+              Profissional
+            </h3>
+            <p class="text-gray-400 mb-6">
+              Para desenvolvedores sérios e equipes criativas
+            </p>
+            <div class="text-4xl font-bold mb-6">R$ 97</div>
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-start">
+                <i class="fas fa-check text-purple-400 mt-1 mr-3"></i>
+                <span class="text-gray-300">Tudo no plano Básico</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-purple-400 mt-1 mr-3"></i>
+                <span class="text-gray-300"
+                  >+50 templates de nichos específicos</span
+                >
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-purple-400 mt-1 mr-3"></i>
+                <span class="text-gray-300"
+                  >Atualizações gratuitas por 1 ano</span
+                >
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-purple-400 mt-1 mr-3"></i>
+                <span class="text-gray-300">Suporte por email prioritário</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-purple-400 mt-1 mr-3"></i>
+                <span class="text-gray-300"
+                  >Guia avançado de ajustes finos</span
+                >
+              </li>
+            </ul>
+            <button
+              class="w-full gradient-bg hover:opacity-90 text-white font-bold py-3 px-4 rounded-lg transition duration-300"
+            >
+              Comprar Agora
+            </button>
+          </div>
+
+          <!-- Enterprise Plan -->
+          <div
+            class="bg-gray-800 rounded-xl p-8 hover-scale transition duration-300"
+          >
+            <h3 class="text-2xl font-bold mb-2 text-purple-300">Empresarial</h3>
+            <p class="text-gray-400 mb-6">
+              Para agências e grandes projetos comerciais
+            </p>
+            <div class="text-4xl font-bold mb-6">R$ 197</div>
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-start">
+                <i class="fas fa-check text-purple-400 mt-1 mr-3"></i>
+                <span class="text-gray-300">Tudo no plano Profissional</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-purple-400 mt-1 mr-3"></i>
+                <span class="text-gray-300">Atualizações vitalícias</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-purple-400 mt-1 mr-3"></i>
+                <span class="text-gray-300">Suporte VIP (chat + email)</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-purple-400 mt-1 mr-3"></i>
+                <span class="text-gray-300">Licença para uso comercial</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-purple-400 mt-1 mr-3"></i>
+                <span class="text-gray-300">Workshop exclusivo (2h)</span>
+              </li>
+            </ul>
+            <button
+              class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300"
+            >
+              Comprar Agora
+            </button>
+          </div>
+        </div>
+
+        <div class="mt-16 text-center">
+          <p class="text-gray-400 mb-6">
+            Não está certo? Oferecemos garantia de 7 dias sem perguntas.
+          </p>
+          <div class="flex items-center justify-center">
+            <i class="fas fa-lock text-purple-400 mr-2"></i>
+            <span class="text-sm text-gray-400"
+              >Pagamento seguro processado por</span
+            >
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png"
+              alt="PayPal"
+              class="h-6 ml-2"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-gray-800">
+      <div class="container mx-auto px-6 max-w-4xl">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">
+          Perguntas Frequentes
+        </h2>
+
+        <div class="space-y-6">
+          <!-- FAQ Item 1 -->
+          <div class="bg-gray-900 rounded-xl p-6">
+            <button
+              onclick="toggleFAQ(1)"
+              class="flex justify-between items-center w-full text-left"
+            >
+              <h3 class="text-lg font-bold">
+                Como recebo o prompt após a compra?
+              </h3>
+              <i
+                id="faq-icon-1"
+                class="fas fa-chevron-down text-purple-400 transition-transform"
+              ></i>
+            </button>
+            <div id="faq-content-1" class="mt-4 text-gray-400 hidden">
+              <p>
+                Imediatamente após a confirmação do pagamento, você receberá um
+                email com:
+              </p>
+              <ul class="list-disc pl-5 mt-2 space-y-1">
+                <li>Link para download do prompt em formato .txt</li>
+                <li>
+                  Versão formatada para diferentes plataformas (ChatGPT, Claude,
+                  etc.)
+                </li>
+                <li>Guia de uso em PDF com exemplos práticos</li>
+                <li>
+                  Instruções para copiar e colar diretamente no seu chatbot
+                  favorito
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- FAQ Item 2 -->
+          <div class="bg-gray-900 rounded-xl p-6">
+            <button
+              onclick="toggleFAQ(2)"
+              class="flex justify-between items-center w-full text-left"
+            >
+              <h3 class="text-lg font-bold">
+                Posso usar para criar personagens comerciais?
+              </h3>
+              <i
+                id="faq-icon-2"
+                class="fas fa-chevron-down text-purple-400 transition-transform"
+              ></i>
+            </button>
+            <div id="faq-content-2" class="mt-4 text-gray-400 hidden">
+              <p>
+                Sim! Todos os planos permitem uso comercial, com algumas
+                diferenças:
+              </p>
+              <ul class="list-disc pl-5 mt-2 space-y-1">
+                <li><strong>Básico:</strong> Até 3 personagens comerciais</li>
+                <li>
+                  <strong>Profissional:</strong> Até 15 personagens comerciais
+                </li>
+                <li>
+                  <strong>Empresarial:</strong> Personagens ilimitados para sua
+                  empresa
+                </li>
+              </ul>
+              <p class="mt-2">
+                Personagens criados são de sua propriedade intelectual.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 3 -->
+          <div class="bg-gray-900 rounded-xl p-6">
+            <button
+              onclick="toggleFAQ(3)"
+              class="flex justify-between items-center w-full text-left"
+            >
+              <h3 class="text-lg font-bold">
+                O prompt funciona em qualquer modelo de IA?
+              </h3>
+              <i
+                id="faq-icon-3"
+                class="fas fa-chevron-down text-purple-400 transition-transform"
+              ></i>
+            </button>
+            <div id="faq-content-3" class="mt-4 text-gray-400 hidden">
+              <p>
+                O PersonaCraft foi otimizado para os principais modelos como:
+              </p>
+              <ul class="list-disc pl-5 mt-2 space-y-1">
+                <li>ChatGPT (3.5 e 4)</li>
+                <li>Claude (todas versões)</li>
+                <li>Google Gemini</li>
+                <li>LLaMA 2/3</li>
+              </ul>
+              <p class="mt-2">
+                Incluímos variações do prompt adaptadas para cada plataforma.
+                Para modelos menores ou especializados, recomendamos ajustes
+                menores que ensinamos no guia avançado.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 4 -->
+          <div class="bg-gray-900 rounded-xl p-6">
+            <button
+              onclick="toggleFAQ(4)"
+              class="flex justify-between items-center w-full text-left"
+            >
+              <h3 class="text-lg font-bold">
+                E se eu não gostar dos resultados?
+              </h3>
+              <i
+                id="faq-icon-4"
+                class="fas fa-chevron-down text-purple-400 transition-transform"
+              ></i>
+            </button>
+            <div id="faq-content-4" class="mt-4 text-gray-400 hidden">
+              <p>
+                Oferecemos garantia incondicional de 7 dias. Se por qualquer
+                motivo você não ficar satisfeito:
+              </p>
+              <ul class="list-disc pl-5 mt-2 space-y-1">
+                <li>Envie um email para suporte@personacraft.com</li>
+                <li>Devolveremos 100% do seu dinheiro sem perguntas</li>
+                <li>Você pode manter os materiais recebidos</li>
+              </ul>
+              <p class="mt-2">
+                Nos últimos 6 meses, menos de 2% dos clientes pediram reembolso.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="gradient-bg py-16">
+      <div class="container mx-auto px-6 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">
+          Pronto para Elevar Seus Personagens de IA?
+        </h2>
+        <p class="text-xl mb-8 max-w-2xl mx-auto">
+          Junte-se a mais de 3.200 criadores que já transformaram sua abordagem
+          à criação de personagens com o PersonaCraft.
+        </p>
+        <div
+          class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4"
+        >
+          <a
+            href="#pricing"
+            class="bg-white text-purple-800 hover:bg-purple-100 font-bold py-3 px-8 rounded-full text-center transition duration-300 transform hover:scale-105"
+          >
+            Compre Agora <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+          <a
+            href="#features"
+            class="border-2 border-white text-white hover:bg-white hover:text-purple-800 font-bold py-3 px-8 rounded-full text-center transition duration-300 transform hover:scale-105"
+          >
+            Ver Demonstração <i class="fas fa-play-circle ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-12">
+      <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between">
+          <div class="mb-8 md:mb-0">
+            <div class="flex items-center space-x-2 mb-4">
+              <i class="fas fa-robot text-2xl text-purple-400"></i>
+              <span class="text-xl font-bold">PersonaCraft</span>
+            </div>
+            <p class="text-gray-400 max-w-xs">
+              O prompt definitivo para criação de personagens de IA ricos e
+              coerentes.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+            <div>
+              <h4 class="text-lg font-bold mb-4">Produto</h4>
+              <ul class="space-y-2">
+                <li>
+                  <a
+                    href="#features"
+                    class="text-gray-400 hover:text-purple-300 transition"
+                    >Recursos</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#pricing"
+                    class="text-gray-400 hover:text-purple-300 transition"
+                    >Preços</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#testimonials"
+                    class="text-gray-400 hover:text-purple-300 transition"
+                    >Depoimentos</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 class="text-lg font-bold mb-4">Suporte</h4>
+              <ul class="space-y-2">
+                <li>
+                  <a
+                    href="#"
+                    class="text-gray-400 hover:text-purple-300 transition"
+                    >FAQ</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="text-gray-400 hover:text-purple-300 transition"
+                    >Contato</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="text-gray-400 hover:text-purple-300 transition"
+                    >Política de Reembolso</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 class="text-lg font-bold mb-4">Legal</h4>
+              <ul class="space-y-2">
+                <li>
+                  <a
+                    href="#"
+                    class="text-gray-400 hover:text-purple-300 transition"
+                    >Termos de Uso</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="text-gray-400 hover:text-purple-300 transition"
+                    >Política de Privacidade</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="text-gray-400 hover:text-purple-300 transition"
+                    >Licenças</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center"
+        >
+          <p class="text-gray-500 text-sm mb-4 md:mb-0">
+            © 2023 PersonaCraft. Todos os direitos reservados.
+          </p>
+          <div class="flex space-x-6">
+            <a href="#" class="text-gray-400 hover:text-purple-300 transition"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a href="#" class="text-gray-400 hover:text-purple-300 transition"
+              ><i class="fab fa-discord"></i
+            ></a>
+            <a href="#" class="text-gray-400 hover:text-purple-300 transition"
+              ><i class="fab fa-github"></i
+            ></a>
+            <a href="#" class="text-gray-400 hover:text-purple-300 transition"
+              ><i class="fab fa-youtube"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // FAQ Toggle Function
+      function toggleFAQ(num) {
+        const content = document.getElementById(`faq-content-${num}`);
+        const icon = document.getElementById(`faq-icon-${num}`);
+
+        if (content.classList.contains("hidden")) {
+          content.classList.remove("hidden");
+          icon.classList.remove("fa-chevron-down");
+          icon.classList.add("fa-chevron-up");
+        } else {
+          content.classList.add("hidden");
+          icon.classList.remove("fa-chevron-up");
+          icon.classList.add("fa-chevron-down");
+        }
+      }
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+      });
+      // Mobile menu toggle (placeholder - would need more implementation)
+      document
+        .querySelector(".md\\:hidden")
+        .addEventListener("click", function () {
+          alert("Menu mobile seria implementado aqui em uma versão completa");
+        });
+    </script>
+    <p
+      style="
+        border-radius: 8px;
+        text-align: center;
+        font-size: 12px;
+        color: #fff;
+        margin-top: 16px;
+        position: fixed;
+        left: 8px;
+        bottom: 8px;
+        z-index: 10;
+        background: rgba(0, 0, 0, 0.8);
+        padding: 4px 8px;
+      "
+    >
+      Made with
+      <img
+        src="https://enzostvs-deepsite.hf.space/logo.svg"
+        alt="DeepSite Logo"
+        style="
+          width: 16px;
+          height: 16px;
+          vertical-align: middle;
+          display: inline-block;
+          margin-right: 3px;
+          filter: brightness(0) invert(1);
+        "
+      /><a
+        href="https://enzostvs-deepsite.hf.space"
+        style="color: #fff; text-decoration: underline"
+        target="_blank"
+        >DeepSite</a
+      >
+      - 🧬
+      <a
+        href="https://enzostvs-deepsite.hf.space?remix=karlmarx2025/persona-craft"
+        style="color: #fff; text-decoration: underline"
+        target="_blank"
+        >Remix</a
+      >
+    </p>
   </body>
 </html>
