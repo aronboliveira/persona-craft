@@ -1,21 +1,38 @@
-import type { JSX } from "react/jsx-runtime";
+import type { JSX } from "react";
+import { lazy, Suspense, useEffect } from "react";
+import useOpacityTransition from "../lib/hooks/useOpacityTransition";
+import { useExternalResourcesAsync } from "../lib/hooks/useExternalResourcesAsync";
+import Spinner from "../components/icons/animated/Spinner";
+
+const AboutContent = lazy(() =>
+  import("../components/bloc/AboutContent").then((m) => ({
+    default: m.AboutContent,
+  }))
+);
 
 export default function About(): JSX.Element {
+  const ready = useExternalResourcesAsync([
+    { type: "script", src: "https://cdn.tailwindcss.com" },
+    {
+      type: "link",
+      href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css",
+    },
+    {
+      type: "link",
+      href: "/styles/about.css",
+    },
+  ]);
+  useOpacityTransition("1");
+  useEffect(() => {
+    const root = document.getElementById("root");
+    const cls = ["bg-gray-900", "text-white", "font-sans"];
+    cls.forEach((c) => root?.classList.add(c));
+    return () => cls.forEach((c) => root?.classList.remove(c));
+  }, []);
+  if (!ready) return <Spinner />;
   return (
-    <div>
-      <h1>About Persona Craft</h1>
-      <p>
-        Persona Craft is a web application designed to help you create and
-        manage your prompts for your own creative endeavors. Whether you're a
-        writer, designer, game developer, digital artist, or just someone who
-        loves storytelling and experimenting with creative technology.
-      </p>
-      <p>
-        Our mission is to make characters and scenarios creation easy,
-        intuitive, and fun. We believe that generate IAs should be a tool that
-        enhances your creativity, not a barrier to it. Thus,
-        <b>your knowledge is here exponentially leveraged!</b>
-      </p>
-    </div>
+    <Suspense fallback={<Spinner />}>
+      <AboutContent />
+    </Suspense>
   );
 }

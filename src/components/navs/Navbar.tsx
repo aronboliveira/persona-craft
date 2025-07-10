@@ -19,7 +19,7 @@ export default function Navbar(): JSX.Element {
       <Link to="/" className="navbar-link" id="privacyLink">
         Privacy policy
       </Link>
-      <Link to="/" className="navbar-link" id="plansLink">
+      <Link to="/subscribe" className="navbar-link" id="plansLink">
         Subscribe
       </Link>
       <Link to="/test" className="navbar-link" id="testLink">

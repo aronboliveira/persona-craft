@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "@types/node": "^24.0.10",
+    "@types/react-helmet": "^6.1.11",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-error-boundary": "^6.0.0",
+    "react-helmet": "^6.1.0",
     "react-router-dom": "^7.6.3",
     "sass": "^1.89.2"
   },
