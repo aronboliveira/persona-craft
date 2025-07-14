@@ -26,7 +26,7 @@ export function useExternalResourcesAsync(
       if (mounted && done === resources.length) setReady(true);
     };
 
-    const created: HTMLElement[] = resources.map((r) => {
+    const created: HTMLElement[] = resources.map(r => {
       const el =
         r.type === "link"
           ? (document.createElement("link") as HTMLLinkElement)
@@ -49,7 +49,14 @@ export function useExternalResourcesAsync(
 
     return () => {
       mounted = false;
-      created.forEach((n) => n.parentElement?.removeChild(n));
+      Array.from(created)
+        .filter(
+          ss =>
+            ss.getAttribute("data-vite-dev-id") &&
+            ss.getAttribute("data-vite-dev-id") &&
+            !/\.module\.s?css/g.test(ss.getAttribute("data-vite-dev-id") ?? "")
+        )
+        .forEach(n => n.parentElement?.removeChild(n));
     };
   }, [resources]);
 

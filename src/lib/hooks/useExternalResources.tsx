@@ -23,7 +23,7 @@ export interface ExternalResource {
  */
 export function useExternalResources(resources: ExternalResource[]): void {
   useEffect(() => {
-    const injected: HTMLElement[] = resources.map((res) => {
+    const injected: HTMLElement[] = resources.map(res => {
       const el =
         res.type === "link"
           ? (document.createElement("link") as HTMLLinkElement)
@@ -40,9 +40,15 @@ export function useExternalResources(resources: ExternalResource[]): void {
       document.head.appendChild(el);
       return el;
     });
-
     return () => {
-      injected.forEach((node) => node.parentElement?.removeChild(node));
+      Array.from(injected)
+        .filter(
+          ss =>
+            ss.getAttribute("data-vite-dev-id") &&
+            ss.getAttribute("data-vite-dev-id") &&
+            !/\.module\.s?css/g.test(ss.getAttribute("data-vite-dev-id") ?? "")
+        )
+        .forEach(node => node.parentElement?.removeChild(node));
     };
   }, [resources]);
 }

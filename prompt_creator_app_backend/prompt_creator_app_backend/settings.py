@@ -19,7 +19,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -29,18 +28,42 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    os.getenv('APP_NAME', 'django_app')
+    'corsheaders',
+    os.getenv('APP_NAME', 'django_app'),
+    'csp',
 ]
 
 MIDDLEWARE = [
+    'csp.middleware.CSPMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+X_FRAME_OPTIONS = "SAMEORIGIN"
+
+from csp.constants import SELF
+
+CONTENT_SECURITY_POLICY = {
+    "DIRECTIVES": {
+        "default-src": [SELF],
+        "style-src": [SELF, "'unsafe-inline'"],
+        "script-src": [SELF, "'unsafe-inline'"],
+        "frame-src": [
+            SELF,
+            "http://127.0.0.1:*",
+            "http://localhost:*",
+        ],
+        "frame-ancestors": [
+            SELF,
+            "http://localhost:*",
+            "http://127.0.0.1:*",
+        ],
+    }
+}
 
 ROOT_URLCONF = "prompt_creator_app_backend.urls"
 
