@@ -6,6 +6,7 @@
 		- Do not blindly choose lists as ul, but use ol and dl as well when it's fit;
 		- Avoid using i and b tags, prefer using em and strong for emphasis;
 		- Avoid using i tags for icons, prefer using SVG or icon fonts like Bootstrap 5 or Font Awesome;
+		- Don't forget to include WARIA attributes in the necessary html;
 	</markup>
 	<style>
 		- Import Bootstrap 5 UI via CDN in all new pages;
@@ -27,5 +28,7 @@
 		- Implement responsive navigation using Bootstrap's navbar component;
 		- Leverage SessionStorage and LocalStorage for state management;
 		- Use ES6+ features like arrow functions, template literals, and destructuring for cleaner code;
+		- Propose scripts that automatic track and correct the DOM in intervals to ensure consistency, like between 			htmlFor and ids;
+		- Leverage dataset and item attributes for dynamic data handling;
 	</javascript>
 </instructions>
