@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { NDialog, NRDispatch } from "../declarations/types/foundations";
 export default function useDialog({
   state,
@@ -8,7 +8,7 @@ export default function useDialog({
   dispatch: NRDispatch<boolean>;
 }): { handler: () => void; ref: React.RefObject<NDialog | HTMLElement> } {
   const ref = useRef<NDialog | HTMLElement>(null),
-    handleClick = (): void => dispatch?.(!state);
+    handleClick = useCallback((): void => dispatch?.(!state), [dispatch]);
   useEffect(() => {
     if (!dispatch || !ref.current) return;
     if (ref.current instanceof HTMLDialogElement)

@@ -224,21 +224,25 @@ export const AboutContent = memo(function AboutContent(): JSX.Element {
   return (
     <>
       {/* ────────────── Header / Navbar ────────────── */}
-      <header className="gradient-bg sticky top-0 z-50">
+      <header
+        className="gradient-bg sticky top-0 z-50"
+        style={{ borderBottom: "1px solid #75e9" }}
+      >
         <nav className="container mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-2">
               <i className="bi bi-palette2" />
-              <span className="text-xl font-bold">PersonaCraft</span>
+              <h1 className="text-xl font-bold" style={{ fontSize: "2rem" }}>
+                <strong>PersonaCraft</strong>
+              </h1>
             </div>
-
             <div className="hidden md:flex space-x-8 items-center">
               {[
                 { href: "/project", label: "Recursos" },
                 { href: "#project", label: "Como Funciona" },
                 { href: "#testimonials", label: "Depoimentos" },
                 { href: "#pricing", label: "Preços" },
-              ].map((l) => (
+              ].map(l => (
                 <a
                   key={l.label}
                   href={l.href}
@@ -272,19 +276,19 @@ export const AboutContent = memo(function AboutContent(): JSX.Element {
           </div>
         </nav>
       </header>
-
       {/* ────────────── Hero ────────────── */}
       <section className="gradient-bg py-20">
         <div className="container mx-auto px-6 flex flex-col md:flex-row items-center">
           <div className="md:w-1/2 mb-10 md:mb-0">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Crie Personagens de IA Incríveis com{" "}
-              <span className="text-purple-300">PersonaCraft</span>
-            </h1>
+            <h2 className="text-4xl md:text-6xl font-bold mb-6">
+              Crie Prompts incríveis com&nbsp;
+              <strong className="text-purple-300">PersonaCraft</strong>
+            </h2>
             <p className="text-xl mb-8 text-gray-200">
-              O prompt definitivo para desenvolver personalidades ricas e
-              coerentes para seus assistentes de IA, chatbots e personagens
-              virtuais.
+              Desenvolva personagens e cenários ricos e envolventes utilizando
+              técnicas refinadas de{" "}
+              <em>design de prompts para IAs generativas</em> guiadas pelos
+              nossos aplicativos e assistentes virtuais!
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               <a
@@ -292,7 +296,7 @@ export const AboutContent = memo(function AboutContent(): JSX.Element {
                 onClick={smoothScroll("pricing")}
                 className="bg-white text-purple-800 hover:bg-purple-100 font-bold py-3 px-8 rounded-full text-center transition duration-300 transform hover:scale-105"
               >
-                Compre Agora <i className="fas fa-arrow-right ml-2" />
+                Assine agora <i className="fas fa-arrow-right ml-2" />
               </a>
               <a
                 href="#features"
@@ -315,7 +319,27 @@ export const AboutContent = memo(function AboutContent(): JSX.Element {
                   <div className="w-3 h-3 rounded-full bg-yellow-500 mr-2" />
                   <div className="w-3 h-3 rounded-full bg-green-500" />
                 </div>
-                <div className="bg-gray-900 p-4 rounded-lg font-mono text-sm h-64 overflow-y-auto">
+                <figure>
+                  <img
+                    src="/public/dalle_elf_dancer.webp"
+                    style={{
+                      border: "2px ridge #eee5",
+                      borderRadius: "0.33rem",
+                    }}
+                  />
+                  <figcaption
+                    style={{
+                      fontStyle: "italic",
+                      marginInline: "0.5rem",
+                      marginTop: "0.5rem",
+                      fontSize: "0.8rem",
+                    }}
+                  >
+                    "A magic elvish dancer in a modern suburban area, with glowy
+                    makeup and jewelry, inspired by popular MOBA Splasharts"
+                  </figcaption>
+                </figure>
+                {/* <div className="bg-gray-900 p-4 rounded-lg font-mono text-sm h-64 overflow-y-auto">
                   <p className="text-green-400"># PersonaCraft Prompt v2.0</p>
                   <p className="text-gray-400">
                     Você é um especialista em criação de personagens. Seu
@@ -336,13 +360,12 @@ export const AboutContent = memo(function AboutContent(): JSX.Element {
                   <p className="text-purple-300 mt-4">[EXEMPLO DE SAÍDA]</p>
                   <p className="text-gray-300">Nome: Dr. Elias Vance</p>
                   <p className="text-gray-300">Personalidade: Analítico ...</p>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
         </div>
       </section>
-
       {/* ────────────── Features ────────────── */}
       <section id="features" className="py-20 bg-gray-800">
         <div className="container mx-auto px-6">
@@ -352,7 +375,7 @@ export const AboutContent = memo(function AboutContent(): JSX.Element {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-            {features.map((f) => (
+            {features.map(f => (
               <div
                 key={f.title}
                 className="bg-gray-900 p-8 rounded-xl hover-scale transition duration-300"
@@ -383,7 +406,7 @@ export const AboutContent = memo(function AboutContent(): JSX.Element {
             <div className="md:w-1/2 mb-10 md:mb-0">
               <div className="bg-gray-800 p-6 rounded-xl glow">
                 <div className="flex items-center mb-4">
-                  {["bg-red-500", "bg-yellow-500", "bg-green-500"].map((c) => (
+                  {["bg-red-500", "bg-yellow-500", "bg-green-500"].map(c => (
                     <div key={c} className={`w-3 h-3 rounded-full ${c} mr-2`} />
                   ))}
                 </div>
@@ -418,7 +441,7 @@ export const AboutContent = memo(function AboutContent(): JSX.Element {
                   "Adapta-se ao seu nível de experiência – de iniciantes a escritores profissionais",
                   "Oferece sugestões inteligentes quando você está em dúvida",
                   "Gera múltiplas variações para você escolher ou combinar",
-                ].map((txt) => (
+                ].map(txt => (
                   <li key={txt} className="flex items-start">
                     <i className="fas fa-check-circle text-purple-400 mt-1 mr-3" />
                     <span className="text-gray-300">{txt}</span>
@@ -433,7 +456,7 @@ export const AboutContent = memo(function AboutContent(): JSX.Element {
             <div className="md:w-1/2 mb-10 md:mb-0 order-1 md:order-2">
               <div className="bg-gray-800 p-6 rounded-xl glow">
                 <div className="flex items-center mb-4">
-                  {["bg-red-500", "bg-yellow-500", "bg-green-500"].map((c) => (
+                  {["bg-red-500", "bg-yellow-500", "bg-green-500"].map(c => (
                     <div key={c} className={`w-3 h-3 rounded-full ${c} mr-2`} />
                   ))}
                 </div>
@@ -466,7 +489,7 @@ export const AboutContent = memo(function AboutContent(): JSX.Element {
                   "Profundidade emocional que engaja usuários",
                   "Flexibilidade para diferentes contextos e cenários",
                   "Detalhes únicos que diferenciam seus personagens",
-                ].map((txt) => (
+                ].map(txt => (
                   <li key={txt} className="flex items-start">
                     <i className="fas fa-star text-purple-400 mt-1 mr-3" />
                     <span className="text-gray-300">{txt}</span>
@@ -486,7 +509,7 @@ export const AboutContent = memo(function AboutContent(): JSX.Element {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {testimonials.map((t) => (
+            {testimonials.map(t => (
               <div
                 key={t.name}
                 className="testimonial-card p-6 rounded-xl hover-scale transition duration-300"
@@ -526,7 +549,7 @@ export const AboutContent = memo(function AboutContent(): JSX.Element {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {plans.map((p) => (
+            {plans.map(p => (
               <div
                 key={p.name}
                 className={`${p.colorBox} rounded-xl p-8 hover-scale relative transition duration-300`}
@@ -551,13 +574,13 @@ export const AboutContent = memo(function AboutContent(): JSX.Element {
                 <div className="text-4xl font-bold mb-6">{p.price}</div>
 
                 <ul className="space-y-3 mb-8">
-                  {[...p.features, ...p.extras].map((txt) => (
+                  {[...p.features, ...p.extras].map(txt => (
                     <li key={txt} className="flex items-start">
                       <i className="fas fa-check text-purple-400 mt-1 mr-3" />
                       <span className="text-gray-300">{txt}</span>
                     </li>
                   ))}
-                  {p.misses.map((m) => (
+                  {p.misses.map(m => (
                     <li key={m} className="flex items-start">
                       <i className="fas fa-times text-gray-500 mt-1 mr-3" />
                       <span className="text-gray-500">{m}</span>
@@ -639,7 +662,7 @@ export const AboutContent = memo(function AboutContent(): JSX.Element {
               onClick={smoothScroll("pricing")}
               className="bg-white text-purple-800 hover:bg-purple-100 font-bold py-3 px-8 rounded-full transition transform hover:scale-105"
             >
-              Compre Agora <i className="fas fa-arrow-right ml-2" />
+              Assine agora <i className="fas fa-arrow-right ml-2" />
             </a>
             <a
               href="#features"
@@ -693,11 +716,11 @@ export const AboutContent = memo(function AboutContent(): JSX.Element {
                     { id: "", label: "Licenças" },
                   ],
                 },
-              ].map((col) => (
+              ].map(col => (
                 <div key={col.title}>
                   <h4 className="text-lg font-bold mb-4">{col.title}</h4>
                   <ul className="space-y-2">
-                    {col.links.map((lk) => (
+                    {col.links.map(lk => (
                       <li key={lk.label}>
                         <a
                           href={lk.id ? `#${lk.id}` : "#"}
@@ -719,7 +742,7 @@ export const AboutContent = memo(function AboutContent(): JSX.Element {
               © 2023 PersonaCraft. Todos os direitos reservados.
             </p>
             <div className="flex space-x-6">
-              {["twitter", "discord", "github", "youtube"].map((net) => (
+              {["twitter", "discord", "github", "youtube"].map(net => (
                 <a
                   key={net}
                   href="#"

@@ -1,0 +1,5 @@
+{
+  "task.autoDetect": "off",
+  "npm.autoDetect": "off",
+  "typescript.preferences.includePackageJsonAutoImports": "off"
+}

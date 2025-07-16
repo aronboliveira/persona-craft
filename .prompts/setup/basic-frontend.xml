@@ -1,0 +1,31 @@
+<instructions>
+	<markup>
+		- Use semantic HTML5 elements for better accessibility and SEO;
+		- Be VERY specific about what tags to choose for blocks of texts in long paragraphs,
+				using a rich approach (like with dfn, mark, cite, em, b, strong, i, sub, sup, etc.);
+		- Do not blindly choose lists as ul, but use ol and dl as well when it's fit;
+		- Avoid using i and b tags, prefer using em and strong for emphasis;
+		- Avoid using i tags for icons, prefer using SVG or icon fonts like Bootstrap 5 or Font Awesome;
+	</markup>
+	<style>
+		- Import Bootstrap 5 UI via CDN in all new pages;
+		- Use Bootstrap utility classes for layout and styling;
+		- Always include a responsive meta tag in the head section;
+		- Always include media queries for responsive design both in desktop and mobile views;
+		- Make use of extensive transitions animations via css pseudoclasses and pseudoelements, like :hover, :focus, 
+				:active, :before, :after, :checked, :disabled, ::placeholder, ::selection, etc.;
+		- Don't forget to style scrollbars;
+		- Prefer a dark theme with a light alternative;
+		- Keep the view comfortable for reading, with a good contrast ratio;
+		- Don't forget to include borders and shadows for depth and separation of elements, SPECIALLY 
+				for main sections like headers and footers;
+	</style>
+	<javascript>
+		- Use Bootstrap 5 JavaScript components via CDN, leveraging elements like toasts, modals, 
+				collapse, dropdowns, and tooltips;
+		- Use JavaScript for interactive elements, ensuring to keep the code modular and maintainable;
+		- Implement responsive navigation using Bootstrap's navbar component;
+		- Leverage SessionStorage and LocalStorage for state management;
+		- Use ES6+ features like arrow functions, template literals, and destructuring for cleaner code;
+	</javascript>
+</instructions>

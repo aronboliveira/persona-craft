@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>AI Art Styles Tables</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background: #fafafa;
+      }
+      #search {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        font-size: 16px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      table.style-table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 40px;
+        background: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        vertical-align: top;
+        font-size: 0.8rem;
+      }
+      th {
+        background-color: #f4f4f4;
+        cursor: pointer;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+      }
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+      tr:hover {
+        background-color: #eef;
+      }
+      caption {
+        font-style: italic;
+        font-weight: bold;
+        font-size: 1.2em;
+        padding: 8px;
+        text-align: left;
+        background: #ececec;
+        border-bottom: 1px solid #ccc;
+        cursor: pointer;
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Sorting
+        document.querySelectorAll("th.sortable").forEach((header, i) => {
+          let asc = true;
+          header.addEventListener("click", () => {
+            const table = header.closest("table");
+            const tbody = table.querySelector("tbody");
+            Array.from(tbody.rows)
+              .sort((a, b) => {
+                const aText = a.cells[i].innerText.trim();
+                const bText = b.cells[i].innerText.trim();
+                return header.dataset.type === "number"
+                  ? asc
+                    ? aText - bText
+                    : bText - aText
+                  : asc
+                  ? aText.localeCompare(bText)
+                  : bText.localeCompare(aText);
+              })
+              .forEach(row => tbody.appendChild(row));
+            asc = !asc;
+          });
+        });
+        // Collapse/expand on caption click
+        document.querySelectorAll("caption").forEach(cap => {
+          cap.addEventListener("click", () => {
+            const tbl = cap.closest("table");
+            tbl.querySelector("tbody").classList.toggle("hidden");
+          });
+        });
+        // Search/filter
+        document.getElementById("search").addEventListener("input", event => {
+          const term = event.target.value.toLowerCase();
+          document.querySelectorAll("table.style-table").forEach(tbl => {
+            tbl.style.display = tbl.innerText.toLowerCase().includes(term)
+              ? ""
+              : "none";
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <input type="text" id="search" placeholder="Search styles…" />
+
+    <!-- CREATE TABLE [Realism] -->
+    <table id="Realism" class="style-table">
+      <caption>
+        Realism
+      </caption>
+      <thead>
+        <tr>
+          <th class="sortable" data-type="text">Name</th>
+          <th>Description</th>
+          <th>Keywords</th>
+          <th class="sortable" data-type="number">
+            AI Popularity<br />(1–100)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Realism</td>
+          <td>
+            Art that strives for lifelike accuracy in proportions, lighting, and
+            detail, minimizing stylization.
+          </td>
+          <td>accurate anatomy, natural lighting, detailed textures</td>
+          <td>100</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CREATE TABLE [PhotographicRealism] -->
+    <table id="PhotographicRealism" class="style-table">
+      <caption>
+        Photographic Realism
+      </caption>
+      <thead>
+        <tr>
+          <th class="sortable" data-type="text">Name</th>
+          <th>Description</th>
+          <th>Keywords</th>
+          <th class="sortable" data-type="number">
+            AI Popularity<br />(1–100)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Photographic Realism</td>
+          <td>
+            Art that mimics high-end photography, with precise focus, depth of
+            field, and accurate color rendition.
+          </td>
+          <td>DSLR, bokeh, high resolution, true-to-life</td>
+          <td>100</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CREATE TABLE [Anime] -->
+    <table id="Anime" class="style-table">
+      <caption>
+        Anime
+      </caption>
+      <thead>
+        <tr>
+          <th class="sortable" data-type="text">Name</th>
+          <th>Description</th>
+          <th>Keywords</th>
+          <th class="sortable" data-type="number">
+            AI Popularity<br />(1–100)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Anime</td>
+          <td>
+            Japanese animation–inspired art with vibrant colors, expressive
+            characters, and dynamic poses that emphasize emotion and
+            storytelling.
+          </td>
+          <td>
+            anime style, cel-shaded, manga-inspired, bold outlines, vibrant
+            palette
+          </td>
+          <td>95</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CREATE TABLE [IllustrativeRealism] -->
+    <table id="IllustrativeRealism" class="style-table">
+      <caption>
+        Illustrative Realism
+      </caption>
+      <thead>
+        <tr>
+          <th class="sortable" data-type="text">Name</th>
+          <th>Description</th>
+          <th>Keywords</th>
+          <th class="sortable" data-type="number">
+            AI Popularity<br />(1–100)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Illustrative Realism</td>
+          <td>
+            Traditional or digital art rendered with realistic technique
+            (shading, perspective) but still clearly illustrated.
+          </td>
+          <td>painterly, smooth gradients, fine detail, hand-drawn feel</td>
+          <td>95</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CREATE TABLE [Shounen] -->
+    <table id="Shounen" class="style-table">
+      <caption>
+        Shounen
+      </caption>
+      <thead>
+        <tr>
+          <th class="sortable" data-type="text">Name</th>
+          <th>Description</th>
+          <th>Keywords</th>
+          <th class="sortable" data-type="number">
+            AI Popularity<br />(1–100)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Shounen</td>
+          <td>
+            Action-oriented anime style targeting young males, featuring bold
+            linework, dynamic battle scenes, and heroic protagonists.
+          </td>
+          <td>
+            spiky hair, speed lines, energy aura, battle scene, dynamic pose
+          </td>
+          <td>90</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CREATE TABLE [Semirealism] -->
+    <table id="Semirealism" class="style-table">
+      <caption>
+        Semirealism
+      </caption>
+      <thead>
+        <tr>
+          <th class="sortable" data-type="text">Name</th>
+          <th>Description</th>
+          <th>Keywords</th>
+          <th class="sortable" data-type="number">
+            AI Popularity<br />(1–100)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Semirealism</td>
+          <td>
+            Hybrid style blending realistic rendering with stylized proportions
+            or artistic flair.
+          </td>
+          <td>realistic shading, stylized features, dynamic lighting</td>
+          <td>90</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CREATE TABLE [FantasySemirealism] -->
+    <table id="FantasySemirealism" class="style-table">
+      <caption>
+        Fantasy Semirealism
+      </caption>
+      <thead>
+        <tr>
+          <th class="sortable" data-type="text">Name</th>
+          <th>Description</th>
+          <th>Keywords</th>
+          <th class="sortable" data-type="number">
+            AI Popularity<br />(1–100)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Fantasy Semirealism</td>
+          <td>
+            Highly detailed semirealistic art for fantasy worlds, as seen in
+            major games like League of Legends or World of Warcraft.
+          </td>
+          <td>epic scale, magical effects, realistic armor, creature design</td>
+          <td>90</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CREATE TABLE [Moe] -->
+    <table id="Moe" class="style-table">
+      <caption>
+        Moe
+      </caption>
+      <thead>
+        <tr>
+          <th class="sortable" data-type="text">Name</th>
+          <th>Description</th>
+          <th>Keywords</th>
+          <th class="sortable" data-type="number">
+            AI Popularity<br />(1–100)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Moe</td>
+          <td>
+            Cute anime style designed to evoke feelings of affection, featuring
+            soft colors, youthful characters, and heartwarming poses.
+          </td>
+          <td>kawaii, pastel palette, blushing cheeks, soft lighting</td>
+          <td>85</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CREATE TABLE [DesignSemirealism] -->
+    <table id="DesignSemirealism" class="style-table">
+      <caption>
+        Design Semirealism
+      </caption>
+      <thead>
+        <tr>
+          <th class="sortable" data-type="text">Name</th>
+          <th>Description</th>
+          <th>Keywords</th>
+          <th class="sortable" data-type="number">
+            AI Popularity<br />(1–100)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Design Semirealism</td>
+          <td>
+            Concept art–style semirealism, used in game/film design to create
+            believable yet imaginative visuals.
+          </td>
+          <td>
+            concept art, dynamic lighting, textured surfaces, imaginative design
+          </td>
+          <td>85</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CREATE TABLE [Shojo] -->
+    <table id="Shojo" class="style-table">
+      <caption>
+        Shojo
+      </caption>
+      <thead>
+        <tr>
+          <th class="sortable" data-type="text">Name</th>
+          <th>Description</th>
+          <th>Keywords</th>
+          <th class="sortable" data-type="number">
+            AI Popularity<br />(1–100)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Shojo</td>
+          <td>
+            Romantic anime style aimed at young females, with soft lines, pastel
+            colors, and emphasis on emotion and character relationships.
+          </td>
+          <td>
+            large sparkling eyes, floral motifs, pastel tones, gentle shading
+          </td>
+          <td>80</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CREATE TABLE [DisneyStyleCartoon] -->
+    <table id="DisneyStyleCartoon" class="style-table">
+      <caption>
+        Disney Style Cartoon
+      </caption>
+      <thead>
+        <tr>
+          <th class="sortable" data-type="text">Name</th>
+          <th>Description</th>
+          <th>Keywords</th>
+          <th class="sortable" data-type="number">
+            AI Popularity<br />(1–100)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Disney Style Cartoon</td>
+          <td>
+            Polished animation style with semi-realistic proportions, smooth
+            shading, and expressive, appealing characters.
+          </td>
+          <td>princess, soft shading, expressive eyes, storybook</td>
+          <td>80</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CREATE TABLE [RealisticFanArt] -->
+    <table id="RealisticFanArt" class="style-table">
+      <caption>
+        Realistic Fan Art
+      </caption>
+      <thead>
+        <tr>
+          <th class="sortable" data-type="text">Name</th>
+          <th>Description</th>
+          <th>Keywords</th>
+          <th class="sortable" data-type="number">
+            AI Popularity<br />(1–100)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Realistic Fan Art</td>
+          <td>
+            Fan-created art that reimagines stylized characters in a realistic
+            manner, blending original design with lifelike detail.
+          </td>
+          <td>
+            hyperreal, character likeness, detailed textures, real-world context
+          </td>
+          <td>80</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CREATE TABLE [Chibi] -->
+    <table id="Chibi" class="style-table">
+      <caption>
+        Chibi
+      </caption>
+      <thead>
+        <tr>
+          <th class="sortable" data-type="text">Name</th>
+          <th>Description</th>
+          <th>Keywords</th>
+          <th class="sortable" data-type="number">
+            AI Popularity<br />(1–100)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Chibi</td>
+          <td>
+            Super-deformed anime style with oversized heads and tiny bodies,
+            emphasizing extreme cuteness and expressive simplicity.
+          </td>
+          <td>super-deformed, big head, tiny body, cute expression</td>
+          <td>75</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CREATE TABLE [Cartoon] -->
+    <table id="Cartoon" class="style-table">
+      <caption>
+        Cartoon
+      </caption>
+      <thead>
+        <tr>
+          <th class="sortable" data-type="text">Name</th>
+          <th>Description</th>
+          <th>Keywords</th>
+          <th class="sortable" data-type="number">
+            AI Popularity<br />(1–100)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Cartoon</td>
+          <td>
+            Simplified or exaggerated illustration style, often humorous, with
+            bold outlines and flat colors.
+          </td>
+          <td>bold outlines, flat colors, caricature, expressive</td>
+          <td>75</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CREATE TABLE [Seinen] -->
+    <table id="Seinen" class="style-table">
+      <caption>
+        Seinen
+      </caption>
+      <thead>
+        <tr>
+          <th class="sortable" data-type="text">Name</th>
+          <th>Description</th>
+          <th>Keywords</th>
+          <th class="sortable" data-type="number">
+            AI Popularity<br />(1–100)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Seinen</td>
+          <td>
+            Mature anime style with realistic proportions, detailed backgrounds,
+            and darker or more complex themes.
+          </td>
+          <td>
+            realistic anatomy, muted palette, gritty textures, mature tone
+          </td>
+          <td>70</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CREATE TABLE [PixelArt] -->
+    <table id="PixelArt" class="style-table">
+      <caption>
+        Pixel Art
+      </caption>
+      <thead>
+        <tr>
+          <th class="sortable" data-type="text">Name</th>
+          <th>Description</th>
+          <th>Keywords</th>
+          <th class="sortable" data-type="number">
+            AI Popularity<br />(1–100)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Pixel Art</td>
+          <td>
+            Low-resolution digital art using square pixels, evoking retro video
+            game graphics and nostalgia.
+          </td>
+          <td>8-bit, low-res, blocky, retro game vibes, sprite</td>
+          <td>70</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CREATE TABLE [NonIsometricPixelArt] -->
+    <table id="NonIsometricPixelArt" class="style-table">
+      <caption>
+        Non-Isometric Pixel Art
+      </caption>
+      <thead>
+        <tr>
+          <th class="sortable" data-type="text">Name</th>
+          <th>Description</th>
+          <th>Keywords</th>
+          <th class="sortable" data-type="number">
+            AI Popularity<br />(1–100)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Non-Isometric Pixel Art</td>
+          <td>
+            Flat-projection pixel art, including side-scroll, top-down, or
+            front-facing perspectives common in classic games.
+          </td>
+          <td>side-view, top-down, sprite sheet, platformer</td>
+          <td>70</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CREATE TABLE [ModernCartoon] -->
+    <table id="ModernCartoon" class="style-table">
+      <caption>
+        Modern Cartoon
+      </caption>
+      <thead>
+        <tr>
+          <th class="sortable" data-type="text">Name</th>
+          <th>Description</th>
+          <th>Keywords</th>
+          <th class="sortable" data-type="number">
+            AI Popularity<br />(1–100)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Modern Cartoon</td>
+          <td>
+            Contemporary cartoon style featuring clean digital lines, vibrant
+            colors, and simplified shapes.
+          </td>
+          <td>vector style, flat design, minimalism, bright palette</td>
+          <td>70</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CREATE TABLE [IsometricPixelArt] -->
+    <table id="IsometricPixelArt" class="style-table">
+      <caption>
+        Isometric Pixel Art
+      </caption>
+      <thead>
+        <tr>
+          <th class="sortable" data-type="text">Name</th>
+          <th>Description</th>
+          <th>Keywords</th>
+          <th class="sortable" data-type="number">
+            AI Popularity<br />(1–100)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Isometric Pixel Art</td>
+          <td>
+            Pixel art rendered in a fixed isometric perspective, giving a
+            3D-like appearance without true depth.
+          </td>
+          <td>3/4 view, dimetric grid, tile-based, cityscape</td>
+          <td>65</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CREATE TABLE [Josei] -->
+    <table id="Josei" class="style-table">
+      <caption>
+        Josei
+      </caption>
+      <thead>
+        <tr>
+          <th class="sortable" data-type="text">Name</th>
+          <th>Description</th>
+          <th>Keywords</th>
+          <th class="sortable" data-type="number">
+            AI Popularity<br />(1–100)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Josei</td>
+          <td>
+            Adult-oriented anime style focusing on realistic slice-of-life
+            scenarios, clean linework, and subtle emotional expression.
+          </td>
+          <td>clean lines, mature characters, subtle shading, everyday life</td>
+          <td>60</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CREATE TABLE [AdultCartoonStyle] -->
+    <table id="AdultCartoonStyle" class="style-table">
+      <caption>
+        Adult Cartoon Style
+      </caption>
+      <thead>
+        <tr>
+          <th class="sortable" data-type="text">Name</th>
+          <th>Description</th>
+          <th>Keywords</th>
+          <th class="sortable" data-type="number">
+            AI Popularity<br />(1–100)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Adult Cartoon Style</td>
+          <td>
+            Animation aimed at mature audiences, often featuring satire, crude
+            humor, or stylized caricatures.
+          </td>
+          <td>satire, caricature, bold shapes, limited animation</td>
+          <td>60</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CREATE TABLE [VintageCartoon] -->
+    <table id="VintageCartoon" class="style-table">
+      <caption>
+        Vintage Cartoon
+      </caption>
+      <thead>
+        <tr>
+          <th class="sortable" data-type="text">Name</th>
+          <th>Description</th>
+          <th>Keywords</th>
+          <th class="sortable" data-type="number">
+            AI Popularity<br />(1–100)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Vintage Cartoon</td>
+          <td>
+            Early animation style with rubber-hose limbs, simple shapes, and
+            black-and-white or limited color palettes.
+          </td>
+          <td>rubber hose, pie-cut eyes, slapstick, grayscale</td>
+          <td>50</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

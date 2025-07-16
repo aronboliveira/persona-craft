@@ -1,36 +1,38 @@
 import type { JSX } from "react";
-import { memo, useContext } from "react";
+import { lazy, memo, Suspense, useContext } from "react";
 import useDialog from "../../../lib/hooks/useDialog";
 import { IChatbotCtx } from "../../../lib/declarations/interfaces/contexts";
 import { NRDispatch } from "../../../lib/declarations/types/foundations";
 import { ChatbotCtx } from "../../providers/Chatbot";
 import st from "../../../styles/Modules/chatbot-popup.module.css";
-const ChatbotPopup = memo((): JSX.Element => {
-  const ctx = useContext<IChatbotCtx>(ChatbotCtx);
-  // closeTitle = "Close the manifest dialog",
-  // closeIdf = "dialogManifestClose",
-  // idf = "dialogManifest";
-  let isChatbotOpen: boolean = false,
-    setChatbotOpen: NRDispatch<boolean> = null;
-  if (ctx) {
-    isChatbotOpen = ctx.isChatbotOpen;
-    setChatbotOpen = ctx.setChatbotOpen;
-  }
-  const { ref: r, handler } = useDialog({
-    dispatch: setChatbotOpen,
-    state: isChatbotOpen,
-  });
-  return !isChatbotOpen ? (
-    <></>
-  ) : (
-    <div className={st.chatbotPopupMain} ref={r as any}>
-      <iframe
-        src="http://127.0.0.1:8002/view-chainlit/"
-        title="Chainlit Chat"
-        style={{ width: "80%", height: "49vh", border: "none" }}
-        sandbox="allow-same-origin allow-scripts allow-forms"
-      ></iframe>
-      {/* <form className="chatbot-popup-content">
+import Spinner from "../../icons/animated/Spinner";
+// @ts-ignore-next-line
+const ChatbotIframe = lazy(() => import("@/components/iframes/ChatbotIframe")),
+  ChatbotPopup = memo((): JSX.Element => {
+    const ctx = useContext<IChatbotCtx>(ChatbotCtx);
+    // closeTitle = "Close the manifest dialog",
+    // closeIdf = "dialogManifestClose",
+    // idf = "dialogManifest";
+    let isChatbotOpen: boolean = false,
+      setChatbotOpen: NRDispatch<boolean> = null;
+    if (ctx) {
+      isChatbotOpen = ctx.isChatbotOpen;
+      setChatbotOpen = ctx.setChatbotOpen;
+    }
+    const { ref: r, handler } = useDialog({
+      dispatch: setChatbotOpen,
+      state: isChatbotOpen,
+    });
+    return (
+      <div
+        className={st.chatbotPopupMain}
+        ref={r as any}
+        style={!isChatbotOpen ? { display: "none" } : {}}
+      >
+        <Suspense fallback={<Spinner />}>
+          <ChatbotIframe />
+        </Suspense>
+        {/* <form className="chatbot-popup-content">
         <h2>Chatbot</h2>
         <p>How can I assist you today?</p>
         <textarea
@@ -72,8 +74,7 @@ const ChatbotPopup = memo((): JSX.Element => {
           </button>
         </fieldset>
       </form> */}
-      <script></script>
-    </div>
-  );
-});
+      </div>
+    );
+  });
 export default ChatbotPopup;

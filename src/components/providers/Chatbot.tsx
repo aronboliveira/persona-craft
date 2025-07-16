@@ -1,5 +1,5 @@
 import type { JSX } from "react";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../errors/GenericErrorComponent";
 import type { IChatbotCtx } from "../../lib/declarations/interfaces/contexts";
@@ -8,7 +8,9 @@ import ChatbotPopup from "../modals/bot/ChatbotPopup";
 const defaultCtx = { isChatbotOpen: false, setChatbotOpen: null };
 export const ChatbotCtx = createContext<IChatbotCtx>(defaultCtx);
 export default function Chatbot(): JSX.Element {
+  // TODO CREATE BUTTON REF IN PROVIDER
   const [isChatbotOpen, setChatbotOpen] = useState<boolean>(false);
+  useEffect(() => {}, [isChatbotOpen]);
   return (
     <ErrorBoundary FallbackComponent={() => <GenericErrorComponent />}>
       <ChatbotCtx.Provider value={{ isChatbotOpen, setChatbotOpen }}>
