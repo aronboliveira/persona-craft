@@ -45,25 +45,54 @@ MIDDLEWARE = [
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
 
-from csp.constants import SELF
+from csp.constants import SELF # type: ignore
 
 CONTENT_SECURITY_POLICY = {
     "DIRECTIVES": {
         "default-src": [SELF],
-        "style-src": [SELF, "'unsafe-inline'"],
-        "script-src": [SELF, "'unsafe-inline'"],
+        "style-src": [
+            SELF,
+            "'unsafe-inline'",
+            "https://cdn.tailwindcss.com",
+            "https://cdnjs.cloudflare.com",
+            "https://cdn.jsdelivr.net/npm/bootstrap@5.3.7"
+        ],
+        "script-src": [
+            SELF,
+            "'unsafe-inline'",
+            "https://cdn.tailwindcss.com",
+            "https://cdn.jsdelivr.net/npm/bootstrap@5.3.7"
+        ],
+        "font-src": [
+            SELF,
+            "https://cdnjs.cloudflare.com"
+        ],
+        "img-src": [
+            SELF,
+            "https://upload.wikimedia.org",
+            "data:"
+        ],
         "frame-src": [
             SELF,
             "http://127.0.0.1:*",
             "http://localhost:*",
+            "http://127.0.0.1:5174",
+            "http://localhost:5174"
         ],
         "frame-ancestors": [
             SELF,
-            "http://localhost:*",
             "http://127.0.0.1:*",
+            "http://localhost:*",
+            "http://127.0.0.1:5174",
+            "http://localhost:5174"
         ],
+        "connect-src": [SELF],
+        "object-src": ["'none'"],
+        "base-uri": [SELF],
+        "form-action": [SELF]
     }
 }
+
 
 ROOT_URLCONF = "prompt_creator_app_backend.urls"
 
@@ -131,7 +160,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "prompt_creator_app_backend", "prompt_creator_app_main_backend", "static")
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

@@ -1,226 +1,223 @@
 // AboutContent.tsx
 import type { JSX } from "react";
-import { memo, useMemo, useState } from "react";
+import { memo, useMemo, useRef, useState } from "react";
 
 export const AboutContent = memo(function AboutContent(): JSX.Element {
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const features = useMemo(
-    () => [
-      {
-        icon: "fa-brain",
-        title: "Modelo de Personalidade Completo",
-        desc: "Utiliza o modelo Big Five (OCEAN) para criar perfis psicológicos detalhados, garantindo personagens com traços consistentes e críveis.",
-      },
-      {
-        icon: "fa-book",
-        title: "Backstory Profunda",
-        desc: "Gera histórias de fundo ricas com eventos formativos, motivações e conflitos internos que moldam o comportamento do personagem.",
-      },
-      {
-        icon: "fa-comments",
-        title: "Estilo de Comunicação",
-        desc: "Define padrões de fala, vocabulário, tom e maneirismos únicos para cada personagem, adaptados ao seu perfil psicológico.",
-      },
-      {
-        icon: "fa-cogs",
-        title: "Sistema de Valores",
-        desc: "Mapeia crenças fundamentais, princípios éticos e dilemas morais que guiam as decisões do personagem.",
-      },
-      {
-        icon: "fa-magic",
-        title: "Arquétipos Adaptáveis",
-        desc: "Oferece 12 arquétipos fundamentais como base, com infinitas variações e combinações para personagens únicos.",
-      },
-      {
-        icon: "fa-random",
-        title: "Geração de Conflitos",
-        desc: "Cria tensões internas e externas naturais que adicionam profundidade e oportunidades de desenvolvimento ao personagem.",
-      },
-    ],
-    []
-  );
-
-  const testimonials = useMemo(
-    () => [
-      {
-        init: "JD",
-        color: "bg-purple-500",
-        name: "Joana Dias",
-        role: "Desenvolvedora de Chatbots",
-        quote:
-          "O PersonaCraft revolucionou nossa abordagem de criação de personagens. Nossos chatbots agora têm personalidades tão ricas que os usuários frequentemente esquecem que estão falando com uma IA!",
-        stars: 5,
-      },
-      {
-        init: "MR",
-        color: "bg-pink-500",
-        name: "Marcos Rocha",
-        role: "Escritor de RPG",
-        quote:
-          "Como escritor, eu lutava para criar NPCs memoráveis. Com o PersonaCraft, consigo gerar dezenas de personagens únicos em uma tarde, cada um com personalidade e backstory convincentes.",
-        stars: 5,
-      },
-      {
-        init: "AS",
-        color: "bg-blue-500",
-        name: "Ana Souza",
-        role: "Produtora de Conteúdo Educativo",
-        quote:
-          "Nossos tutores virtuais agora têm personalidades tão distintas que os alunos desenvolvem preferências por um ou outro. O engajamento com nosso material educativo aumentou 300%!",
-        stars: 4.5,
-      },
-    ],
-    []
-  );
-
-  const plans = useMemo(
-    () => [
-      {
-        name: "Básico",
-        price: "R$ 47",
-        highlight: false,
-        colorBox: "bg-gray-800",
-        extras: [],
-        features: [
-          "Prompt completo PersonaCraft v2.0",
-          "Guia de uso detalhado (PDF)",
-          "10 templates de personagens populares",
-        ],
-        misses: ["Atualizações futuras", "Suporte prioritário"],
-      },
-      {
-        name: "Profissional",
-        price: "R$ 97",
-        highlight: true,
-        colorBox: "bg-gray-800 border-2 border-purple-500",
-        extras: [
-          "+50 templates de nichos específicos",
-          "Atualizações gratuitas por 1 ano",
-          "Suporte por email prioritário",
-          "Guia avançado de ajustes finos",
-        ],
-        features: ["Tudo no plano Básico"],
-        misses: [],
-      },
-      {
-        name: "Empresarial",
-        price: "R$ 197",
-        highlight: false,
-        colorBox: "bg-gray-800",
-        extras: [
-          "Atualizações vitalícias",
-          "Suporte VIP (chat + email)",
-          "Licença para uso comercial",
-          "Workshop exclusivo (2h)",
-        ],
-        features: ["Tudo no plano Profissional"],
-        misses: [],
-      },
-    ],
-    []
-  );
-
-  const faqs = useMemo(
-    () => [
-      {
-        q: "Como recebo o prompt após a compra?",
-        a: (
-          <>
-            <p>
-              Imediatamente após a confirmação do pagamento, você receberá um
-              email com:
-            </p>
-            <ul className="list-disc pl-5 mt-2 space-y-1">
-              <li>Link para download do prompt em formato .txt</li>
-              <li>
-                Versão formatada para diferentes plataformas (ChatGPT, Claude,
-                etc.)
-              </li>
-              <li>Guia de uso em PDF com exemplos práticos</li>
-              <li>
-                Instruções para copiar e colar diretamente no seu chatbot
-                favorito
-              </li>
-            </ul>
-          </>
-        ),
-      },
-      {
-        q: "Posso usar para criar personagens comerciais?",
-        a: (
-          <>
-            <p>
-              Sim! Todos os planos permitem uso comercial, com algumas
-              diferenças:
-            </p>
-            <ul className="list-disc pl-5 mt-2 space-y-1">
-              <li>
-                <strong>Básico:</strong> Até 3 personagens comerciais
-              </li>
-              <li>
-                <strong>Profissional:</strong> Até 15 personagens comerciais
-              </li>
-              <li>
-                <strong>Empresarial:</strong> Personagens ilimitados para sua
-                empresa
-              </li>
-            </ul>
-            <p className="mt-2">
-              Personagens criados são de sua propriedade intelectual.
-            </p>
-          </>
-        ),
-      },
-      {
-        q: "O prompt funciona em qualquer modelo de IA?",
-        a: (
-          <>
-            <p>O PersonaCraft foi otimizado para os principais modelos:</p>
-            <ul className="list-disc pl-5 mt-2 space-y-1">
-              <li>ChatGPT (3.5 e 4)</li>
-              <li>Claude (todas versões)</li>
-              <li>Google Gemini</li>
-              <li>LLaMA 2 / 3</li>
-            </ul>
-            <p className="mt-2">
-              Incluímos variações do prompt adaptadas para cada plataforma. Para
-              modelos menores ou especializados, recomendamos pequenos ajustes
-              que ensinamos no guia avançado.
-            </p>
-          </>
-        ),
-      },
-      {
-        q: "E se eu não gostar dos resultados?",
-        a: (
-          <>
-            <p>
-              Oferecemos garantia incondicional de 7 dias. Se por qualquer
-              motivo você não ficar satisfeito:
-            </p>
-            <ul className="list-disc pl-5 mt-2 space-y-1">
-              <li>Envie um email para suporte@personacraft.com</li>
-              <li>Devolveremos 100% do seu dinheiro sem perguntas</li>
-              <li>Você pode manter os materiais recebidos</li>
-            </ul>
-            <p className="mt-2">
-              Nos últimos 6 meses, menos de 2% dos clientes pediram reembolso.
-            </p>
-          </>
-        ),
-      },
-    ],
-    []
-  );
-
-  /* ─────────────────────────── helpers ──────────────────────────── */
-  const smoothScroll = (id: string) => () =>
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-
-  const mobileMenu = () =>
-    alert("Menu mobile seria implementado aqui em uma versão completa");
-
-  /* ───────────────────────────── JSX ────────────────────────────── */
+  const scrollRef = useRef<HTMLElement>(null),
+    [openFaq, setOpenFaq] = useState<number | null>(null),
+    features = useMemo(
+      () => [
+        {
+          icon: "fa-brain",
+          title: "Modelo de Personalidade Completo",
+          desc: "Utiliza o modelo Big Five (OCEAN) para criar perfis psicológicos detalhados, garantindo personagens com traços consistentes e críveis.",
+        },
+        {
+          icon: "fa-book",
+          title: "Backstory Profunda",
+          desc: "Gera histórias de fundo ricas com eventos formativos, motivações e conflitos internos que moldam o comportamento do personagem.",
+        },
+        {
+          icon: "fa-comments",
+          title: "Estilo de Comunicação",
+          desc: "Define padrões de fala, vocabulário, tom e maneirismos únicos para cada personagem, adaptados ao seu perfil psicológico.",
+        },
+        {
+          icon: "fa-cogs",
+          title: "Sistema de Valores",
+          desc: "Mapeia crenças fundamentais, princípios éticos e dilemas morais que guiam as decisões do personagem.",
+        },
+        {
+          icon: "fa-magic",
+          title: "Arquétipos Adaptáveis",
+          desc: "Oferece 12 arquétipos fundamentais como base, com infinitas variações e combinações para personagens únicos.",
+        },
+        {
+          icon: "fa-random",
+          title: "Geração de Conflitos",
+          desc: "Cria tensões internas e externas naturais que adicionam profundidade e oportunidades de desenvolvimento ao personagem.",
+        },
+      ],
+      []
+    ),
+    testimonials = useMemo(
+      () => [
+        {
+          init: "JD",
+          color: "bg-purple-500",
+          name: "Joana Dias",
+          role: "Desenvolvedora de Chatbots",
+          quote:
+            "O PersonaCraft revolucionou nossa abordagem de criação de personagens. Nossos chatbots agora têm personalidades tão ricas que os usuários frequentemente esquecem que estão falando com uma IA!",
+          stars: 5,
+        },
+        {
+          init: "MR",
+          color: "bg-pink-500",
+          name: "Marcos Rocha",
+          role: "Escritor de RPG",
+          quote:
+            "Como escritor, eu lutava para criar NPCs memoráveis. Com o PersonaCraft, consigo gerar dezenas de personagens únicos em uma tarde, cada um com personalidade e backstory convincentes.",
+          stars: 5,
+        },
+        {
+          init: "AS",
+          color: "bg-blue-500",
+          name: "Ana Souza",
+          role: "Produtora de Conteúdo Educativo",
+          quote:
+            "Nossos tutores virtuais agora têm personalidades tão distintas que os alunos desenvolvem preferências por um ou outro. O engajamento com nosso material educativo aumentou 300%!",
+          stars: 4.5,
+        },
+      ],
+      []
+    ),
+    plans = useMemo(
+      () => [
+        {
+          name: "Básico",
+          price: "R$ 47",
+          highlight: false,
+          colorBox: "bg-gray-800",
+          extras: [],
+          features: [
+            "Prompt completo PersonaCraft v2.0",
+            "Guia de uso detalhado (PDF)",
+            "10 templates de personagens populares",
+          ],
+          misses: ["Atualizações futuras", "Suporte prioritário"],
+        },
+        {
+          name: "Profissional",
+          price: "R$ 97",
+          highlight: true,
+          colorBox: "bg-gray-800 border-2 border-purple-500",
+          extras: [
+            "+50 templates de nichos específicos",
+            "Atualizações gratuitas por 1 ano",
+            "Suporte por email prioritário",
+            "Guia avançado de ajustes finos",
+          ],
+          features: ["Tudo no plano Básico"],
+          misses: [],
+        },
+        {
+          name: "Empresarial",
+          price: "R$ 197",
+          highlight: false,
+          colorBox: "bg-gray-800",
+          extras: [
+            "Atualizações vitalícias",
+            "Suporte VIP (chat + email)",
+            "Licença para uso comercial",
+            "Workshop exclusivo (2h)",
+          ],
+          features: ["Tudo no plano Profissional"],
+          misses: [],
+        },
+      ],
+      []
+    ),
+    faqs = useMemo(
+      () => [
+        {
+          q: "Como recebo o prompt após a compra?",
+          a: (
+            <>
+              <p>
+                Imediatamente após a confirmação do pagamento, você receberá um
+                email com:
+              </p>
+              <ul className="list-disc pl-5 mt-2 space-y-1">
+                <li>Link para download do prompt em formato .txt</li>
+                <li>
+                  Versão formatada para diferentes plataformas (ChatGPT, Claude,
+                  etc.)
+                </li>
+                <li>Guia de uso em PDF com exemplos práticos</li>
+                <li>
+                  Instruções para copiar e colar diretamente no seu chatbot
+                  favorito
+                </li>
+              </ul>
+            </>
+          ),
+        },
+        {
+          q: "Posso usar para criar personagens comerciais?",
+          a: (
+            <>
+              <p>
+                Sim! Todos os planos permitem uso comercial, com algumas
+                diferenças:
+              </p>
+              <ul className="list-disc pl-5 mt-2 space-y-1">
+                <li>
+                  <strong>Básico:</strong> Até 3 personagens comerciais
+                </li>
+                <li>
+                  <strong>Profissional:</strong> Até 15 personagens comerciais
+                </li>
+                <li>
+                  <strong>Empresarial:</strong> Personagens ilimitados para sua
+                  empresa
+                </li>
+              </ul>
+              <p className="mt-2">
+                Personagens criados são de sua propriedade intelectual.
+              </p>
+            </>
+          ),
+        },
+        {
+          q: "O prompt funciona em qualquer modelo de IA?",
+          a: (
+            <>
+              <p>O PersonaCraft foi otimizado para os principais modelos:</p>
+              <ul className="list-disc pl-5 mt-2 space-y-1">
+                <li>ChatGPT (3.5 e 4)</li>
+                <li>Claude (todas versões)</li>
+                <li>Google Gemini</li>
+                <li>LLaMA 2 / 3</li>
+              </ul>
+              <p className="mt-2">
+                Incluímos variações do prompt adaptadas para cada plataforma.
+                Para modelos menores ou especializados, recomendamos pequenos
+                ajustes que ensinamos no guia avançado.
+              </p>
+            </>
+          ),
+        },
+        {
+          q: "E se eu não gostar dos resultados?",
+          a: (
+            <>
+              <p>
+                Oferecemos garantia incondicional de 7 dias. Se por qualquer
+                motivo você não ficar satisfeito:
+              </p>
+              <ul className="list-disc pl-5 mt-2 space-y-1">
+                <li>Envie um email para suporte@personacraft.com</li>
+                <li>Devolveremos 100% do seu dinheiro sem perguntas</li>
+                <li>Você pode manter os materiais recebidos</li>
+              </ul>
+              <p className="mt-2">
+                Nos últimos 6 meses, menos de 2% dos clientes pediram reembolso.
+              </p>
+            </>
+          ),
+        },
+      ],
+      []
+    ),
+    smoothScroll = (id: string) => (): void => {
+      if (!(scrollRef.current && scrollRef.current.isConnected))
+        scrollRef.current = document.getElementById(id);
+      if (!scrollRef.current) return;
+      scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    },
+    mobileMenu = () =>
+      alert("Menu mobile seria implementado aqui em uma versão completa");
   return (
     <>
       {/* ────────────── Header / Navbar ────────────── */}

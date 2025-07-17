@@ -27,11 +27,17 @@ async def allow_iframe(request, call_next):
     response.headers.pop("x-frame-options", None)
     response.headers.pop("X-Frame-Options", None)
     response.headers["Content-Security-Policy"] = (
-        "frame-ancestors 'self' "
-        "http://127.0.0.1:* "    # Django admin
-        "http://localhost:* "    # Django admin alias
-        "http://127.0.0.1:5174 "    # your React/Vite front-end
-        "http://localhost:5174"
+        "frame-ancestors 'self' http://127.0.0.1:* http://localhost:* http://127.0.0.1:5174 http://localhost:5174; "
+        "style-src 'self' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net/npm/bootstrap@5.3.7"
+        "font-src 'self' https://cdnjs.cloudflare.com; "
+        "img-src 'self' https://upload.wikimedia.org data:; "
+        "script-src 'self' https://cdn.jsdelivr.net/npm/bootstrap@5.3.7; "
+        "default-src 'self'; "
+        "connect-src 'self'; "
+        "object-src 'none'; "
+        "base-uri 'self'; "
+        "form-action 'self'; "
+        "frame-src 'self' http://127.0.0.1:* http://localhost:*;"
     )
 
     return response
