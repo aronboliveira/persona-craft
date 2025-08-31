@@ -2,7 +2,7 @@ import type React from "react";
 import { CarouselComponents } from "../types/helpers";
 
 export interface Parent {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export interface GuidanceProps {
@@ -32,16 +32,16 @@ export interface CarouselChildStandardProps extends Parent {
 }
 
 export interface CarouselSlideProps extends Parent {
-  index: number;
+  index?: number;
   style?: React.CSSProperties;
   className?: string;
   extra?: Record<string, string>;
 }
 
 export interface CarouselIndicatorProps {
-  i: number;
-  isActive: boolean;
-  onClick: () => void;
+  i?: number;
+  isActive?: boolean;
+  onClick?: () => void;
   parentId: string;
   ariaLabel?: string;
   style?: React.CSSProperties;

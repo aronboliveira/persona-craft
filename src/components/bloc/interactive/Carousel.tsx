@@ -51,8 +51,10 @@ export default function Carousel({
     ),
     [activeIndex, setActiveIndex] = useState<number>(0);
   useEffect(() => {
+    /* eslint-disable */
     callback && callback(...callbackArgs);
-  }, [callback]);
+    /* eslint-enable */
+  }, [callback, callbackArgs]);
   useEffect(() => {
     if (
       mainRef.current instanceof HTMLElement &&
@@ -128,65 +130,6 @@ Carousel.Slide = function Slide({
   );
 };
 
-Carousel.Indicators = function Indicators({
-  children,
-  className,
-  style,
-}: CarouselChildStandardProps & {
-  children: keyof typeof Carousel.Indicator;
-}): JSX.Element {
-  const ctx = useContext<ICarouselCtx>(CarouselCtx);
-  let id = "",
-    activeIndex = 0,
-    setActiveIndex: NRDispatch<number> = () => {};
-  if (ctx) {
-    id = ctx.id;
-    activeIndex = ctx.activeIndex;
-    setActiveIndex = ctx.setActiveIndex;
-  }
-  return (
-    <fieldset
-      className={`carousel-indicators${className ? ` ${className}` : ""}`}
-      style={style ? style : {}}
-    >
-      {Children.map(children, (child, i) => {
-        if (!isValidElement(child)) return null;
-        return cloneElement(child, {
-          i,
-          isActive: i === activeIndex,
-          onClick: () => setActiveIndex && setActiveIndex(i),
-          parentId: id,
-        });
-      })}
-    </fieldset>
-  );
-};
-
-Carousel.Indicator = function Indicator({
-  i,
-  isActive,
-  onClick,
-  parentId,
-  ariaLabel,
-  className,
-  style,
-}: CarouselIndicatorProps) {
-  return (
-    <button
-      type="button"
-      className={`carousel-indicator${isActive ? " active" : ""}${
-        className ? ` ${className}` : ""
-      }`}
-      style={style ? style : {}}
-      data-bs-target={`#${parentId}`}
-      data-bs-slide-to={i}
-      aria-label={ariaLabel ? ariaLabel : `Slide ${i + 1}`}
-      aria-current={isActive ? "true" : "false"}
-      onClick={onClick}
-    />
-  );
-};
-
 Carousel.Image = function Image({
   src,
   style,
@@ -226,6 +169,66 @@ Carousel.Image = function Image({
   );
 };
 
+Carousel.Indicators = function Indicators({
+  children = <></>,
+  className = "",
+  style = {},
+}: CarouselChildStandardProps & {
+  children: React.ReactNode;
+}): JSX.Element {
+  const ctx = useContext<ICarouselCtx>(CarouselCtx);
+  let id = "",
+    activeIndex = 0,
+    setActiveIndex: NRDispatch<number> = () => {};
+  if (ctx) {
+    id = ctx.id;
+    activeIndex = ctx.activeIndex;
+    setActiveIndex = ctx.setActiveIndex;
+  }
+  return (
+    <fieldset
+      className={`carousel-indicators${className ? ` ${className}` : ""}`}
+      style={style ? style : {}}
+    >
+      {Children.map(children, (child, i: number) => {
+        if (!isValidElement(child)) return null;
+        return cloneElement(child, {
+          // @ts-ignore
+          i,
+          isActive: i === activeIndex,
+          onClick: () => setActiveIndex && setActiveIndex(i),
+          parentId: id,
+        });
+      })}
+    </fieldset>
+  );
+};
+
+Carousel.Indicator = function Indicator({
+  parentId,
+  i = 0,
+  isActive = false,
+  onClick = () => {},
+  ariaLabel = "",
+  className = "",
+  style = {},
+}: CarouselIndicatorProps) {
+  return (
+    <button
+      type="button"
+      className={`carousel-indicator${isActive ? " active" : ""}${
+        className ? ` ${className}` : ""
+      }`}
+      style={style ? style : {}}
+      data-bs-target={`#${parentId}`}
+      data-bs-slide-to={i}
+      aria-label={ariaLabel ? ariaLabel : `Slide ${i + 1}`}
+      aria-current={isActive ? "true" : "false"}
+      onClick={onClick}
+    />
+  );
+};
+
 Carousel.Caption = function Caption({
   children = <></>,
   style,
@@ -245,8 +248,8 @@ Carousel.Caption = function Caption({
 
 Carousel.PrevButton = function PrevButton({
   children = <></>,
-  style,
-  className,
+  style = {},
+  className = "",
 }: CarouselChildStandardProps) {
   const ctx = useContext<ICarouselCtx>(CarouselCtx);
   let id = "",
@@ -284,8 +287,8 @@ Carousel.PrevButton = function PrevButton({
 
 Carousel.NextButton = function NextButton({
   children = <></>,
-  style,
-  className,
+  style = {},
+  className = "",
 }: CarouselChildStandardProps) {
   const ctx = useContext<ICarouselCtx>(CarouselCtx);
   let id = "",

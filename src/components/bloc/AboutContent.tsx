@@ -1,6 +1,7 @@
 // AboutContent.tsx
 import type { JSX } from "react";
 import { memo, useMemo, useRef, useState } from "react";
+import Carousel from "./interactive/Carousel";
 
 export const AboutContent = memo(function AboutContent(): JSX.Element {
   const scrollRef = useRef<HTMLElement>(null),
@@ -15,7 +16,7 @@ export const AboutContent = memo(function AboutContent(): JSX.Element {
         {
           icon: "fa-book",
           title: "Backstory Profunda",
-          desc: "Gera histórias de fundo ricas com eventos formativos, motivações e conflitos internos que moldam o comportamento do personagem.",
+          desc: "Gere histórias de fundo ricas com eventos formativos, motivações e conflitos internos que moldam o comportamento do personagem.",
         },
         {
           icon: "fa-comments",
@@ -316,7 +317,88 @@ export const AboutContent = memo(function AboutContent(): JSX.Element {
                   <div className="w-3 h-3 rounded-full bg-yellow-500 mr-2" />
                   <div className="w-3 h-3 rounded-full bg-green-500" />
                 </div>
-                <figure>
+                <Carousel id="examplesCarousel">
+                  <Carousel.Indicators>
+                    <Carousel.Indicator parentId="examplesCarousel" />
+                    <Carousel.Indicator parentId="examplesCarousel" />
+                    <Carousel.Indicator parentId="examplesCarousel" />
+                  </Carousel.Indicators>
+                  <Carousel.Slides>
+                    <Carousel.Slide>
+                      <Carousel.Image
+                        src="/imgs/dalle_elf_dancer.webp"
+                        style={{
+                          border: "2px ridge #eee5",
+                          borderRadius: "0.33rem",
+                        }}
+                      />
+                      <Carousel.Caption
+                        style={{
+                          fontStyle: "italic",
+                          marginInline: "0.5rem",
+                          marginTop: "0.5rem",
+                          fontSize: "0.8rem",
+                        }}
+                      >
+                        "A magic elvish dancer in a modern suburban area, with
+                        glowy makeup and jewelry, inspired by popular MOBA
+                        Splasharts"
+                      </Carousel.Caption>
+                    </Carousel.Slide>
+                    <Carousel.Slide>
+                      <Carousel.Image
+                        src="/imgs/dall-e-baphomet.jpeg"
+                        style={{
+                          border: "2px ridge #eee5",
+                          borderRadius: "0.33rem",
+                        }}
+                      />
+                      <Carousel.Caption
+                        style={{
+                          fontStyle: "italic",
+                          marginInline: "0.5rem",
+                          marginTop: "0.5rem",
+                          fontSize: "0.8rem",
+                        }}
+                      >
+                        "A monster inspired by 2000s MMORPGs drawings,
+                        resembling the Baphomet.Its body is muscular and covered
+                        in dark fur, and it wields a large, intimidating staff
+                        or weapon. The background should reflect a mystical or
+                        ominous setting, enhancing the creature's powerful and
+                        dark presence."
+                      </Carousel.Caption>
+                    </Carousel.Slide>
+                    <Carousel.Slide>
+                      <Carousel.Image
+                        src="/imgs/dall-e-alligator-1.jpeg"
+                        style={{
+                          border: "2px ridge #eee5",
+                          borderRadius: "0.33rem",
+                        }}
+                      />
+                      <Carousel.Caption
+                        style={{
+                          fontStyle: "italic",
+                          marginInline: "0.5rem",
+                          marginTop: "0.5rem",
+                          fontSize: "0.8rem",
+                        }}
+                      >
+                        "A dynamic splash art-style image inspired by MOBA
+                        splasharts, depicting a human woman druid. She has
+                        colorful tribal body paintings. Her eyes have glowing
+                        bright yellow sclera and a narrowed pupil, similar to an
+                        alligator. The background is the shore of a large river
+                        in the Amazonian Brazilian forest, with vibrant colors
+                        and intricate details."
+                      </Carousel.Caption>
+                    </Carousel.Slide>
+                  </Carousel.Slides>
+                  <Carousel.PrevButton />
+                  <Carousel.NextButton />
+                </Carousel>
+                {/* <figure>
                   <img
                     src="/public/dalle_elf_dancer.webp"
                     style={{
@@ -335,7 +417,7 @@ export const AboutContent = memo(function AboutContent(): JSX.Element {
                     "A magic elvish dancer in a modern suburban area, with glowy
                     makeup and jewelry, inspired by popular MOBA Splasharts"
                   </figcaption>
-                </figure>
+                </figure> */}
                 {/* <div className="bg-gray-900 p-4 rounded-lg font-mono text-sm h-64 overflow-y-auto">
                   <p className="text-green-400"># PersonaCraft Prompt v2.0</p>
                   <p className="text-gray-400">

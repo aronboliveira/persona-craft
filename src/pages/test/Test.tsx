@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useExternalResources } from "../../lib/hooks/useExternalResources";
 import useOpacityTransition from "../../lib/hooks/useOpacityTransition";
 import Chatbot from "../../components/providers/Chatbot";
+import { Link } from "react-router-dom";
 export default function Test(): JSX.Element {
   useExternalResources([{ type: "link", href: "/styles/home.css" }]);
   useOpacityTransition();
@@ -20,6 +21,9 @@ export default function Test(): JSX.Element {
   return (
     <>
       <p>This is a test!</p>
+      <Link to={"/main"} prefetch="viewport">
+        Go to Forms
+      </Link>
       <div style={{ position: "absolute", top: "40vh", left: "60vw" }}>
         <Chatbot />
       </div>
