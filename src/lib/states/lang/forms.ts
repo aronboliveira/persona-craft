@@ -1,7 +1,7 @@
 import { LangDict } from "../../declarations/interfaces/utils";
-import { AvailableLangs } from "../../declarations/types/utils";
+import { AvailableLang } from "../../declarations/types/utils";
 
-export const FORM_DICT: Readonly<{ [K in AvailableLangs]: LangDict }> =
+export const FORM_DICT: Readonly<{ [K in AvailableLang]: LangDict }> =
   Object.freeze({
     en: {
       str: "Let's start!",

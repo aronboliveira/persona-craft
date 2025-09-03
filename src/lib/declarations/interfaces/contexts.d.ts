@@ -5,6 +5,10 @@ export interface IHomeManifestCtx {
   setManifestOpen: NRDispatch<boolean>;
 }
 
+export interface IMainFormCtx {
+  lang: string;
+}
+
 export interface IChatbotCtx {
   isChatbotOpen: boolean;
   setChatbotOpen: NRDispatch<boolean>;
