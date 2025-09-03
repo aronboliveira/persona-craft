@@ -1,10 +1,20 @@
 import type { JSX } from "react";
 import { Link } from "react-router-dom";
+import useLanguage from "../../lib/hooks/useLanguage";
+import { FORM_DICT } from "../../lib/states/lang/forms";
 
 export default function Navbar(): JSX.Element {
+  const { lang } = useLanguage();
   return (
-    <nav className="navbar">
-      <Link to="/" className="navbar-link" id="homeLink">
+    <nav
+      className="navbar"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      {/* <Link to="/" className="navbar-link" id="homeLink">
         Home
       </Link>
       <Link to="/about" className="navbar-link" id="aboutLink">
@@ -21,9 +31,9 @@ export default function Navbar(): JSX.Element {
       </Link>
       <Link to="/subscribe" className="navbar-link" id="plansLink">
         Subscribe
-      </Link>
-      <Link to="/test" className="navbar-link" id="testLink">
-        Test
+      </Link> */}
+      <Link to="/forms" className="navbar-link navbar-button" id="testLink">
+        {FORM_DICT[lang].str}
       </Link>
     </nav>
   );

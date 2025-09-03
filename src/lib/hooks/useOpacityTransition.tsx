@@ -6,5 +6,5 @@ export default function useOpacityTransition(seconds: string = "0.5") {
     return () => {
       document.body.style.opacity = "0";
     };
-  }, []);
+  }, [seconds]);
 }

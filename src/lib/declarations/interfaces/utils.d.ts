@@ -1,0 +1,13 @@
+export interface Character {
+  height: "short" | "average" | "tall";
+  weight: "light" | "medium" | "heavy";
+  age: "child" | "teen" | "adult" | "senior";
+}
+export interface Environment {
+  type: "indoor" | "outdoor";
+  lighting: "bright" | "dim" | "dark";
+  timeOfDay: "morning" | "afternoon" | "evening" | "night";
+}
+export interface LangDict {
+  [key: string]: string;
+}

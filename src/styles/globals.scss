@@ -1,0 +1,48 @@
+@use "./abstracts/mixins.scss" as *;
+
+.image-radio-option {
+  cursor: pointer;
+  display: flex;
+  position: relative;
+  input {
+    &[type="radio"],
+    &[type="checkbox"] {
+      ~ img {
+        transition: transform 0.2s ease-in-out;
+      }
+      &:checked {
+        ~ img {
+          border: 3px solid #007bff;
+          box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+        }
+      }
+      &:hover {
+        ~ img {
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+}
+
+.navbar-button {
+  @include navbar-button;
+}
+
+.navbar-link {
+  margin: 0 1rem;
+  &.navbar-button {
+    @include navbar-button;
+  }
+}
+
+.form-check-input.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
