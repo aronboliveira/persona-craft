@@ -4,6 +4,7 @@ import { FormsState } from "../../lib/declarations/interfaces/redux";
 const initialState: FormsState = {
   style: "anime",
   character: {
+    gender: "female",
     height: "average",
     weight: "medium",
     age: "adult",

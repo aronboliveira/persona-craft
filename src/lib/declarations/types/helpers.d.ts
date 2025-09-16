@@ -10,9 +10,12 @@ export type CarouselComponents =
   | "next-button";
 export type ImageStyle =
   | "anime"
-  | "photorealistic"
-  | "sketch"
   | "cartoon"
+  | "photorealistic"
   | "pixel"
-  | "semi-realistic";
-export type QuestionId = "stl";
+  | "semi-realistic"
+  | "sketch";
+export type Gender = "female" | "masculine" | "nonbinary";
+export type BodyFatTypes = "scrawny" | "thin" | "fair" | "thick" | "fat";
+export type StyleSets = "sr" | "ptr" | "anm" | "crt" | "skt" | "px";
+export type QuestionId = "stl" | "gd" | "bft";

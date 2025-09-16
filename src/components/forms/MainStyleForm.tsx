@@ -4,25 +4,19 @@ import { FORM_DICT } from "../../lib/states/lang/forms";
 import { FORMS_OPTS } from "../../lib/data/opts";
 import { CLASSES } from "../../lib/data/classes";
 import { GENERIC_DICT } from "../../lib/states/lang/generic";
-import { DEFAULTS } from "../../lib/states/default";
-import { useContext, useState } from "react";
-import { IMainFormCtx } from "../../lib/declarations/interfaces/contexts";
-import MainFormCtx from "../../lib/states/contexts/MainFormCtx";
+import { useState } from "react";
 import { update } from "../../redux/mainStore/formsSlice";
-import { ValidateImgStyle, ValidateLang } from "../../lib/utils/validations";
-import { AvailableLang } from "../../lib/declarations/types/utils";
+import { ValidateImgStyle } from "../../lib/utils/validations";
 import { useAppSelector } from "../../redux/mainStore/hooks";
-import { useDispatch } from "react-redux";
-import { FormsAppDispatch } from "../../lib/declarations/types/redux";
+import { OptDict } from "../../lib/declarations/interfaces/utils";
+import { ImageStyle } from "../../lib/declarations/types/helpers";
+import { useFormCtxStore } from "../../lib/hooks/useFormCtxStore";
 
 export default function MainStyleForm() {
-  let lang: AvailableLang = DEFAULTS.lang;
-  const ctx = useContext<IMainFormCtx>(MainFormCtx),
-    dispatch = useDispatch<FormsAppDispatch>();
-  if (ctx && ValidateLang(ctx.lang)) lang = ctx.lang;
-  const selectedStl = useAppSelector(s => s.style),
-    [stlSelected, setStl] = useState<string>(selectedStl),
-    handleStlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { lang, dispatch } = useFormCtxStore(),
+    selectedStl = useAppSelector(s => s.style),
+    [stlSelected, setStl] = useState<ImageStyle>(selectedStl),
+    handleStlChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
       const newValue = e.target.value;
       if (ValidateImgStyle(newValue)) {
         setStl(newValue);
@@ -49,18 +43,19 @@ export default function MainStyleForm() {
                 height={512}
                 loading="lazy"
                 decoding="async"
-                src={v.src}
-                alt={`${v.friendlyName} — ${
+                src={(v as OptDict).src}
+                alt={`${(v as OptDict).friendlyName} — ${
                   GENERIC_DICT[lang]?.img ?? "Image"
                 }`}
+                style={{ objectFit: "contain" }}
               />
             </label>
-            <figcaption>{v.friendlyName}</figcaption>
+            <figcaption>{(v as OptDict).friendlyName}</figcaption>
           </figure>
         ))}
       </fieldset>
       <div style={{ marginTop: "20px" }}>
-        <strong>Selected STL:</strong> {stlSelected}
+        <strong>Selected Style:</strong> {stlSelected}
       </div>
     </ErrorBoundary>
   );

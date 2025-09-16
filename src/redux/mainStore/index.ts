@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import formsReducer from "./formsSlice";
 import { FormsState } from "../../lib/declarations/interfaces/redux";
-const STG_KEY = "promptCreatorFormsState";
+export const STG_KEY = "promptCreatorFormsState";
 export const formsStore = configureStore<FormsState>({
   reducer: formsReducer,
   preloadedState: ((): FormsState | undefined => {

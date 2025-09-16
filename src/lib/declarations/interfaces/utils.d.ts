@@ -1,4 +1,5 @@
 export interface Character {
+  gender: Gender;
   height: "short" | "average" | "tall";
   weight: "light" | "medium" | "heavy";
   age: "child" | "teen" | "adult" | "senior";
@@ -10,4 +11,8 @@ export interface Environment {
 }
 export interface LangDict {
   [key: string]: string;
+}
+export interface OptDict {
+  friendlyName: string;
+  src: string;
 }
