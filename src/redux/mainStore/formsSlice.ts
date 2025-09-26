@@ -8,6 +8,7 @@ const initialState: FormsState = {
     height: "average",
     weight: "medium",
     age: "adult",
+    muscle: "slender",
   },
   environment: {
     type: "indoor",

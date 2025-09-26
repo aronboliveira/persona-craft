@@ -4,6 +4,7 @@ import { FormsState } from "../../lib/declarations/interfaces/redux";
 export const STG_KEY = "promptCreatorFormsState";
 export const formsStore = configureStore<FormsState>({
   reducer: formsReducer,
+  devTools: import.meta.env.DEV,
   preloadedState: ((): FormsState | undefined => {
     try {
       const raw = localStorage.getItem(STG_KEY);
@@ -15,10 +16,17 @@ export const formsStore = configureStore<FormsState>({
       return undefined;
     }
   })(),
-  middleware: (gdm: (...params: any[]) => any) =>
-    gdm({ serializableCheck: false }),
-  // enhancers: (defaultEnhancers: any): any => [defaultEnhancers],
-  devTools: import.meta.env.DEV,
+  middleware: getDefaultMiddleware => {
+    console.log("MIDDLEWARE");
+    return getDefaultMiddleware({
+      serializableCheck: false,
+    });
+  },
+  enhancers: (getDefaultEnhancers: any): any => {
+    console.log("ENHANCERS");
+    console.log();
+    return [...getDefaultEnhancers()];
+  },
 });
 let timer: number | undefined;
 formsStore.subscribe(() => {

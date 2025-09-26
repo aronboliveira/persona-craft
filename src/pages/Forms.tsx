@@ -12,6 +12,7 @@ import { FORM_DICT } from "../lib/states/lang/forms";
 import { useFormsStrategist } from "../lib/hooks/useStrategy";
 import { FormState, FormAction } from "../lib/declarations/types/redux";
 import GenderForm from "../components/forms/GenderForm";
+import BodyTypeMuscleForm from "../components/forms/BodyTypeMuscleForm";
 const initialState: FormState = {
     order: 0,
   },
@@ -43,6 +44,8 @@ export default function Forms(): JSX.Element {
           return <MainStyleForm />;
         case GenderForm.name:
           return <GenderForm />;
+        case BodyTypeMuscleForm.name:
+          return <BodyTypeMuscleForm />;
         default:
           return (
             <div className="text-error">

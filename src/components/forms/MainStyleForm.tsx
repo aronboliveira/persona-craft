@@ -25,8 +25,8 @@ export default function MainStyleForm() {
     };
   return (
     <ErrorBoundary FallbackComponent={() => <GenericErrorComponent />}>
-      <fieldset>
-        <legend id="stlLeg">{FORM_DICT[lang].stl}</legend>
+      <fieldset id="mainStyleForm">
+        <legend id="stlLeg">{FORM_DICT[lang]?.stl ?? "Style:"}</legend>
         {Object.entries(FORMS_OPTS.stl).map(([k, v], i) => (
           <figure key={k}>
             <label htmlFor={`stl_${i + 1}`} className={CLASSES.IMG_RD_LB}>

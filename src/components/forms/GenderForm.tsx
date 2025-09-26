@@ -4,19 +4,15 @@ import { FORM_DICT } from "../../lib/states/lang/forms";
 import { FORMS_OPTS } from "../../lib/data/opts";
 import { CLASSES } from "../../lib/data/classes";
 import { GENERIC_DICT } from "../../lib/states/lang/generic";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { update } from "../../redux/mainStore/formsSlice";
 import { ValidateGender } from "../../lib/utils/validations";
-import { useAppSelector } from "../../redux/mainStore/hooks";
 import { OptDict } from "../../lib/declarations/interfaces/utils";
-import { useFormCtxStore } from "../../lib/hooks/useFormCtxStore";
-import { Gender, StyleSets } from "../../lib/declarations/types/helpers";
-import useReduxLog from "../../lib/hooks/useReduxLog";
+import { StyleSets } from "../../lib/declarations/types/helpers";
+import { useLaterForm } from "../../lib/hooks/useLaterForm";
 
 export default function GenderForm() {
-  useReduxLog();
-  const { lang, dispatch } = useFormCtxStore(),
-    state = useAppSelector(s => s),
+  const { lang, dispatch, state, gdSelected, setGd } = useLaterForm(),
     stKey = useMemo(
       () =>
         ((): StyleSets => {
@@ -29,15 +25,12 @@ export default function GenderForm() {
               return "ptr";
             case "pixel":
               return "px";
-            case "sketch":
-              return "skt";
             default:
               return "sr";
           }
         })(),
       [state.style]
     ),
-    [gdSelected, setGd] = useState<Gender>(state.character.gender),
     handleStlChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
       const newValue = e.target.value;
       if (ValidateGender(newValue)) {
@@ -52,8 +45,8 @@ export default function GenderForm() {
     };
   return (
     <ErrorBoundary FallbackComponent={() => <GenericErrorComponent />}>
-      <fieldset>
-        <legend id="stlLeg">{FORM_DICT[lang].stl}</legend>
+      <fieldset id="genderForm">
+        <legend id="stlLeg">{FORM_DICT[lang]?.stl ?? "Gender:"}</legend>
         {Object.entries((FORMS_OPTS.gd as Record<StyleSets, any>)[stKey]).map(
           ([k, v], i) => {
             console.log([(v as any).src]);

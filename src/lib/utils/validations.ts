@@ -9,7 +9,7 @@ export function ValidateImgStyle(v: string): v is ImageStyle {
     [
       "anime",
       "photorealistic",
-      "sketch",
+      // "sketch",
       "cartoon",
       "pixel",
       "semi-realistic",

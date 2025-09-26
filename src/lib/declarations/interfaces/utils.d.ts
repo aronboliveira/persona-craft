@@ -1,8 +1,11 @@
+import { BodyMuscleTypes } from "../types/helpers";
+
 export interface Character {
   gender: Gender;
   height: "short" | "average" | "tall";
   weight: "light" | "medium" | "heavy";
   age: "child" | "teen" | "adult" | "senior";
+  muscle: BodyMuscleTypes;
 }
 export interface Environment {
   type: "indoor" | "outdoor";

@@ -44,7 +44,7 @@ export const FORMS_OPTS: Record<
       friendlyName: "Cartoon",
       src: "/imgs/dall-e-druid-capybara.png",
     },
-    sketch: { friendlyName: "Sketch", src: "/imgs/dall-e-warrior-sketch.png" },
+    // sketch: { friendlyName: "Sketch", src: "/imgs/dall-e-warrior-sketch.png" },
     pixel: { friendlyName: "Pixel", src: "/imgs/dall-e-wizard-geomancer.png" },
   },
   gd: Object.fromEntries(
