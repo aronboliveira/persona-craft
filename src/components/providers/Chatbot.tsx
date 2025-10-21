@@ -1,12 +1,10 @@
 import type { JSX } from "react";
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../errors/GenericErrorComponent";
-import type { IChatbotCtx } from "../../lib/declarations/interfaces/contexts";
 import Callbot from "../icons/buttons/Callbot";
 import ChatbotPopup from "../modals/bot/ChatbotPopup";
-const defaultCtx = { isChatbotOpen: false, setChatbotOpen: null };
-export const ChatbotCtx = createContext<IChatbotCtx>(defaultCtx);
+import { ChatbotCtx } from "../../lib/states/contexts/ChatbotCtx";
 export default function Chatbot(): JSX.Element {
   // TODO CREATE BUTTON REF IN PROVIDER
   const [isChatbotOpen, setChatbotOpen] = useState<boolean>(false);

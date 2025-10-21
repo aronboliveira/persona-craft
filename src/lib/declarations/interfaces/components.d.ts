@@ -56,3 +56,22 @@ export interface CarouselImgProps {
   i?: string;
   extra?: Record<string, string>;
 }
+
+export interface OptionFigureProps {
+  prefix: string;
+  suffix: string;
+  name: string;
+  src: string;
+  handleChange: (...params: any[]) => void;
+  value?: string;
+  checked?: boolean;
+  inpAddProps?: Omit<
+    typeof React.InputHTMLAttributes<HTMLInputElement>,
+    "type" | "onChange"
+  >;
+  caption?: string;
+  imgAddProps?: Omit<typeof React.ImgHTMLAttributes<HTMLImageElement>, "src">;
+  imgStyle?: React.CSSProperties;
+  figureAddClasses?: string[];
+  imgAddClasses?: string[];
+}

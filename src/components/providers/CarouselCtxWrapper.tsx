@@ -1,11 +1,6 @@
-import { JSX, createContext } from "react";
+import { JSX } from "react";
 import { ICarouselCtx } from "../../lib/declarations/interfaces/contexts";
-export const CarouselCtx = createContext<ICarouselCtx>({
-  id: crypto.randomUUID(),
-  activeIndex: 0,
-  setActiveIndex: null,
-  slideCount: 0,
-});
+import { CarouselCtx } from "../../lib/states/contexts/CarouselCtx";
 export default function CarouselCtxWrapper({
   children,
   value = {

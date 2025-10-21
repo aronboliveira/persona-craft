@@ -1,7 +1,7 @@
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../errors/GenericErrorComponent";
 import { useEffect, useState } from "react";
-import { BodyMuscleTypes } from "../../lib/declarations/types/helpers";
+import { BodyMuscleTypes } from "../../lib/declarations/types/anatomy";
 import { FORM_DICT } from "../../lib/states/lang/forms";
 import { useLaterForm } from "../../lib/hooks/useLaterForm";
 import { update } from "../../redux/mainStore/formsSlice";
@@ -9,7 +9,7 @@ import { CLASSES } from "../../lib/data/classes";
 
 export default function BodyTypeMuscleForm() {
   const { lang, dispatch, state } = useLaterForm(),
-    [bdTp, setBodyType] = useState<BodyMuscleTypes>("slender");
+    [bdTp, setBodyType] = useState<BodyMuscleTypes>("average");
   useEffect(() => {
     dispatch(
       update({ ...state, character: { ...state.character, muscle: bdTp } })
@@ -23,9 +23,9 @@ export default function BodyTypeMuscleForm() {
         {(
           [
             "frail",
-            "slender",
+            "weak",
+            "average",
             "athletic",
-            "muscular",
             "herculean",
           ] as BodyMuscleTypes[]
         ).map(value => (

@@ -2,7 +2,7 @@ import type { JSX } from "react";
 import { memo, useContext } from "react";
 import { createPortal } from "react-dom";
 import type { IHomeManifestCtx } from "../../../lib/declarations/interfaces/contexts";
-import { HomeManifestCtx } from "../../providers/HomeManifest";
+import { HomeManifestCtx } from "../../../lib/states/contexts/HomeManifestCtx";
 import { NRDispatch } from "../../../lib/declarations/types/foundations";
 import useDialog from "../../../lib/hooks/useDialog";
 import st from "../../../styles/Modules/dialog-manifest.module.css";

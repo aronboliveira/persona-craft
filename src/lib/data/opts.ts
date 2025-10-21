@@ -1,6 +1,6 @@
 import { OptDict } from "../declarations/interfaces/utils";
+import { BodyFat } from "../declarations/types/anatomy";
 import {
-  BodyFatTypes,
   Gender,
   ImageStyle,
   QuestionId,
@@ -15,25 +15,19 @@ export const styleSets = [
   "sr",
 ] as StyleSets[];
 export const gds = ["female", "male", "nonBinary"] as Gender[];
-export const bdTps = [
-  "scrawny",
-  "thin",
-  "fair",
-  "thick",
-  "fat",
-] as BodyFatTypes[];
+export const bdTps = ["scrawny", "thin", "fair", "thick", "fat"] as BodyFat[];
 export const FORMS_OPTS: Record<
   QuestionId,
   {
     [K in ImageStyle &
       Record<Partial<StyleSets>, Gender> &
-      Record<BodyFatTypes, any>]: OptDict;
+      Record<BodyFat, any>]: OptDict;
   }
 > = {
   stl: {
     "semi-realistic": {
       friendlyName: "Semi-Realistic",
-      src: "/imgs/dall-e-cronomancer-5.jpeg",
+      src: "/imgs/dalle_elf_dancer.webp",
     },
     photorealistic: {
       friendlyName: "Photorealistic",
@@ -82,8 +76,8 @@ export const FORMS_OPTS: Record<
             src: `/imgs/${st}/${gd}/${bd}/`,
             friendlyName: (() => {
               switch (bd) {
-                case "fat":
-                  return "Fat";
+                case "obese":
+                  return "Obese";
                 case "scrawny":
                   return "Scrawny";
                 case "thick":

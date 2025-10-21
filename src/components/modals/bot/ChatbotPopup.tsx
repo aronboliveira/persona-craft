@@ -3,7 +3,7 @@ import { lazy, memo, Suspense, useContext } from "react";
 import useDialog from "../../../lib/hooks/useDialog";
 import { IChatbotCtx } from "../../../lib/declarations/interfaces/contexts";
 import { NRDispatch } from "../../../lib/declarations/types/foundations";
-import { ChatbotCtx } from "../../providers/Chatbot";
+import { ChatbotCtx } from "../../../lib/states/contexts/ChatbotCtx";
 import st from "../../../styles/Modules/chatbot-popup.module.css";
 import Spinner from "../../icons/animated/Spinner";
 // @ts-ignore-next-line
@@ -19,7 +19,7 @@ const ChatbotIframe = lazy(() => import("@/components/iframes/ChatbotIframe")),
       isChatbotOpen = ctx.isChatbotOpen;
       setChatbotOpen = ctx.setChatbotOpen;
     }
-    const { ref: r, handler } = useDialog({
+    const { ref: r } = useDialog({
       dispatch: setChatbotOpen,
       state: isChatbotOpen,
     });

@@ -10,9 +10,9 @@ export default class FormsStrategist implements UIRenderingStrategy {
     if (!context?.order) return MainStyleForm.name;
     switch (context.order) {
       case 1:
-        return NarrativeForm.name;
-      case 2:
         return GenderForm.name;
+      case 2:
+        return NarrativeForm.name;
       case 3:
         return BodyTypeMuscleForm.name;
       default:

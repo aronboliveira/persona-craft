@@ -1,5 +1,5 @@
-import { BodyMuscleTypes } from "../types/helpers";
-
+import { BodyMuscleTypes } from "../types/anatomy";
+import { Gender } from "../types/helpers";
 export interface Character {
   gender: Gender;
   height: "short" | "average" | "tall";
