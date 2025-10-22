@@ -4,10 +4,11 @@ import { FORM_DICT } from "../../lib/states/lang/forms";
 import { useState } from "react";
 import { useAppSelector } from "../../redux/mainStore/hooks";
 import { LangDict } from "../../lib/declarations/interfaces/utils";
-import { useFormCtxStore } from "../../lib/hooks/useFormCtxStore";
+import { useFormCtxStore } from "../../lib/hooks/contexts/useFormCtxStore";
 import { Parent } from "../../lib/declarations/interfaces/components";
 import { FormRootState } from "../../lib/declarations/types/redux";
 import OptionFsCtx from "../../lib/states/contexts/OptionFsCtx";
+import { Grid } from "@mui/material";
 
 export default function OptionFieldset({
   children,
@@ -29,7 +30,9 @@ export default function OptionFieldset({
             {FORM_DICT[lang]?.[abbr] ??
               `${selector[0].toUpperCase()}${selector.slice(1)}`}
           </legend>
-          {children}
+          <Grid container spacing={1.5}>
+            {children}
+          </Grid>
         </fieldset>
         <div style={{ marginTop: "20px" }}>
           <strong>

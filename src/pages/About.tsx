@@ -1,11 +1,11 @@
 import type { JSX } from "react";
 import { lazy, Suspense, useEffect } from "react";
-import useOpacityTransition from "../lib/hooks/useOpacityTransition";
-import { useExternalResourcesAsync } from "../lib/hooks/useExternalResourcesAsync";
+import useOpacityTransition from "../lib/hooks/styles/useOpacityTransition";
+import { useExternalResourcesAsync } from "../lib/hooks/resources/useExternalResourcesAsync";
 import Spinner from "../components/icons/animated/Spinner";
 
 const AboutContent = lazy(() =>
-  import("../components/bloc/AboutContent").then((m) => ({
+  import("../components/bloc/AboutContent").then(m => ({
     default: m.AboutContent,
   }))
 );
@@ -26,8 +26,8 @@ export default function About(): JSX.Element {
   useEffect(() => {
     const root = document.getElementById("root");
     const cls = ["bg-gray-900", "text-white", "font-sans"];
-    cls.forEach((c) => root?.classList.add(c));
-    return () => cls.forEach((c) => root?.classList.remove(c));
+    cls.forEach(c => root?.classList.add(c));
+    return () => cls.forEach(c => root?.classList.remove(c));
   }, []);
   if (!ready) return <Spinner />;
   return (

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useExternalResources } from "../lib/hooks/useExternalResources";
+import { useExternalResources } from "../lib/hooks/resources/useExternalResources";
 import type { JSX } from "react/jsx-dev-runtime";
-import useOpacityTransition from "../lib/hooks/useOpacityTransition";
+import useOpacityTransition from "../lib/hooks/styles/useOpacityTransition";
 
 type Role = "bot" | "user";
 
@@ -63,12 +63,12 @@ export default function Subscribe(): JSX.Element {
     const trimmed = input.trim();
     if (!trimmed) return;
 
-    setMessages((prev) => [...prev, { role: "user", text: trimmed }]);
+    setMessages(prev => [...prev, { role: "user", text: trimmed }]);
     setInput("");
 
     const resposta = gerarSugestaoIa(trimmed);
     setTimeout(() => {
-      setMessages((prev) => [...prev, { role: "bot", text: resposta }]);
+      setMessages(prev => [...prev, { role: "bot", text: resposta }]);
       setIaSuggestion(resposta);
     }, 700);
   };
@@ -133,7 +133,7 @@ export default function Subscribe(): JSX.Element {
               Prompts
             </h2>
 
-            <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
+            <form onSubmit={e => e.preventDefault()} className="space-y-4">
               {/* Objetivo */}
               <div>
                 <label className="form-label fw-semibold">

@@ -10,7 +10,7 @@ import { ValidateImgStyle } from "../../lib/utils/validations";
 import { useAppSelector } from "../../redux/mainStore/hooks";
 import { OptDict } from "../../lib/declarations/interfaces/utils";
 import { ImageStyle } from "../../lib/declarations/types/helpers";
-import { useFormCtxStore } from "../../lib/hooks/useFormCtxStore";
+import { useFormCtxStore } from "../../lib/hooks/contexts/useFormCtxStore";
 
 export default function NarrativeForm() {
   const { lang, dispatch } = useFormCtxStore(),

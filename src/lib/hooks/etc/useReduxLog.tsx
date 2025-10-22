@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../redux/mainStore/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/mainStore/hooks";
 useEffect;
 export default function useReduxLog(): void {
   const dispatch = useAppDispatch(),

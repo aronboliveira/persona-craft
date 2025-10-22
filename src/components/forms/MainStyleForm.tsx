@@ -2,28 +2,23 @@ import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../errors/GenericErrorComponent";
 import { FORM_DICT } from "../../lib/states/lang/forms";
 import { FORMS_OPTS } from "../../lib/data/opts";
-import { RefObject, useContext, useEffect, useRef, useState } from "react";
+import { RefObject, useState } from "react";
 import { update } from "../../redux/mainStore/formsSlice";
 import { ValidateImgStyle } from "../../lib/utils/validations";
 import { useAppSelector } from "../../redux/mainStore/hooks";
 import { OptDict } from "../../lib/declarations/interfaces/utils";
 import { ImageStyle } from "../../lib/declarations/types/helpers";
-import { useFormCtxStore } from "../../lib/hooks/useFormCtxStore";
+import { useFormCtxStore } from "../../lib/hooks/contexts/useFormCtxStore";
 import OptionFigure from "../bloc/OptionFigure";
 import { GENERIC_DICT } from "../../lib/states/lang/generic";
-import { ILayoutCtx } from "../../lib/declarations/interfaces/contexts";
-import { LayoutCtx } from "../../lib/states/contexts/LayoutCtx";
-type StringStyleKeys = {
-  [K in keyof CSSStyleDeclaration]: CSSStyleDeclaration[K] extends string
-    ? K
-    : never;
-}[keyof CSSStyleDeclaration];
-
+import { useLayoutCtx } from "../../lib/hooks/contexts/useLayoutCtx";
+import Forms from "../../pages/Forms";
+import { Typography } from "@mui/material";
 export default function MainStyleForm() {
   const { lang, dispatch } = useFormCtxStore(),
+    { formRef } = useLayoutCtx("mainStyleForm"),
     selectedStl = useAppSelector(s => s.style),
     [stlSelected, setStl] = useState<ImageStyle>(selectedStl),
-    layoutCtx = useContext<ILayoutCtx | null>(LayoutCtx),
     handleStlChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
       const newValue = e.target.value;
       if (ValidateImgStyle(newValue)) {
@@ -31,38 +26,17 @@ export default function MainStyleForm() {
         dispatch(update({ style: newValue }));
       } else setStl(stlSelected);
     };
-  let formRef = useRef<HTMLFieldSetElement | null>(null);
-  if (layoutCtx && "selectedFormRef" in layoutCtx)
-    formRef = layoutCtx.selectedFormRef as RefObject<HTMLFieldSetElement>;
-  useEffect(() => {
-    if (!layoutCtx) return;
-    formRef.current ??= document.getElementById(
-      "mainStyleForm"
-    ) as HTMLFieldSetElement | null;
-    if (!layoutCtx?.style) return;
-    console.log(layoutCtx.style);
-    const desc = Object.getOwnPropertyDescriptors(
-      (formRef.current as HTMLFieldSetElement).style
-    );
-    console.log(desc);
-    Object.entries(layoutCtx.style).forEach(([key, value]) => {
-      if (
-        (!desc || desc[key as keyof HTMLFieldSetElement]?.writable) &&
-        formRef.current instanceof HTMLElement
-      )
-        formRef.current.style[key as StringStyleKeys] = value as string;
-    });
-    console.log(
-      getComputedStyle(formRef.current as HTMLFieldSetElement).display
-    );
-  }, [layoutCtx, formRef]);
   return (
     <ErrorBoundary FallbackComponent={() => <GenericErrorComponent />}>
       <fieldset
         ref={formRef as RefObject<HTMLFieldSetElement>}
         id="mainStyleForm"
       >
-        <legend id="stlLeg">{FORM_DICT[lang]?.stl ?? "Style:"}</legend>
+        <Forms.Header>
+          <Typography id="stlLeg" variant="h6">
+            {FORM_DICT[lang]?.stl ?? "Style"}
+          </Typography>
+        </Forms.Header>
         {Object.entries(FORMS_OPTS.stl).map(([k, v], i) => (
           <OptionFigure
             figureAddClasses={["stl-option"]}
@@ -83,9 +57,10 @@ export default function MainStyleForm() {
           />
         ))}
       </fieldset>
-      <div style={{ marginTop: "20px" }}>
-        <strong>Selected Style:</strong> {stlSelected}
-      </div>
+      <Typography variant="body2" sx={{ mt: 1 }}>
+        <strong>Selected:</strong>
+        <span>{stlSelected}</span>
+      </Typography>
     </ErrorBoundary>
   );
 }

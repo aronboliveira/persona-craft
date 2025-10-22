@@ -1,6 +1,6 @@
 import type { JSX } from "react";
 import { lazy, memo, Suspense, useContext } from "react";
-import useDialog from "../../../lib/hooks/useDialog";
+import useDialog from "../../../lib/hooks/mount/useDialog";
 import { IChatbotCtx } from "../../../lib/declarations/interfaces/contexts";
 import { NRDispatch } from "../../../lib/declarations/types/foundations";
 import { ChatbotCtx } from "../../../lib/states/contexts/ChatbotCtx";

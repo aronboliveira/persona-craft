@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { AvailableLang } from "../declarations/types/utils";
-import { DEFAULTS } from "../states/default";
-import { FORM_DICT } from "../states/lang/forms";
+import { AvailableLang } from "../../declarations/types/utils";
+import { FORM_DICT } from "../../states/lang/forms";
+import { DEFAULTS } from "../../states/default";
 
 export default function useLanguage(): {
   lang: AvailableLang;

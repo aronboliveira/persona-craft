@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import type { IHomeManifestCtx } from "../../../lib/declarations/interfaces/contexts";
 import { HomeManifestCtx } from "../../../lib/states/contexts/HomeManifestCtx";
 import { NRDispatch } from "../../../lib/declarations/types/foundations";
-import useDialog from "../../../lib/hooks/useDialog";
+import useDialog from "../../../lib/hooks/mount/useDialog";
 import st from "../../../styles/Modules/dialog-manifest.module.css";
 
 const DialogManifest = memo((): JSX.Element => {

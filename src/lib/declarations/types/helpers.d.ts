@@ -50,3 +50,8 @@ export type GenderAbbr = "fm" | "m" | "nb";
 export type QuestionId = "stl" | "gd" | "bft";
 export type Symmetry = "asymmetrical" | "symmetrical";
 export type Side = "left" | "right" | "both";
+export type StringStyleKeys = {
+  [K in keyof CSSStyleDeclaration]: CSSStyleDeclaration[K] extends string
+    ? K
+    : never;
+}[keyof CSSStyleDeclaration];

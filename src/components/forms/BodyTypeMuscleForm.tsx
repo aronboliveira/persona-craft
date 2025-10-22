@@ -3,9 +3,9 @@ import GenericErrorComponent from "../errors/GenericErrorComponent";
 import { useEffect, useState } from "react";
 import { BodyMuscleTypes } from "../../lib/declarations/types/anatomy";
 import { FORM_DICT } from "../../lib/states/lang/forms";
-import { useLaterForm } from "../../lib/hooks/useLaterForm";
 import { update } from "../../redux/mainStore/formsSlice";
 import { CLASSES } from "../../lib/data/classes";
+import { useLaterForm } from "../../lib/hooks/contexts/useLaterForm";
 
 export default function BodyTypeMuscleForm() {
   const { lang, dispatch, state } = useLaterForm(),

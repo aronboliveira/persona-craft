@@ -2,7 +2,7 @@ import type { JSX } from "react";
 import Navbar from "../components/navs/Navbar";
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../components/errors/GenericErrorComponent";
-import useOpacityTransition from "../lib/hooks/useOpacityTransition";
+import useOpacityTransition from "../lib/hooks/styles/useOpacityTransition";
 import HomeManifest from "../components/providers/HomeManifest";
 
 export default function Home(): JSX.Element {

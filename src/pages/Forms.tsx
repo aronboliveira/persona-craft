@@ -1,20 +1,29 @@
-import { JSX, useMemo, useReducer, useCallback, useRef } from "react";
+import {
+  JSX,
+  useMemo,
+  useReducer,
+  useCallback,
+  useRef,
+  useState,
+  useLayoutEffect,
+  PropsWithChildren,
+} from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../components/errors/GenericErrorComponent";
-import useOpacityTransition from "../lib/hooks/useOpacityTransition";
-import useLanguage from "../lib/hooks/useLanguage";
+import useOpacityTransition from "../lib/hooks/styles/useOpacityTransition";
+import useLanguage from "../lib/hooks/resources/useLanguage";
 import MainFormCtx from "../lib/states/contexts/MainFormCtx";
 import MainStyleForm from "../components/forms/MainStyleForm";
 import { CLASSES } from "../lib/data/classes";
 import { GENERIC_DICT } from "../lib/states/lang/generic";
 import FormsStrategist from "../classes/FormsStrategist";
 import { FORM_DICT } from "../lib/states/lang/forms";
-import { useFormsStrategist } from "../lib/hooks/useStrategy";
+import { useFormsStrategist } from "../lib/hooks/contexts/useStrategy";
 import { FormState, FormAction } from "../lib/declarations/types/redux";
 import GenderForm from "../components/forms/GenderForm";
 import BodyTypeMuscleForm from "../components/forms/BodyTypeMuscleForm";
 import { LayoutProvider } from "../components/layouts/LayoutProvider";
-import { Box, Stack } from "@mui/material";
+import { Box, Button, Divider, Stack } from "@mui/material";
 const initialState: FormState = {
     order: 0,
   },
@@ -37,6 +46,7 @@ export default function Forms(): JSX.Element {
       formReducer,
       initialState
     ),
+    [columnRepeat, setColumnRepeat] = useState(2),
     strategist = useFormsStrategist(),
     strategistRef = useRef<FormsStrategist | null>(strategist),
     selectedForm = useMemo(() => {
@@ -59,11 +69,26 @@ export default function Forms(): JSX.Element {
     handleNext = useCallback(() => dispatch({ type: "NEXT_FORM" }), []),
     handleReset = useCallback(() => dispatch({ type: "RESET_FORM" }), []),
     selectedFormRef = useRef<HTMLElement | null>(null);
+  useLayoutEffect(() => {
+    const imgCls = "option-figure-img",
+      optImgs =
+        selectedFormRef.current instanceof HTMLElement
+          ? selectedFormRef.current.querySelectorAll(`.${imgCls}`)
+          : document.getElementsByClassName(imgCls);
+    console.log(optImgs.length);
+    setColumnRepeat(
+      optImgs.length % 2 === 0 ? optImgs.length * 0.5 : optImgs.length * 0.5 + 1
+    );
+  }, [selectedFormRef, state.order]);
   return (
     <ErrorBoundary FallbackComponent={() => <GenericErrorComponent />}>
       <MainFormCtx.Provider value={{ lang }}>
         <LayoutProvider
-          style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)" }}
+          style={{
+            display: "grid",
+            gridTemplateColumns: `repeat(${columnRepeat}, 1fr)`,
+            gridAutoFlow: "row",
+          }}
           classNameMap={{}}
           selectedFormRef={selectedFormRef}
           formState={state}
@@ -81,30 +106,24 @@ export default function Forms(): JSX.Element {
                 borderRadius: 2,
               }}
             >
-              {selectedForm}
-              <fieldset className="cta-form-pacing">
-                <button
-                  type="button"
-                  className={CLASSES.BTN_WARN}
-                  onClick={handleReset}
-                >
-                  {GENERIC_DICT[lang].reset}
-                </button>
-                <button
-                  type="button"
-                  className={CLASSES.BTN_INFO}
-                  onClick={handleReset}
-                >
-                  {GENERIC_DICT[lang].return}
-                </button>
-                <button
-                  type="button"
-                  className={CLASSES.BTN_PRIM}
-                  onClick={handleNext}
-                >
-                  {GENERIC_DICT[lang].next}
-                </button>
-              </fieldset>
+              <Forms.Body>{selectedForm}</Forms.Body>
+              <Forms.Actions>
+                <fieldset className="cta-form-pacing">
+                  <Button
+                    variant="outlined"
+                    color="warning"
+                    onClick={handleReset}
+                  >
+                    {GENERIC_DICT[lang].reset}
+                  </Button>
+                  <Button variant="outlined" color="info" onClick={handleReset}>
+                    {GENERIC_DICT[lang].return}
+                  </Button>
+                  <Button variant="contained" onClick={handleNext}>
+                    {GENERIC_DICT[lang].next}
+                  </Button>
+                </fieldset>
+              </Forms.Actions>
             </Box>
           </Stack>
         </LayoutProvider>
@@ -112,3 +131,43 @@ export default function Forms(): JSX.Element {
     </ErrorBoundary>
   );
 }
+function Header({ children, id }: PropsWithChildren & { id?: string }) {
+  return (
+    <Stack
+      direction="row"
+      alignItems={"center"}
+      justifyContent={"space-between"}
+      spacing={2}
+      sx={{ p: 2, pb: 1 }}
+      id={id}
+    >
+      {children}
+    </Stack>
+  );
+}
+function Body({ children }: PropsWithChildren) {
+  return (
+    <Stack spacing={2} sx={{ p: 2 }}>
+      {children}
+    </Stack>
+  );
+}
+function Actions({ children }: PropsWithChildren) {
+  return (
+    <>
+      <Divider />
+      <Stack
+        direction={"row"}
+        spacing={1.5}
+        justifyContent={"flex-end"}
+        sx={{ p: 2 }}
+      >
+        {children}
+      </Stack>
+    </>
+  );
+}
+
+Forms.Header = Header;
+Forms.Body = Body;
+Forms.Actions = Actions;

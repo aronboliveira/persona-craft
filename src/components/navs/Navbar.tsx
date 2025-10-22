@@ -1,6 +1,6 @@
 import type { JSX } from "react";
 import { Link } from "react-router-dom";
-import useLanguage from "../../lib/hooks/useLanguage";
+import useLanguage from "../../lib/hooks/resources/useLanguage";
 import { FORM_DICT } from "../../lib/states/lang/forms";
 
 export default function Navbar(): JSX.Element {

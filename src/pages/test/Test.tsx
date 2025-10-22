@@ -1,5 +1,5 @@
 import type { JSX } from "react";
-import useOpacityTransition from "../../lib/hooks/useOpacityTransition";
+import useOpacityTransition from "../../lib/hooks/styles/useOpacityTransition";
 import Chatbot from "../../components/providers/Chatbot";
 import { Link } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
