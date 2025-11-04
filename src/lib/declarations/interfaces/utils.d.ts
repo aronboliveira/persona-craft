@@ -19,3 +19,8 @@ export interface OptDict {
   friendlyName: string;
   src: string;
 }
+export interface EnableableTip {
+  enabled?: boolean;
+  tipLocalKeys?: Record<string, string>;
+  tipSessionKeys?: Record<string, string>;
+}

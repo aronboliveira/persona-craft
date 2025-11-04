@@ -1,9 +1,8 @@
-import { JSX, useEffect, useState } from "react";
+import { JSX, memo, useEffect, useState } from "react";
 import { CLASSES } from "../../lib/data/classes";
 import { OptionFigureProps } from "../../lib/declarations/interfaces/components";
 import { Card, CardMedia, Radio } from "@mui/material";
-
-export default function OptionFigure(props: OptionFigureProps): JSX.Element {
+const OptionFigure = (props: OptionFigureProps): JSX.Element => {
   const [checked, setChecked] = useState(props.checked || false);
   useEffect(() => {
     setChecked(props.checked || false);
@@ -47,4 +46,5 @@ export default function OptionFigure(props: OptionFigureProps): JSX.Element {
       <figcaption>{props.caption}</figcaption>
     </Card>
   );
-}
+};
+export default memo(OptionFigure);

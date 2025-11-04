@@ -1,3 +1,4 @@
+import { NEl, NNd } from "../declarations/types/foundations";
 import { Gender, ImageStyle } from "../declarations/types/helpers";
 import { AvailableLang } from "../declarations/types/utils";
 
@@ -18,4 +19,13 @@ export function ValidateImgStyle(v: string): v is ImageStyle {
 }
 export function ValidateGender(v: string): v is Gender {
   return (["female", "male", "nonBinary"] as Gender[]).includes(v as any);
+}
+export const isElement = (nd: NNd): nd is Element => nd?.nodeType === 1;
+export function hasOrInsideClass(el: NNd, cls: string): NEl {
+  if (!isElement(el)) return null;
+  if (el instanceof Element) {
+    if (el.classList.contains(cls)) return el;
+    if (el.closest(`.${cls}`)) return el.closest(`.${cls}`);
+  }
+  return null;
 }

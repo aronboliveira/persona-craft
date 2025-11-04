@@ -2,14 +2,12 @@ import { RefObject, useContext, useEffect, useRef } from "react";
 import { ILayoutCtx } from "../../declarations/interfaces/contexts";
 import { LayoutCtx } from "../../states/contexts/LayoutCtx";
 import { StringStyleKeys } from "../../declarations/types/helpers";
+import { LayoutCtxHookReturn } from "../../declarations/interfaces/hooks";
 
 export function useLayoutCtx(
   idf: string,
   applyLayoutStyle: boolean = true
-): {
-  layoutCtx: ILayoutCtx | null;
-  formRef: RefObject<HTMLFieldSetElement | HTMLFormElement | null>;
-} {
+): LayoutCtxHookReturn {
   const layoutCtx = useContext<ILayoutCtx | null>(LayoutCtx);
   let formRef = useRef<HTMLFieldSetElement | HTMLFormElement | null>(null);
   if (layoutCtx && "selectedFormRef" in layoutCtx)

@@ -55,3 +55,4 @@ export type StringStyleKeys = {
     ? K
     : never;
 }[keyof CSSStyleDeclaration];
+export type RTouchEvent<T> = TouchEvent<T> | React.TouchEvent<T>;

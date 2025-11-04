@@ -7,6 +7,8 @@ import {
   useState,
   useLayoutEffect,
   PropsWithChildren,
+  useContext,
+  ActionDispatch,
 } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../components/errors/GenericErrorComponent";
@@ -14,7 +16,6 @@ import useOpacityTransition from "../lib/hooks/styles/useOpacityTransition";
 import useLanguage from "../lib/hooks/resources/useLanguage";
 import MainFormCtx from "../lib/states/contexts/MainFormCtx";
 import MainStyleForm from "../components/forms/MainStyleForm";
-import { CLASSES } from "../lib/data/classes";
 import { GENERIC_DICT } from "../lib/states/lang/generic";
 import FormsStrategist from "../classes/FormsStrategist";
 import { FORM_DICT } from "../lib/states/lang/forms";
@@ -24,6 +25,10 @@ import GenderForm from "../components/forms/GenderForm";
 import BodyTypeMuscleForm from "../components/forms/BodyTypeMuscleForm";
 import { LayoutProvider } from "../components/layouts/LayoutProvider";
 import { Box, Button, Divider, Stack } from "@mui/material";
+import StartFormTip from "../components/modals/tips/StartFormTip";
+import { TipsState, TipsAction } from "../lib/declarations/interfaces/redux";
+import { IMainFormCtx } from "../lib/declarations/interfaces/contexts";
+import SideSwipe from "../components/buttons/SideSwipe";
 const initialState: FormState = {
     order: 0,
   },
@@ -47,6 +52,34 @@ export default function Forms(): JSX.Element {
       initialState
     ),
     [columnRepeat, setColumnRepeat] = useState(2),
+    [tipsState, dispatchTips] = useReducer(
+      (s: TipsState, a: TipsAction): TipsState => {
+        const payload = a?.payload || s;
+        switch (a.type) {
+          case "OPEN_START_TIP":
+            return { ...s, startFormTip: true };
+          case "CLOSE_START_TIP":
+            return { ...s, startFormTip: false };
+          case "OPEN_ALL":
+            return {
+              ...s,
+              ...Object.fromEntries(
+                Object.entries(payload).map(([k]) => [k, true])
+              ),
+            };
+          case "CLOSE_ALL":
+            return {
+              ...s,
+              ...Object.fromEntries(
+                Object.entries(payload).map(([k]) => [k, false])
+              ),
+            };
+          default:
+            return s;
+        }
+      },
+      { startFormTip: false }
+    ),
     strategist = useFormsStrategist(),
     strategistRef = useRef<FormsStrategist | null>(strategist),
     selectedForm = useMemo(() => {
@@ -82,7 +115,7 @@ export default function Forms(): JSX.Element {
   }, [selectedFormRef, state.order]);
   return (
     <ErrorBoundary FallbackComponent={() => <GenericErrorComponent />}>
-      <MainFormCtx.Provider value={{ lang }}>
+      <MainFormCtx.Provider value={{ lang, tipsState, dispatchTips }}>
         <LayoutProvider
           style={{
             display: "grid",
@@ -108,7 +141,10 @@ export default function Forms(): JSX.Element {
             >
               <Forms.Body>{selectedForm}</Forms.Body>
               <Forms.Actions>
-                <fieldset className="cta-form-pacing">
+                <fieldset
+                  className="cta-form-pacing"
+                  style={{ display: "flex", gap: "1rem" }}
+                >
                   <Button
                     variant="outlined"
                     color="warning"
@@ -136,7 +172,7 @@ function Header({ children, id }: PropsWithChildren & { id?: string }) {
     <Stack
       direction="row"
       alignItems={"center"}
-      justifyContent={"space-between"}
+      justifyContent={"center"}
       spacing={2}
       sx={{ p: 2, pb: 1 }}
       id={id}
@@ -146,9 +182,18 @@ function Header({ children, id }: PropsWithChildren & { id?: string }) {
   );
 }
 function Body({ children }: PropsWithChildren) {
+  const ctx = useContext<IMainFormCtx>(MainFormCtx);
+  let tipsState: TipsState = { startFormTip: false };
+  let tipsDispatch = null;
+  if (ctx) {
+    tipsState = ctx.tipsState;
+    tipsDispatch = ctx.dispatchTips as ActionDispatch<[a: TipsAction]>;
+  }
   return (
     <Stack spacing={2} sx={{ p: 2 }}>
       {children}
+      <StartFormTip state={tipsState} dispatch={tipsDispatch ?? (() => {})} />
+      <SideSwipe />
     </Stack>
   );
 }
@@ -159,7 +204,7 @@ function Actions({ children }: PropsWithChildren) {
       <Stack
         direction={"row"}
         spacing={1.5}
-        justifyContent={"flex-end"}
+        justifyContent={"space-evenly"}
         sx={{ p: 2 }}
       >
         {children}

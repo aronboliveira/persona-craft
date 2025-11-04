@@ -1,6 +1,7 @@
-import type { NRDispatch } from "../types/foundations";
-import { FormState } from "../types/redux";
-import { FormsState } from "./redux";
+import { ActionDispatch } from "react";
+import type { NHtEl, NRDispatch } from "../types/foundations";
+import { FormState, TipsAction } from "../types/redux";
+import { FormsState, TipsState } from "./redux";
 
 export interface IHomeManifestCtx {
   isManifestOpen: boolean;
@@ -9,6 +10,8 @@ export interface IHomeManifestCtx {
 
 export interface IMainFormCtx {
   lang: string;
+  tipsState: TipsState;
+  dispatchTips: ActionDispatch<[a: TipsAction]>;
 }
 
 export interface ILayoutCtx {
@@ -16,7 +19,7 @@ export interface ILayoutCtx {
   classNameMap: Record<string, string>;
   setPortalChildren?: NRDispatch<React.ReactNode>;
   selectedFormRef?: React.RefObject<
-    HTMLElement | HTMLFieldSetElement | HTMLFormElement | null
+    NHtEl | HTMLFieldSetElement | HTMLFormElement
   >;
   formState: FormState;
 }

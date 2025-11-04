@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from "react";
-import { NDialog, NRDispatch } from "../declarations/types/foundations";
+import { NDialog, NRDispatch } from "../../declarations/types/foundations";
 export default function useDialog({
   state,
   dispatch,
