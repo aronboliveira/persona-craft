@@ -2,7 +2,7 @@ import { ImageStyle } from "../types/helpers";
 import { TipsActionType } from "../types/redux";
 import { Character, Environment } from "./utils";
 
-export interface FormsState {
+export interface PromptState {
   style: ImageStyle;
   character: Character;
   environment: Environment;
@@ -17,3 +17,5 @@ export type TipsAction = {
   type: TipsActionType;
   payload?: TipsState;
 };
+
+export type MainStoreState = PromptState & FormState & TipsState;

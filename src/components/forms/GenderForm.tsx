@@ -5,7 +5,7 @@ import { FORMS_OPTS } from "../../lib/data/opts";
 import { CLASSES } from "../../lib/data/classes";
 import { GENERIC_DICT } from "../../lib/states/lang/generic";
 import { useMemo } from "react";
-import { update } from "../../redux/mainStore/formsSlice";
+import { updatePrompt } from "../../redux/mainStore/slices/promptSlice";
 import { ValidateGender } from "../../lib/utils/validations";
 import { OptDict } from "../../lib/declarations/interfaces/utils";
 import { StyleSets } from "../../lib/declarations/types/helpers";
@@ -36,7 +36,7 @@ export default function GenderForm() {
       if (ValidateGender(newValue)) {
         setGd(newValue);
         dispatch(
-          update({
+          updatePrompt({
             ...state,
             character: { ...state.character, gender: newValue },
           })

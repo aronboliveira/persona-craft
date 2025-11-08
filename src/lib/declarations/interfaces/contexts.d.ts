@@ -1,7 +1,7 @@
 import { ActionDispatch } from "react";
 import type { NHtEl, NRDispatch } from "../types/foundations";
-import { FormState, TipsAction } from "../types/redux";
-import { FormsState, TipsState } from "./redux";
+import { FormReducerAction, FormState, TipsAction } from "../types/redux";
+import { PromptState, TipsState } from "./redux";
 
 export interface IHomeManifestCtx {
   isManifestOpen: boolean;
@@ -12,6 +12,11 @@ export interface IMainFormCtx {
   lang: string;
   tipsState: TipsState;
   dispatchTips: ActionDispatch<[a: TipsAction]>;
+  formState: FormState;
+  formDispatch: ActionDispatch<[a: FormReducerAction]>;
+  handleNext: (...args: any[]) => void;
+  handlePrevious: (...args: any[]) => void;
+  handleReset: (...args: any[]) => void;
 }
 
 export interface ILayoutCtx {
@@ -38,5 +43,5 @@ export interface ICarouselCtx {
 
 export interface IOptionCtx {
   selected: string;
-  setSelected: NRDispatch<keyof FormsState>;
+  setSelected: NRDispatch<keyof PromptState>;
 }

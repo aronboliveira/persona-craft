@@ -1,15 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import formsReducer from "./formsSlice";
-import { FormsState } from "../../lib/declarations/interfaces/redux";
-export const STG_KEY = "promptCreatorFormsState";
-export const formsStore = configureStore<FormsState>({
+import formsReducer from "./slices/promptSlice";
+import { MainStoreState } from "../../lib/declarations/interfaces/redux";
+export const STG_KEY = "promptCreatorPromptState";
+export const formsStore = configureStore<MainStoreState>({
   reducer: formsReducer,
   devTools: import.meta.env.DEV,
-  preloadedState: ((): FormsState | undefined => {
+  preloadedState: ((): MainStoreState | undefined => {
     try {
       const raw = localStorage.getItem(STG_KEY);
       if (!raw) return undefined;
-      const parsed = JSON.parse(raw) as FormsState;
+      const parsed = JSON.parse(raw) as MainStoreState;
       return parsed;
     } catch (error) {
       console.error("Failed to parse forms state from localStorage:", error);

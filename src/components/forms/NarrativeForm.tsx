@@ -5,7 +5,7 @@ import { FORMS_OPTS } from "../../lib/data/opts";
 import { CLASSES } from "../../lib/data/classes";
 import { GENERIC_DICT } from "../../lib/states/lang/generic";
 import { useState } from "react";
-import { update } from "../../redux/mainStore/formsSlice";
+import { updatePrompt } from "../../redux/mainStore/slices/promptSlice";
 import { ValidateImgStyle } from "../../lib/utils/validations";
 import { useAppSelector } from "../../redux/mainStore/hooks";
 import { OptDict } from "../../lib/declarations/interfaces/utils";
@@ -20,7 +20,7 @@ export default function NarrativeForm() {
       const newValue = e.target.value;
       if (ValidateImgStyle(newValue)) {
         setStl(newValue);
-        dispatch(update({ style: newValue }));
+        dispatch(updatePrompt({ style: newValue }));
       } else setStl(stlSelected);
     };
   return (

@@ -28,7 +28,7 @@ export default function Guidance({
         else r.current.setAttribute(k, v);
       }
     }
-  }, [r.current]);
+  }, [r, extra]);
   return (
     <button
       ref={r}

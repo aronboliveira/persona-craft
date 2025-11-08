@@ -1,5 +1,11 @@
 @use "./abstracts/mixins.scss" as *;
 
+.cta-form-pacing {
+  display: flex;
+  gap: 1rem;
+  border: none;
+}
+
 .image-radio-option {
   cursor: pointer;
   display: flex;
@@ -36,6 +42,20 @@
   }
 }
 
+.option-figure {
+  &:has(.option-figure-img) {
+    transition: cubic-bezier(0.47, 0, 0.745, 0.715) all 0.2s;
+    cursor: pointer;
+    &:hover,
+    &:focus,
+    &:focus-within {
+      transform: translateY(-2%) rotateZ(1deg) scale(1.015);
+      filter: brightness(1.05);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
 .form-check-input.sr-only {
   position: absolute;
   width: 1px;
@@ -45,4 +65,8 @@
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+
+#mainStyleForm {
+  border: none;
 }

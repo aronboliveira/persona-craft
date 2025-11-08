@@ -1,7 +1,6 @@
 import type React from "react";
 import { CarouselComponents } from "../types/helpers";
 import { TipsState } from "./redux";
-import { EnableableTip } from "./utils";
 
 export interface Parent {
   children?: React.ReactNode;
@@ -20,11 +19,6 @@ export interface GuidanceProps {
 export interface StartFormTipProps {
   state: TipsState;
   dispatch: (...args: any[]) => any;
-}
-
-export interface SideSwipeProps extends EnableableTip {
-  onNext?: (...args: any[]) => any;
-  onPrev?: (...args: any[]) => any;
 }
 
 export interface CarouselProps extends Parent {

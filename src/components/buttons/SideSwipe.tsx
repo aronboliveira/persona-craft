@@ -1,5 +1,13 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { SideSwipeProps } from "../../lib/declarations/interfaces/components";
+import {
+  CSSProperties,
+  JSX,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { NHtEl } from "../../lib/declarations/types/foundations";
 import { useMount } from "../../lib/hooks/mount/useMount";
 import { useDeviceDetection } from "../../lib/hooks/etc/useDeviceDetection";
@@ -21,21 +29,29 @@ import {
   TipsLocalStorage,
   TipsSessionStorage,
 } from "../../lib/declarations/interfaces/storages";
+import { IMainFormCtx } from "../../lib/declarations/interfaces/contexts";
+import MainFormCtx from "../../lib/states/contexts/MainFormCtx";
+import { EnableableTip } from "../../lib/declarations/interfaces/utils";
 export default function SideSwipe({
   enabled = true,
-  onNext,
-  onPrev,
   tipLocalKeys = { swpTipLocalKey: "__tips_blocked" },
   tipSessionKeys = { swpTipSessionKey: "__tips_shown" },
-}: SideSwipeProps) {
+}: EnableableTip) {
+  let handleNext = null,
+    handlePrevious = null;
+  const ctx = useContext<IMainFormCtx>(MainFormCtx);
+  if (ctx) {
+    handleNext = ctx.handleNext;
+    handlePrevious = ctx.handlePrevious;
+  }
   const dataSwipeBind = "data-swipe-binded",
     prevSwipeRef = useRef<NHtEl>(null),
     nextSwipeRef = useRef<NHtEl>(null),
     tipRef = useRef<NHtEl>(null),
     blockRef = useRef<boolean>(false),
-    portals = useMemo(() => {
+    portals = useMemo<{ [k: string]: NHtEl }>(() => {
       if (typeof window?.document === "undefined")
-        return { prev: null, next: null };
+        return { prev: null, next: null, tip: null };
       prevSwipeRef.current ??= document.getElementById("swipePortalPrev");
       nextSwipeRef.current ??= document.getElementById("swipePortalNext");
       tipRef.current ??= document.getElementById("swipePortalTip");
@@ -51,17 +67,17 @@ export default function SideSwipe({
       useScreenCoords(),
     mounted = useMount(),
     deviceInfo = useDeviceDetection(),
-    invokeNext = useCallback((): void => {
-      if (!enabled || typeof onNext !== "function") return;
-      onNext();
+    invokeNext = useCallback<() => void>((): void => {
+      if (!enabled || typeof handleNext !== "function") return;
+      handleNext();
       // TODO maybe more actions?
-    }, [enabled, onNext]),
-    invokePrev = useCallback((): void => {
-      if (!enabled || typeof onPrev !== "function") return;
-      onPrev();
+    }, [enabled, handleNext]),
+    invokePrev = useCallback<() => void>((): void => {
+      if (!enabled || typeof handlePrevious !== "function") return;
+      handlePrevious();
       // TODO maybe more actions?
-    }, [enabled, onPrev]),
-    onTouchStart = useCallback(
+    }, [enabled, handlePrevious]),
+    onTouchStart = useCallback<(e: RTouchEvent<NHtEl>) => void>(
       (e: RTouchEvent<NHtEl>) => {
         if (!enabled || !(deviceInfo.isMobile || deviceInfo.isTablet)) return;
         const t = e.touches[0];
@@ -78,7 +94,7 @@ export default function SideSwipe({
         deviceInfo.isTablet,
       ]
     ),
-    onTouchMove = useCallback(
+    onTouchMove = useCallback<(e: RTouchEvent<NHtEl>) => void>(
       (e: RTouchEvent<NHtEl>) => {
         if (
           !enabled ||
@@ -115,12 +131,17 @@ export default function SideSwipe({
         setIsTracking,
       ]
     ),
-    onTouchEnd = useCallback(() => {
+    onTouchEnd = useCallback<() => void>(() => {
       activeSwipe.current = false;
       setIsTracking(false);
       setTouchCoords({ x: 0, y: 0 });
     }, [activeSwipe, setIsTracking, setTouchCoords]),
-    baseBtnSx = useMemo(
+    baseBtnSx = useMemo<
+      Record<
+        string,
+        string | number | CSSProperties | Record<string, string | number>
+      >
+    >(
       () => ({
         position: "fixed" as const,
         top: "50%",
@@ -144,9 +165,19 @@ export default function SideSwipe({
       }),
       []
     ),
-    leftBtn = useMemo(() => ({ ...baseBtnSx, left: 12 }), [baseBtnSx]),
-    rightBtn = useMemo(() => ({ ...baseBtnSx, right: 12 }), [baseBtnSx]),
-    leftButton = (
+    leftBtn = useMemo<
+      Record<
+        string,
+        string | number | CSSProperties | Record<string, string | number>
+      >
+    >(() => ({ ...baseBtnSx, left: 12 }), [baseBtnSx]),
+    rightBtn = useMemo<
+      Record<
+        string,
+        string | number | CSSProperties | Record<string, string | number>
+      >
+    >(() => ({ ...baseBtnSx, right: 12 }), [baseBtnSx]),
+    leftButton: JSX.Element = (
       <Tooltip title="Prev (swipe right on mobile)" placement="right">
         <IconButton
           aria-label="Previous"
@@ -158,7 +189,7 @@ export default function SideSwipe({
         </IconButton>
       </Tooltip>
     ),
-    rightButton = (
+    rightButton: JSX.Element = (
       <Tooltip title="Next (swipe left on mobile)" placement="left">
         <IconButton
           aria-label="Next"
@@ -186,10 +217,13 @@ export default function SideSwipe({
         console.error("Error updating localStorage item:", e);
       }
     },
-    handleCloseTip = useCallback((_?: any, reason?: string) => {
-      if (reason === "clickaway") return;
-      setTipOpen(false);
-    }, []);
+    handleCloseTip = useCallback<(_?: any, reason?: string) => void>(
+      (_?: any, reason?: string): void => {
+        if (reason === "clickaway") return;
+        setTipOpen(false);
+      },
+      []
+    );
   useEffect(() => {
     if (
       !enabled ||

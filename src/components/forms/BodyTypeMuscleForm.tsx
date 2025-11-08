@@ -3,7 +3,7 @@ import GenericErrorComponent from "../errors/GenericErrorComponent";
 import { useEffect, useState } from "react";
 import { BodyMuscleTypes } from "../../lib/declarations/types/anatomy";
 import { FORM_DICT } from "../../lib/states/lang/forms";
-import { update } from "../../redux/mainStore/formsSlice";
+import { updatePrompt } from "../../redux/mainStore/slices/promptSlice";
 import { CLASSES } from "../../lib/data/classes";
 import { useLaterForm } from "../../lib/hooks/contexts/useLaterForm";
 
@@ -12,7 +12,10 @@ export default function BodyTypeMuscleForm() {
     [bdTp, setBodyType] = useState<BodyMuscleTypes>("average");
   useEffect(() => {
     dispatch(
-      update({ ...state, character: { ...state.character, muscle: bdTp } })
+      updatePrompt({
+        ...state,
+        character: { ...state.character, muscle: bdTp },
+      })
     );
   }, [dispatch, state, bdTp]);
   return (

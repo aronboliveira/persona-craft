@@ -20,7 +20,7 @@ import { GENERIC_DICT } from "../lib/states/lang/generic";
 import FormsStrategist from "../classes/FormsStrategist";
 import { FORM_DICT } from "../lib/states/lang/forms";
 import { useFormsStrategist } from "../lib/hooks/contexts/useStrategy";
-import { FormState, FormAction } from "../lib/declarations/types/redux";
+import { FormState, FormReducerAction } from "../lib/declarations/types/redux";
 import GenderForm from "../components/forms/GenderForm";
 import BodyTypeMuscleForm from "../components/forms/BodyTypeMuscleForm";
 import { LayoutProvider } from "../components/layouts/LayoutProvider";
@@ -29,30 +29,34 @@ import StartFormTip from "../components/modals/tips/StartFormTip";
 import { TipsState, TipsAction } from "../lib/declarations/interfaces/redux";
 import { IMainFormCtx } from "../lib/declarations/interfaces/contexts";
 import SideSwipe from "../components/buttons/SideSwipe";
-const initialState: FormState = {
-    order: 0,
-  },
-  formReducer = (state: FormState, action: FormAction): FormState => {
-    switch (action.type) {
-      case "NEXT_FORM":
-        return { ...state, order: state.order + 1 };
-      case "RESET_FORM":
-        return { ...state, order: 0 };
-      case "SET_ORDER":
-        return { ...state, order: action.payload };
-      default:
-        return state;
-    }
-  };
+import { NHtEl } from "../lib/declarations/types/foundations";
 export default function Forms(): JSX.Element {
   useOpacityTransition();
   const { lang } = useLanguage(),
-    [state, dispatch] = useReducer<FormState, [action: FormAction]>(
-      formReducer,
-      initialState
+    [state, dispatch] = useReducer<FormState, [action: FormReducerAction]>(
+      (state: FormState, action: FormReducerAction): FormState => {
+        switch (action.type) {
+          case "NEXT_FORM":
+            return { ...state, order: state.order + 1 };
+          case "PREVIOUS_FORM":
+            return {
+              ...state,
+              order: state.order - 1 >= 0 ? state.order - 1 : 0,
+            };
+          case "RESET_FORM":
+            return { ...state, order: 0 };
+          case "SET_ORDER":
+            return { ...state, order: action.payload ?? 0 };
+          default:
+            return state;
+        }
+      },
+      {
+        order: 0,
+      }
     ),
-    [columnRepeat, setColumnRepeat] = useState(2),
-    [tipsState, dispatchTips] = useReducer(
+    [columnRepeat, setColumnRepeat] = useState<number>(2),
+    [tipsState, dispatchTips] = useReducer<TipsState, [action: TipsAction]>(
       (s: TipsState, a: TipsAction): TipsState => {
         const payload = a?.payload || s;
         switch (a.type) {
@@ -82,7 +86,7 @@ export default function Forms(): JSX.Element {
     ),
     strategist = useFormsStrategist(),
     strategistRef = useRef<FormsStrategist | null>(strategist),
-    selectedForm = useMemo(() => {
+    selectedForm = useMemo<JSX.Element>(() => {
       strategistRef.current ??= new FormsStrategist();
       switch (strategistRef.current.render({ order: state.order })) {
         case MainStyleForm.name:
@@ -99,9 +103,19 @@ export default function Forms(): JSX.Element {
           );
       }
     }, [state.order, lang]),
-    handleNext = useCallback(() => dispatch({ type: "NEXT_FORM" }), []),
-    handleReset = useCallback(() => dispatch({ type: "RESET_FORM" }), []),
-    selectedFormRef = useRef<HTMLElement | null>(null);
+    handleNext: () => void = useCallback<() => void>(
+      (): void => dispatch({ type: "NEXT_FORM" }),
+      []
+    ),
+    handlePrevious: () => void = useCallback<() => void>(
+      (): void => dispatch({ type: "PREVIOUS_FORM" }),
+      []
+    ),
+    handleReset: () => void = useCallback<() => void>(
+      (): void => dispatch({ type: "RESET_FORM" }),
+      []
+    ),
+    selectedFormRef = useRef<NHtEl>(null);
   useLayoutEffect(() => {
     const imgCls = "option-figure-img",
       optImgs =
@@ -115,7 +129,18 @@ export default function Forms(): JSX.Element {
   }, [selectedFormRef, state.order]);
   return (
     <ErrorBoundary FallbackComponent={() => <GenericErrorComponent />}>
-      <MainFormCtx.Provider value={{ lang, tipsState, dispatchTips }}>
+      <MainFormCtx.Provider
+        value={{
+          lang,
+          tipsState,
+          dispatchTips,
+          handleNext,
+          handleReset,
+          handlePrevious,
+          formState: state,
+          formDispatch: dispatch,
+        }}
+      >
         <LayoutProvider
           style={{
             display: "grid",
@@ -141,21 +166,18 @@ export default function Forms(): JSX.Element {
             >
               <Forms.Body>{selectedForm}</Forms.Body>
               <Forms.Actions>
-                <fieldset
-                  className="cta-form-pacing"
-                  style={{ display: "flex", gap: "1rem" }}
-                >
-                  <Button
-                    variant="outlined"
-                    color="warning"
-                    onClick={handleReset}
-                  >
+                <fieldset className="cta-form-pacing">
+                  <Button color="warning" onClick={handleReset}>
                     {GENERIC_DICT[lang].reset}
                   </Button>
-                  <Button variant="outlined" color="info" onClick={handleReset}>
+                  <Button color="info" onClick={handleReset}>
                     {GENERIC_DICT[lang].return}
                   </Button>
-                  <Button variant="contained" onClick={handleNext}>
+                  <Button
+                    variant="contained"
+                    onClick={handleNext}
+                    style={{ color: "#ffffff" }}
+                  >
                     {GENERIC_DICT[lang].next}
                   </Button>
                 </fieldset>
@@ -183,8 +205,8 @@ function Header({ children, id }: PropsWithChildren & { id?: string }) {
 }
 function Body({ children }: PropsWithChildren) {
   const ctx = useContext<IMainFormCtx>(MainFormCtx);
-  let tipsState: TipsState = { startFormTip: false };
-  let tipsDispatch = null;
+  let tipsState: TipsState = { startFormTip: false },
+    tipsDispatch = null;
   if (ctx) {
     tipsState = ctx.tipsState;
     tipsDispatch = ctx.dispatchTips as ActionDispatch<[a: TipsAction]>;
