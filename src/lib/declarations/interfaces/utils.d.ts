@@ -2,7 +2,7 @@ import { BodyMuscleTypes } from "../types/anatomy";
 import { Gender } from "../types/helpers";
 export interface Character {
   gender: Gender;
-  height: "short" | "average" | "tall";
+  height: BodyHeight;
   weight: "light" | "medium" | "heavy";
   age: "child" | "teen" | "adult" | "senior";
   muscle: BodyMuscleTypes;

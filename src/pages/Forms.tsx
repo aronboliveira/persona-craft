@@ -5,7 +5,6 @@ import {
   useCallback,
   useRef,
   useState,
-  useLayoutEffect,
   PropsWithChildren,
   useContext,
   ActionDispatch,
@@ -20,42 +19,33 @@ import { GENERIC_DICT } from "../lib/states/lang/generic";
 import FormsStrategist from "../classes/FormsStrategist";
 import { FORM_DICT } from "../lib/states/lang/forms";
 import { useFormsStrategist } from "../lib/hooks/contexts/useStrategy";
-import { FormState, FormReducerAction } from "../lib/declarations/types/redux";
 import GenderForm from "../components/forms/GenderForm";
 import BodyTypeMuscleForm from "../components/forms/BodyTypeMuscleForm";
 import { LayoutProvider } from "../components/layouts/LayoutProvider";
-import { Box, Button, Divider, Stack } from "@mui/material";
+import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import StartFormTip from "../components/modals/tips/StartFormTip";
 import { TipsState, TipsAction } from "../lib/declarations/interfaces/redux";
 import { IMainFormCtx } from "../lib/declarations/interfaces/contexts";
 import SideSwipe from "../components/buttons/SideSwipe";
 import { NHtEl } from "../lib/declarations/types/foundations";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../redux/mainStore";
+import {
+  nextForm,
+  previousForm,
+  resetForm,
+} from "../redux/mainStore/slices/formStrategySlice";
+import { FormState } from "../lib/declarations/types/redux";
+import { useOptionGrid } from "../lib/hooks/mount/useOptsGrid";
+
 export default function Forms(): JSX.Element {
   useOpacityTransition();
   const { lang } = useLanguage(),
-    [state, dispatch] = useReducer<FormState, [action: FormReducerAction]>(
-      (state: FormState, action: FormReducerAction): FormState => {
-        switch (action.type) {
-          case "NEXT_FORM":
-            return { ...state, order: state.order + 1 };
-          case "PREVIOUS_FORM":
-            return {
-              ...state,
-              order: state.order - 1 >= 0 ? state.order - 1 : 0,
-            };
-          case "RESET_FORM":
-            return { ...state, order: 0 };
-          case "SET_ORDER":
-            return { ...state, order: action.payload ?? 0 };
-          default:
-            return state;
-        }
-      },
-      {
-        order: 0,
-      }
+    dispatch = useDispatch<AppDispatch>(),
+    stateOrder = useSelector(
+      (s: RootState) => (s.formStrategy as unknown as FormState).order
     ),
-    [columnRepeat, setColumnRepeat] = useState<number>(2),
+    [, setColumnRepeat] = useState<number>(2),
     [tipsState, dispatchTips] = useReducer<TipsState, [action: TipsAction]>(
       (s: TipsState, a: TipsAction): TipsState => {
         const payload = a?.payload || s;
@@ -88,7 +78,7 @@ export default function Forms(): JSX.Element {
     strategistRef = useRef<FormsStrategist | null>(strategist),
     selectedForm = useMemo<JSX.Element>(() => {
       strategistRef.current ??= new FormsStrategist();
-      switch (strategistRef.current.render({ order: state.order })) {
+      switch (strategistRef.current.render({ order: stateOrder })) {
         case MainStyleForm.name:
           return <MainStyleForm />;
         case GenderForm.name:
@@ -102,33 +92,33 @@ export default function Forms(): JSX.Element {
             </div>
           );
       }
-    }, [state.order, lang]),
-    handleNext: () => void = useCallback<() => void>(
-      (): void => dispatch({ type: "NEXT_FORM" }),
-      []
-    ),
-    handlePrevious: () => void = useCallback<() => void>(
-      (): void => dispatch({ type: "PREVIOUS_FORM" }),
-      []
-    ),
-    handleReset: () => void = useCallback<() => void>(
-      (): void => dispatch({ type: "RESET_FORM" }),
-      []
-    ),
+    }, [stateOrder, lang]),
+    handleNext = useCallback((): void => {
+      dispatch(nextForm());
+    }, [dispatch]),
+    handlePrevious = useCallback((): void => {
+      dispatch(previousForm());
+    }, [dispatch]),
+    handleReset = useCallback((): void => {
+      dispatch(resetForm());
+    }, [dispatch]),
     selectedFormRef = useRef<NHtEl>(null);
-  useLayoutEffect(() => {
-    const imgCls = "option-figure-img",
-      optImgs =
-        selectedFormRef.current instanceof HTMLElement
-          ? selectedFormRef.current.querySelectorAll(`.${imgCls}`)
-          : document.getElementsByClassName(imgCls);
-    console.log(optImgs.length);
-    setColumnRepeat(
-      optImgs.length % 2 === 0 ? optImgs.length * 0.5 : optImgs.length * 0.5 + 1
-    );
-  }, [selectedFormRef, state.order]);
+
+  useOptionGrid({
+    selectedFormRef,
+    setColumns: setColumnRepeat,
+    order: stateOrder,
+  });
+
   return (
-    <ErrorBoundary FallbackComponent={() => <GenericErrorComponent />}>
+    <ErrorBoundary
+      onError={(error, errorInfo) => {
+        console.error("Error caught by boundary:", error);
+        console.error("Component stack:", errorInfo.componentStack);
+        alert(`An error occurred: ${error.message}`);
+      }}
+      FallbackComponent={() => <GenericErrorComponent />}
+    >
       <MainFormCtx.Provider
         value={{
           lang,
@@ -137,19 +127,16 @@ export default function Forms(): JSX.Element {
           handleNext,
           handleReset,
           handlePrevious,
-          formState: state,
-          formDispatch: dispatch,
         }}
       >
         <LayoutProvider
           style={{
             display: "grid",
-            gridTemplateColumns: `repeat(${columnRepeat}, 1fr)`,
+            // gridTemplateColumns: `repeat(${columnRepeat}, 1fr)`,
             gridAutoFlow: "row",
           }}
           classNameMap={{}}
           selectedFormRef={selectedFormRef}
-          formState={state}
         >
           <Stack
             component="section"
@@ -170,7 +157,9 @@ export default function Forms(): JSX.Element {
                   <Button color="warning" onClick={handleReset}>
                     {GENERIC_DICT[lang].reset}
                   </Button>
-                  <Button color="info" onClick={handleReset}>
+                  // * "Return" now navigates to the previous form instead of
+                  resetting the flow
+                  <Button color="info" onClick={handlePrevious}>
                     {GENERIC_DICT[lang].return}
                   </Button>
                   <Button
@@ -189,20 +178,28 @@ export default function Forms(): JSX.Element {
     </ErrorBoundary>
   );
 }
-function Header({ children, id }: PropsWithChildren & { id?: string }) {
+
+function Header({
+  children,
+  id,
+  containerId,
+}: PropsWithChildren & { id?: string; containerId?: string }) {
   return (
-    <Stack
-      direction="row"
-      alignItems={"center"}
-      justifyContent={"center"}
-      spacing={2}
-      sx={{ p: 2, pb: 1 }}
-      id={id}
-    >
-      {children}
-    </Stack>
+    <Typography id={containerId} variant="h4" fontWeight={"bold"}>
+      <Stack
+        direction="row"
+        alignItems={"center"}
+        justifyContent={"center"}
+        spacing={2}
+        sx={{ p: 2, pb: 1 }}
+        id={id}
+      >
+        {children}
+      </Stack>
+    </Typography>
   );
 }
+
 function Body({ children }: PropsWithChildren) {
   const ctx = useContext<IMainFormCtx>(MainFormCtx);
   let tipsState: TipsState = { startFormTip: false },
@@ -219,6 +216,21 @@ function Body({ children }: PropsWithChildren) {
     </Stack>
   );
 }
+
+function Result({ variable }: { variable: string }) {
+  return (
+    <Typography
+      variant="body2"
+      sx={{ mt: 1 }}
+      fontSize={"1.5rem"}
+      className="result-display"
+    >
+      <strong>Selected:&nbsp;</strong>
+      <span>{variable}</span>
+    </Typography>
+  );
+}
+
 function Actions({ children }: PropsWithChildren) {
   return (
     <>
@@ -238,3 +250,4 @@ function Actions({ children }: PropsWithChildren) {
 Forms.Header = Header;
 Forms.Body = Body;
 Forms.Actions = Actions;
+Forms.Result = Result;

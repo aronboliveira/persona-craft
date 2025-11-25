@@ -6,7 +6,6 @@ import { NRDispatch } from "../../../lib/declarations/types/foundations";
 import { ChatbotCtx } from "../../../lib/states/contexts/ChatbotCtx";
 import st from "../../../styles/Modules/chatbot-popup.module.css";
 import Spinner from "../../icons/animated/Spinner";
-// @ts-ignore-next-line
 const ChatbotIframe = lazy(() => import("@/components/iframes/ChatbotIframe")),
   ChatbotPopup = memo((): JSX.Element => {
     const ctx = useContext<IChatbotCtx>(ChatbotCtx);

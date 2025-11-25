@@ -6,6 +6,7 @@ const initialState: FormState = { order: 0 },
     initialState,
     reducers: {
       nextForm: (state: FormState): void => {
+        console.log("next form...");
         state.order += 1;
       },
       previousForm: (state: FormState): void => {

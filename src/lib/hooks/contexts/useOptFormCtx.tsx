@@ -5,18 +5,19 @@ import useOptImgsListeners from "./useOptImgsListeners";
 
 export const useOptFormCtx = ({
   layoutParams,
-  imgParams,
+  imgParams = { globalNumbersAlso: true },
   formParams = [],
 }: {
   layoutParams: Parameters<typeof useLayoutCtx>;
-  imgParams: UseOptImgListenersProps;
-  formParams: Parameters<typeof useFormCtxStore>;
+  imgParams?: UseOptImgListenersProps;
+  formParams?: Parameters<typeof useFormCtxStore>;
 }): ReturnType<typeof useLayoutCtx> &
   ReturnType<typeof useFormCtxStore> &
   ReturnType<typeof useOptImgsListeners> => {
   const { layoutCtx, formRef } = useLayoutCtx(...layoutParams),
-    formCtx = useFormCtxStore(...formParams),
-    optImgs = useOptImgsListeners(imgParams);
+    validFormParams: any[] = !Array.isArray(formParams) ? [] : formParams,
+    formCtx = useFormCtxStore(...(validFormParams as [])),
+    optImgs = useOptImgsListeners(imgParams ?? { globalNumbersAlso: true });
   return {
     ...layoutCtx,
     formRef,

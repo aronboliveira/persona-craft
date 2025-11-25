@@ -5,6 +5,7 @@ export type BodyMuscleTypes =
   | "athletic"
   | "herculean";
 export type BodyFat = "scrawny" | "skinny" | "thin" | "thick" | "obese";
+export type BodyHeight = "dwarfic" | "short" | "average" | "tall" | "colossal";
 export type EyebrowHairLength =
   | "minimal"
   | "short"

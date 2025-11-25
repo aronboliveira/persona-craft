@@ -30,7 +30,9 @@ if (root) {
         </div>
       }
       onError={(error, errorInfo) => {
-        console.error("React Error Boundary caught:", error, errorInfo);
+        console.error("Error caught by boundary:", error);
+        console.error("Component stack:", errorInfo.componentStack);
+        alert(`An error occurred: ${error.message}`);
       }}
     >
       <ThemeProvider theme={appTheme}>

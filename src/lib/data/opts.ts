@@ -1,28 +1,94 @@
-import { OptDict } from "../declarations/interfaces/utils";
-import { BodyFat } from "../declarations/types/anatomy";
+// import { OptDict } from "../declarations/interfaces/utils";
+import {
+  BodyFat,
+  BodyHeight,
+  BodyMuscleTypes,
+} from "../declarations/types/anatomy";
 import {
   Gender,
-  ImageStyle,
+  GenderAbbr,
+  ImageFormat,
+  // ImageStyle,
   QuestionId,
   StyleSets,
 } from "../declarations/types/helpers";
-export const styleSets = [
+import { OptsMap } from "../declarations/types/utils";
+
+export const styleSets = Object.seal([
   "anm",
   "crt",
   "ptr",
   "px",
   "skt",
   "sr",
-] as StyleSets[];
-export const gds = ["female", "male", "nonBinary"] as Gender[];
-export const bdTps = ["scrawny", "thin", "fair", "thick", "fat"] as BodyFat[];
+]) as StyleSets[];
+
+export const gds = [
+  "female",
+  "masculine",
+  "nonBinary",
+] as const satisfies Gender[];
+
+export const gdAbbrs = ["fm", "m", "nb"] as const satisfies GenderAbbr[];
+
+export enum GdAbbr {
+  female = "fm",
+  masculine = "m",
+  nonBinary = "nb",
+}
+
+export const mscLvls = [
+  "average",
+  "frail",
+  "weak",
+  "athletic",
+  "herculean",
+] as const satisfies BodyMuscleTypes[];
+
+export const bdTps = [
+  "thin",
+  "scrawny",
+  "thick",
+  "obese",
+] as const satisfies BodyFat[]; // * removed duplicated "thin" previously
+
+export const bdHgt = [
+  "dwarfic",
+  "short",
+  "average",
+  "tall",
+  "colossal",
+] as const satisfies BodyHeight[]; // * new height levels
+export const DEFAULT_OPTS: OptsMap<Exclude<QuestionId, "bft">> = Object.freeze(
+  (() => {
+    return {
+      stl: styleSets.includes("anm") ? "anm" : styleSets[0],
+      gd: gds.includes("female") ? "female" : gds[0],
+      msc: mscLvls.includes("average") ? "average" : mscLvls[0],
+      hgt: bdHgt.includes("average") ? "average" : bdHgt[0], // * default height
+    };
+  })()
+);
+
+export const genderDetails = {
+  female: { friendlyName: "Feminine" },
+  masculine: { friendlyName: "Masculine" },
+  nonBinary: { friendlyName: "Non-binary" },
+} as const satisfies Record<Gender, { friendlyName: string }>;
+
+export const muscleDetails = {
+  average: { friendlyName: "Average" },
+  frail: { friendlyName: "Frail" },
+  weak: { friendlyName: "Weak" },
+  athletic: { friendlyName: "Athletic" },
+  herculean: { friendlyName: "Herculean" },
+} as const satisfies Record<BodyMuscleTypes, { friendlyName: string }>;
+
+const imgBasePath = "/imgs";
+
 export const FORMS_OPTS: Record<
   QuestionId,
-  {
-    [K in ImageStyle &
-      Record<Partial<StyleSets>, Gender> &
-      Record<BodyFat, any>]: OptDict;
-  }
+  object | ((...args: any[]) => object)
 > = {
   stl: {
     "semi-realistic": {
@@ -46,18 +112,14 @@ export const FORMS_OPTS: Record<
       st,
       ((styleCode: string) =>
         Object.fromEntries(
-          Object.entries({
-            female: { friendlyName: "Feminine" },
-            male: { friendlyName: "Masculine" },
-            nonBinary: { friendlyName: "Non-binary" },
-          }).map(([key, value]) => [
+          Object.entries(genderDetails).map(([key, value]) => [
             key,
             {
               ...value,
-              src: `/imgs/gender/${styleCode}/dall-e-${
+              src: `${imgBasePath}/gender/${styleCode}/dall-e-${
                 key === "female"
                   ? "fem-warr"
-                  : key === "male"
+                  : key === "masculine"
                   ? "male-knight"
                   : "nb-priest"
               }.${styleCode === "sr" ? "jpeg" : "png"}`,
@@ -65,9 +127,40 @@ export const FORMS_OPTS: Record<
           ])
         ))(st),
     ])
-  ),
+  ), // * "masculine" now matches the Gender union; previously "male" never matched
+  msc: (
+    gnd: GenderAbbr | Gender = "fm",
+    stl: StyleSets = "anm"
+  ): {
+    [K in BodyMuscleTypes]: {
+      friendlyName: string;
+      src: `${typeof imgBasePath}/muscle/${string}.${ImageFormat}`;
+    };
+  } => {
+    gnd = gdAbbrs.includes(gnd as any)
+      ? gnd
+      : gds.includes(gnd as any)
+      ? GdAbbr[gnd as Gender]
+      : "fm";
+
+    return mscLvls.reduce(
+      (acc, mscLvl) => {
+        acc[mscLvl] = {
+          friendlyName: muscleDetails[mscLvl].friendlyName,
+          src: `${imgBasePath}/muscle/${stl}/${gnd}-${mscLvl}.png` as any,
+        };
+        return acc;
+      },
+      {} as {
+        [K in BodyMuscleTypes]: {
+          friendlyName: string;
+          src: `${typeof imgBasePath}/muscle/${string}.${ImageFormat}`;
+        };
+      }
+    );
+  },
   bft: (() => {
-    const combos = [];
+    const combos: { src: string; friendlyName: string }[] = []; // * explicit element type helps with tooling and refactors
     for (const st of styleSets)
       for (const gd of gds)
         for (const bd of bdTps)
@@ -85,10 +178,49 @@ export const FORMS_OPTS: Record<
                 case "thin":
                   return "Thin";
                 default:
-                  "Fair";
+                  return "Fair"; // * ensure a fallback label is always returned
               }
             })(),
           });
     return combos;
+  })(),
+  hgt: (() => {
+    const basePath = `${imgBasePath}/height`; // * base folder: /public/imgs/height
+    const entries = {} as {
+      [K in BodyHeight]: {
+        friendlyName: string;
+        src: `${typeof imgBasePath}/height/${string}.${ImageFormat}`;
+      };
+    }; // * strongly typed map for height options
+
+    for (const h of bdHgt) {
+      let friendlyName: string;
+      switch (h) {
+        case "dwarfic":
+          friendlyName = "Dwarfic";
+          break;
+        case "short":
+          friendlyName = "Short";
+          break;
+        case "average":
+          friendlyName = "Average";
+          break;
+        case "tall":
+          friendlyName = "Tall";
+          break;
+        case "colossal":
+          friendlyName = "Colossal";
+          break;
+        default:
+          friendlyName = h;
+      }
+
+      entries[h] = {
+        friendlyName,
+        src: `${basePath}/${h}.png` as any, // * e.g. /imgs/height/short.png
+      };
+    }
+
+    return entries;
   })(),
 };

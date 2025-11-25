@@ -3,6 +3,8 @@ import { UseOptImgListenersProps } from "../../declarations/interfaces/hooks";
 import { NEl, NInput } from "../../declarations/types/foundations";
 import { DOMHelper } from "../../utils/DOMHelper";
 import { hasOrInsideClass } from "../../utils/validations";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/mainStore";
 
 export default function useOptImgsListeners({
   classNames = ["option-figure-img"],
@@ -14,6 +16,7 @@ export default function useOptImgsListeners({
 // tipSessionKey = "__kb_tip_shown",
 UseOptImgListenersProps) {
   const lastBoundCount = useRef<number>(0),
+    order = useSelector((s: RootState) => s.formStrategy.order),
     observerRef = useRef<MutationObserver | null>(null),
     rebindQueueRef = useRef<boolean>(false),
     // disposedRef = useRef<boolean>(false),
@@ -29,26 +32,31 @@ UseOptImgListenersProps) {
       DOMHelper.queryClassSnap(scope, queryChain),
     /* eslint-disable */
     selectRadio = (n: number): NEl => {
-      n = Math.round(n);
-      const nodes = querySnapshot().filter(Boolean) as Element[];
-      if (!nodes?.length) return null;
-      const el = nodes[n - 1];
-      if (!el) return null;
-      const container =
-        (el.closest("label") as HTMLElement | null) ||
-        (el.parentElement as HTMLElement | null) ||
-        el;
-      const radio: NInput = DOMHelper.queryRadio(container, el);
-      if (!radio) return null;
-      radio.click();
-      radio.focus({ preventScroll: true });
-      const scrollTarg = container ?? radio;
-      scrollTarg.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-        inline: "nearest",
-      });
-      return radio ? el : null;
+      try {
+        n = Math.round(n);
+        const nodes = querySnapshot().filter(Boolean) as Element[];
+        if (!nodes?.length) return null;
+        const el = nodes[n - 1];
+        if (!el) return null;
+        const container =
+          (el.closest("label") as HTMLElement | null) ||
+          (el.parentElement as HTMLElement | null) ||
+          el;
+        const radio: NInput = DOMHelper.queryRadio(container, el);
+        if (!radio) return null;
+        radio.click();
+        radio.focus({ preventScroll: true });
+        const scrollTarg = container ?? radio;
+        scrollTarg.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "nearest",
+        });
+        return radio ? el : null;
+      } catch (err) {
+        console.error(err);
+        return null;
+      }
     },
     /* eslint-enable */
     onKeyDown = useMemo((): EventListener => {
@@ -113,51 +121,60 @@ UseOptImgListenersProps) {
         : setTimeout(run, 0);
     }, [installAll, uninstallAll, rebindQueueRef]);
   useEffect(() => {
-    if (!enabled || !scope) return;
-    installAll();
-    const obs = new MutationObserver(mutations => {
-      let relevant = false;
-      for (const m of mutations) {
-        if (
-          m.type === "attributes" &&
-          m.attributeName === "src" &&
-          queryChain
-        ) {
-          if (hasOrInsideClass(m.target, queryChain)) {
-            relevant = true;
-            break;
-          }
-        } else if (
-          m.type === "childList" &&
-          (m.addedNodes.length || m.removedNodes.length)
-        ) {
-          const set = [...m.addedNodes, ...m.removedNodes];
-          for (const n of set)
-            if (hasOrInsideClass(n, queryChain)) {
-              relevant = true;
-              break;
+    try {
+      if (!enabled || !scope) return;
+      console.log("effect");
+      installAll();
+      const obs = new MutationObserver(mutations => {
+        try {
+          let relevant = false;
+          for (const m of mutations) {
+            if (
+              m.type === "attributes" &&
+              m.attributeName === "src" &&
+              queryChain
+            ) {
+              if (hasOrInsideClass(m.target, queryChain)) {
+                relevant = true;
+                break;
+              }
+            } else if (
+              m.type === "childList" &&
+              (m.addedNodes.length || m.removedNodes.length)
+            ) {
+              const set = [...m.addedNodes, ...m.removedNodes];
+              for (const n of set)
+                if (hasOrInsideClass(n, queryChain)) {
+                  relevant = true;
+                  break;
+                }
+              if (relevant) break;
+            } else if (m.type === "characterData") {
+              if (hasOrInsideClass(m.target.parentNode, queryChain)) {
+                relevant = true;
+                break;
+              }
             }
-          if (relevant) break;
-        } else if (m.type === "characterData") {
-          if (hasOrInsideClass(m.target.parentNode, queryChain)) {
-            relevant = true;
-            break;
+            if (relevant) scheduleRebind();
           }
+        } catch (err) {
+          console.warn(err);
         }
-        if (relevant) scheduleRebind();
-      }
-    });
-    obs.observe(scope instanceof Document ? scope.documentElement : scope, {
-      subtree: true,
-      childList: true,
-      attributes: true,
-      characterData: true,
-      attributeFilter: ["src"],
-    });
-    observerRef.current = obs;
-    globalNumbersAlso &&
-      typeof window?.document !== "undefined" &&
-      window.document.addEventListener("keydown", onGlobalKeyDown);
+      });
+      obs.observe(scope instanceof Document ? scope.documentElement : scope, {
+        subtree: true,
+        childList: true,
+        attributes: true,
+        characterData: true,
+        attributeFilter: ["src"],
+      });
+      observerRef.current = obs;
+      globalNumbersAlso &&
+        typeof window?.document !== "undefined" &&
+        window.document.addEventListener("keydown", onGlobalKeyDown);
+    } catch (err) {
+      console.error(err);
+    }
     return () => {
       if (observerRef.current) {
         observerRef.current.disconnect();
@@ -179,6 +196,7 @@ UseOptImgListenersProps) {
     installAll,
     uninstallAll,
     scheduleRebind,
+    order,
   ]);
   // useEffect(() => {
   //   if (!enabled || typeof window === "undefined") return;

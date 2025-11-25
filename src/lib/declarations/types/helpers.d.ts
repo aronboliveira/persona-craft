@@ -45,9 +45,9 @@ export type StorySettingStyleAbbr =
   | "ftr"
   | "spop"
   | "spod";
-export type Gender = "female" | "masculine" | "nonbinary";
+export type Gender = "female" | "masculine" | "nonBinary";
 export type GenderAbbr = "fm" | "m" | "nb";
-export type QuestionId = "stl" | "gd" | "bft";
+export type QuestionId = "stl" | "gd" | "msc" | "bft" | "hgt";
 export type Symmetry = "asymmetrical" | "symmetrical";
 export type Side = "left" | "right" | "both";
 export type StringStyleKeys = {
@@ -56,3 +56,7 @@ export type StringStyleKeys = {
     : never;
 }[keyof CSSStyleDeclaration];
 export type RTouchEvent<T> = TouchEvent<T> | React.TouchEvent<T>;
+export type ValidateGdAbbrKeys = {
+  [K in Gender]: K extends keyof typeof GdAbbr ? true : never;
+};
+export type ImageFormat = "png" | "jpg" | "jpeg" | "webp" | "gif";

@@ -1,17 +1,16 @@
-import { JSX, memo, useEffect, useState } from "react";
+import { JSX, memo } from "react"; // * removed useEffect/useState; component is now fully controlled via props
 import { CLASSES } from "../../lib/data/classes";
 import { OptionFigureProps } from "../../lib/declarations/interfaces/components";
 import { Card, CardMedia, Radio } from "@mui/material";
+
 const OptionFigure = (props: OptionFigureProps): JSX.Element => {
-  const [checked, setChecked] = useState(props.checked || false);
-  useEffect(() => {
-    setChecked(props.checked || false);
-  }, [props.checked]);
+  const isChecked = !!props.checked; // * derive checked flag directly from the prop
+
   return (
     <Card
       component={"figure"}
-      variant={checked ? "outlined" : undefined}
-      sx={{ borderWidth: checked ? 2 : 1 }}
+      variant={isChecked ? "outlined" : undefined} // * visual selection is driven by isChecked
+      sx={{ borderWidth: isChecked ? 2 : 1 }} // * thicker border when selected
       className={`option-figure ${props.figureAddClasses?.join(" ")}`}
     >
       <label
@@ -22,7 +21,7 @@ const OptionFigure = (props: OptionFigureProps): JSX.Element => {
           className={CLASSES.IMG_RD_INP}
           id={`${props.prefix}_${props.suffix}`}
           value={props.value ? props.value : "false"}
-          checked={props.checked || false}
+          checked={isChecked} // * radio is controlled by parent (Redux) instead of internal state
           onChange={props.handleChange}
           name={props.name}
           {...props.inpAddProps}
@@ -33,7 +32,7 @@ const OptionFigure = (props: OptionFigureProps): JSX.Element => {
           height={512}
           loading="lazy"
           decoding="async"
-          className="option-figure-img"
+          className={CLASSES.OPT_FIMG}
           src={props.src}
           {...props.imgAddProps}
           style={{
@@ -47,4 +46,5 @@ const OptionFigure = (props: OptionFigureProps): JSX.Element => {
     </Card>
   );
 };
+
 export default memo(OptionFigure);

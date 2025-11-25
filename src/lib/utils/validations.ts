@@ -5,6 +5,7 @@ import { AvailableLang } from "../declarations/types/utils";
 export function ValidateLang(l: string): l is AvailableLang {
   return ["en", "pt", "es", "fr", "zh"].includes(l);
 }
+
 export function ValidateImgStyle(v: string): v is ImageStyle {
   return (
     [
@@ -17,10 +18,13 @@ export function ValidateImgStyle(v: string): v is ImageStyle {
     ] as ImageStyle[]
   ).includes(v as any);
 }
+
 export function ValidateGender(v: string): v is Gender {
-  return (["female", "male", "nonBinary"] as Gender[]).includes(v as any);
+  return (["female", "masculine", "nonBinary"] as Gender[]).includes(v as any); // * align with Gender type ("masculine" instead of the never-used "male")
 }
+
 export const isElement = (nd: NNd): nd is Element => nd?.nodeType === 1;
+
 export function hasOrInsideClass(el: NNd, cls: string): NEl {
   if (!isElement(el)) return null;
   if (el instanceof Element) {
