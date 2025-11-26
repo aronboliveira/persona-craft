@@ -37,6 +37,8 @@ import {
 } from "../redux/mainStore/slices/formStrategySlice";
 import { FormState } from "../lib/declarations/types/redux";
 import { useOptionGrid } from "../lib/hooks/mount/useOptsGrid";
+import HeightForm from "../components/forms/HeightForm";
+import BodyFatForm from "../components/forms/BodyFatForm";
 
 export default function Forms(): JSX.Element {
   useOpacityTransition();
@@ -85,6 +87,10 @@ export default function Forms(): JSX.Element {
           return <GenderForm />;
         case BodyTypeMuscleForm.name:
           return <BodyTypeMuscleForm />;
+        case HeightForm.name:
+          return <HeightForm />;
+        case BodyFatForm.name:
+          return <BodyFatForm />;
         default:
           return (
             <div className="text-error">
@@ -157,8 +163,6 @@ export default function Forms(): JSX.Element {
                   <Button color="warning" onClick={handleReset}>
                     {GENERIC_DICT[lang].reset}
                   </Button>
-                  // * "Return" now navigates to the previous form instead of
-                  resetting the flow
                   <Button color="info" onClick={handlePrevious}>
                     {GENERIC_DICT[lang].return}
                   </Button>

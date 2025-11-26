@@ -1,9 +1,9 @@
-import { BodyMuscleTypes } from "../types/anatomy";
+import { BodyFat, BodyMuscleTypes } from "../types/anatomy";
 import { Gender } from "../types/helpers";
 export interface Character {
   gender: Gender;
   height: BodyHeight;
-  weight: "light" | "medium" | "heavy";
+  weight: BodyFat;
   age: "child" | "teen" | "adult" | "senior";
   muscle: BodyMuscleTypes;
 }
