@@ -1,11 +1,13 @@
-// import { OptDict } from "../declarations/interfaces/utils";
 import {
   BodyFat,
   BodyHeight,
   BodyMuscleTypes,
   HairBangDensity,
   HairBangLength,
+  HairBangShape,
+  HairLength,
   HairTexture,
+  HairTidiness,
 } from "../declarations/types/anatomy";
 import {
   Gender,
@@ -25,21 +27,17 @@ export const styleSets = Object.seal([
   "skt",
   "sr",
 ]) as StyleSets[];
-
 export const gds = [
   "female",
   "masculine",
   "nonBinary",
 ] as const satisfies Gender[];
-
 export const gdAbbrs = ["fm", "m", "nb"] as const satisfies GenderAbbr[];
-
 export enum GdAbbr {
   female = "fm",
   masculine = "m",
   nonBinary = "nb",
 }
-
 export const mscLvls = [
   "average",
   "frail",
@@ -47,14 +45,12 @@ export const mscLvls = [
   "athletic",
   "herculean",
 ] as const satisfies BodyMuscleTypes[];
-
 export const bdTps = [
   "thin",
   "scrawny",
   "thick",
   "obese",
-] as const satisfies BodyFat[]; // * removed duplicated "thin" previously
-
+] as const satisfies BodyFat[];
 export const hrTxt = [
   "straight",
   "straight-wavy",
@@ -66,7 +62,21 @@ export const hrTxt = [
   "afro",
   "kinky-straight",
 ] as const satisfies HairTexture[];
-
+export const hrLng = [
+  "bald",
+  "very-short",
+  "short",
+  "medium",
+  "long",
+  "very-long",
+  "extremely-long",
+] as const satisfies HairLength[];
+export const hrTd = [
+  "done",
+  "tousled",
+  "frizzy",
+  "disheveled",
+] as const satisfies HairTidiness[];
 export const hrBgLg = [
   "micro",
   "short",
@@ -77,7 +87,6 @@ export const hrBgLg = [
   "lash-length",
   "lip-length",
 ] as const satisfies HairBangLength[];
-
 export const hrBgDs = [
   "full",
   "fringe",
@@ -85,14 +94,21 @@ export const hrBgDs = [
   "wispy",
   "absent",
 ] as const satisfies HairBangDensity[];
-
+export const hrBgSp = [
+  "blunt",
+  "arched",
+  "feathered",
+  "curtain",
+  "side-swept",
+  "asymmetrical",
+] as const satisfies HairBangShape[];
 export const bdHgt = [
   "dwarfic",
   "short",
   "average",
   "tall",
   "colossal",
-] as const satisfies BodyHeight[]; // * new height levels
+] as const satisfies BodyHeight[];
 export const DEFAULT_OPTS: OptsMap<Exclude<QuestionId, "bft">> = Object.freeze(
   (() => {
     return {
@@ -103,13 +119,11 @@ export const DEFAULT_OPTS: OptsMap<Exclude<QuestionId, "bft">> = Object.freeze(
     };
   })()
 );
-
 export const genderDetails = {
   female: { friendlyName: "Feminine" },
   masculine: { friendlyName: "Masculine" },
   nonBinary: { friendlyName: "Non-binary" },
 } as const satisfies Record<Gender, { friendlyName: string }>;
-
 export const muscleDetails = {
   average: { friendlyName: "Average" },
   frail: { friendlyName: "Frail" },
@@ -117,9 +131,7 @@ export const muscleDetails = {
   athletic: { friendlyName: "Athletic" },
   herculean: { friendlyName: "Herculean" },
 } as const satisfies Record<BodyMuscleTypes, { friendlyName: string }>;
-
 const imgBasePath = "/imgs";
-
 export const FORMS_OPTS: Record<
   QuestionId,
   object | ((...args: any[]) => object)

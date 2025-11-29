@@ -11,9 +11,12 @@ const initialState: PromptState = {
     muscle: "average",
     hair: {
       texture: "straight",
+      length: "medium",
+      tidiness: "done",
       bang: {
         density: "wispy",
         length: "lash-length",
+        shape: "curtain",
       },
     },
   },

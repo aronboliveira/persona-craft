@@ -181,6 +181,7 @@ export type HairTexture =
   | "kinky-curly"
   | "afro"
   | "kinky-straight";
+export type HairTidiness = "done" | "tousled" | "frizzy" | "disheveled";
 export type HairBangDensity = "full" | "fringe" | "piecey" | "wispy" | "absent";
 export type HairBangLength =
   | "micro"
@@ -191,3 +192,18 @@ export type HairBangLength =
   | "lash-length"
   | "cheekbone-length"
   | "lip-length";
+export type HairBangShape =
+  | "blunt"
+  | "arched"
+  | "feathered"
+  | "curtain"
+  | "side-swept"
+  | "asymmetrical";
+export type HairLength =
+  | "bald"
+  | "very-short"
+  | "short"
+  | "medium"
+  | "long"
+  | "very-long"
+  | "extremely-long";

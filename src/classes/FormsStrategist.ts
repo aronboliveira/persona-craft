@@ -9,6 +9,9 @@ import BodyFatForm from "../components/forms/BodyFatForm";
 import HairTextureForm from "../components/forms/hair/HairTextureForm";
 import HairBangDensityForm from "../components/forms/hair/HairBangDensityForm";
 import HairBangLengthForm from "../components/forms/hair/HairBangLengthForm";
+import HairBangShapeForm from "../components/forms/hair/HairBangShapeForm";
+import HairTidinessForm from "../components/forms/hair/HairTidiness";
+import HairLengthForm from "../components/forms/hair/HairLengthForm";
 
 export default class FormsStrategist implements UIRenderingStrategy {
   render(context: Partial<PromptState & { order: number }>): string {
@@ -27,10 +30,16 @@ export default class FormsStrategist implements UIRenderingStrategy {
       case 5:
         return HairTextureForm.name;
       case 6:
-        return HairBangDensityForm.name;
+        return HairLengthForm.name;
       case 7:
-        return HairBangLengthForm.name;
+        return HairTidinessForm.name;
       case 8:
+        return HairBangDensityForm.name;
+      case 9:
+        return HairBangLengthForm.name;
+      case 10:
+        return HairBangShapeForm.name;
+      case 11:
         return NarrativeForm.name;
       default:
         return "";

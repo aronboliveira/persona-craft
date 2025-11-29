@@ -1,11 +1,9 @@
-// src/components/forms/HairBangLengthForm.tsx
-
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../../errors/GenericErrorComponent";
 import { useCallback, useMemo, RefObject, ChangeEvent, JSX } from "react";
 import { FORM_DICT } from "../../../lib/states/lang/forms";
 import { GENERIC_DICT } from "../../../lib/states/lang/generic";
-import { HairBangLength } from "../../../lib/declarations/types/anatomy";
+import { HairTidiness } from "../../../lib/declarations/types/anatomy";
 import { updatePrompt } from "../../../redux/mainStore/slices/promptSlice";
 import { CLASSES } from "../../../lib/data/classes";
 import { useAppDispatch, useAppSelector } from "../../../redux/mainStore/hooks";
@@ -15,35 +13,31 @@ import { useOptFormCtx } from "../../../lib/hooks/contexts/useOptFormCtx";
 import OptionFieldset from "../../bloc/OptionFieldset";
 import OptionFigure from "../../bloc/OptionFigure";
 import Forms from "../../../pages/Forms";
-import { hrBgLg } from "../../../lib/data/opts";
-import { HairBangLengthOption } from "../../../lib/declarations/interfaces/anatomy";
-export default function HairBangLengthForm(): JSX.Element {
+import { hrTd } from "../../../lib/data/opts";
+import { HairTidinessOption } from "../../../lib/declarations/interfaces/anatomy";
+export default function HairTidinessForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
-      layoutParams: ["hairBangLengthForm"],
+      layoutParams: ["hairTidinessForm"],
     }),
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
-    lengthOptions = useMemo<HairBangLengthOption[]>(() => {
-      const basePath = "/imgs/hair/bang-length", // expects /public/imgs/hair/bang-length/{key}.png
-        labelMap: Record<HairBangLength, string> = {
-          micro: "Micro",
-          short: "Short",
-          "eyebrow-skimming": "Eyebrow-skimming",
-          "blunt-cut": "Blunt cut",
-          "blunt-across": "Blunt across",
-          "lash-length": "Lash-length",
-          "cheekbone-length": "Cheekbone-length",
-          "lip-length": "Lip-length",
+    tidinessOptions = useMemo<HairTidinessOption[]>(() => {
+      const basePath = "/imgs/hair/tidiness",
+        labelMap: Record<HairTidiness, string> = {
+          done: "Neatly done",
+          tousled: "Tousled",
+          frizzy: "Frizzy",
+          disheveled: "Disheveled",
         };
-      return hrBgLg.map(key => ({
+      return hrTd.map(key => ({
         key,
         friendlyName: labelMap[key],
         src: `${basePath}/${key}.png`,
       }));
     }, []),
-    handleBangLengthChange = useCallback(
+    handleTidinessChange = useCallback(
       (e: ChangeEvent<HTMLInputElement>): void => {
-        const value = e.target.value as HairBangLength;
+        const value = e.target.value as HairTidiness;
         dispatch(
           updatePrompt({
             character: {
@@ -51,14 +45,10 @@ export default function HairBangLengthForm(): JSX.Element {
               hair: {
                 ...(state.character.hair ?? {
                   texture: "wavy" as any,
+                  tidiness: "done" as any,
                   bang: { density: "full" as any, length: "short" as any },
                 }),
-                bang: {
-                  ...(state.character.hair?.bang ?? {
-                    density: "full" as any,
-                  }),
-                  length: value,
-                },
+                tidiness: value,
               },
             },
           })
@@ -66,8 +56,8 @@ export default function HairBangLengthForm(): JSX.Element {
       },
       [dispatch, state.character]
     ),
-    selectedLength = state.character.hair?.bang?.length as
-      | HairBangLength
+    selectedTidiness = state.character.hair?.tidiness as
+      | HairTidiness
       | undefined;
   return (
     <ErrorBoundary
@@ -80,25 +70,25 @@ export default function HairBangLengthForm(): JSX.Element {
     >
       <fieldset
         ref={formRef as RefObject<HTMLFieldSetElement>}
-        id="hairBangLengthForm"
+        id="hairTidinessForm"
       >
-        <Forms.Header containerId="hblLeg" id="hblLegStack">
-          {FORM_DICT[lang as keyof typeof FORM_DICT]?.hbl ??
-            "What is the bang length of your character?"}
+        <Forms.Header containerId="htdLeg" id="htdLegStack">
+          {FORM_DICT[lang as keyof typeof FORM_DICT]?.htd ??
+            "What is the hair tidiness of your character?"}
         </Forms.Header>
-        <OptionFieldset selector="hbl">
-          {lengthOptions.map((opt, i) => {
-            const isChecked = selectedLength === opt.key;
+        <OptionFieldset selector="htd">
+          {tidinessOptions.map((opt, i) => {
+            const isChecked = selectedTidiness === opt.key;
             return (
               <OptionFigure
                 key={opt.key}
                 figureAddClasses={[CLASSES.STL_OPT]}
-                prefix="hbl"
+                prefix="htd"
                 suffix={`${i + 1}`}
                 value={opt.key}
                 checked={isChecked}
-                handleChange={handleBangLengthChange}
-                name="hbl"
+                handleChange={handleTidinessChange}
+                name="htd"
                 src={opt.src}
                 caption={opt.friendlyName}
                 imgAddProps={{
@@ -112,7 +102,7 @@ export default function HairBangLengthForm(): JSX.Element {
           })}
         </OptionFieldset>
       </fieldset>
-      <Forms.Result variable={selectedLength ?? ""} />
+      <Forms.Result variable={selectedTidiness ?? ""} />
     </ErrorBoundary>
   );
 }

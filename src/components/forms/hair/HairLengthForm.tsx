@@ -1,11 +1,11 @@
-// src/components/forms/HairBangLengthForm.tsx
+// src/components/forms/HairLengthForm.tsx
 
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../../errors/GenericErrorComponent";
 import { useCallback, useMemo, RefObject, ChangeEvent, JSX } from "react";
 import { FORM_DICT } from "../../../lib/states/lang/forms";
 import { GENERIC_DICT } from "../../../lib/states/lang/generic";
-import { HairBangLength } from "../../../lib/declarations/types/anatomy";
+import { HairLength } from "../../../lib/declarations/types/anatomy";
 import { updatePrompt } from "../../../redux/mainStore/slices/promptSlice";
 import { CLASSES } from "../../../lib/data/classes";
 import { useAppDispatch, useAppSelector } from "../../../redux/mainStore/hooks";
@@ -15,35 +15,34 @@ import { useOptFormCtx } from "../../../lib/hooks/contexts/useOptFormCtx";
 import OptionFieldset from "../../bloc/OptionFieldset";
 import OptionFigure from "../../bloc/OptionFigure";
 import Forms from "../../../pages/Forms";
-import { hrBgLg } from "../../../lib/data/opts";
-import { HairBangLengthOption } from "../../../lib/declarations/interfaces/anatomy";
-export default function HairBangLengthForm(): JSX.Element {
+import { hrLng } from "../../../lib/data/opts";
+import { HairLengthOption } from "../../../lib/declarations/interfaces/anatomy";
+export default function HairLengthForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
-      layoutParams: ["hairBangLengthForm"],
+      layoutParams: ["hairLengthForm"],
     }),
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
-    lengthOptions = useMemo<HairBangLengthOption[]>(() => {
-      const basePath = "/imgs/hair/bang-length", // expects /public/imgs/hair/bang-length/{key}.png
-        labelMap: Record<HairBangLength, string> = {
-          micro: "Micro",
+    lengthOptions = useMemo<HairLengthOption[]>(() => {
+      const basePath = "/imgs/hair/length",
+        labelMap: Record<HairLength, string> = {
+          bald: "Bald",
+          "very-short": "Very short",
           short: "Short",
-          "eyebrow-skimming": "Eyebrow-skimming",
-          "blunt-cut": "Blunt cut",
-          "blunt-across": "Blunt across",
-          "lash-length": "Lash-length",
-          "cheekbone-length": "Cheekbone-length",
-          "lip-length": "Lip-length",
+          medium: "Medium",
+          long: "Long",
+          "very-long": "Very long",
+          "extremely-long": "Extremely long",
         };
-      return hrBgLg.map(key => ({
+      return hrLng.map(key => ({
         key,
         friendlyName: labelMap[key],
         src: `${basePath}/${key}.png`,
       }));
     }, []),
-    handleBangLengthChange = useCallback(
+    handleLengthChange = useCallback(
       (e: ChangeEvent<HTMLInputElement>): void => {
-        const value = e.target.value as HairBangLength;
+        const value = e.target.value as HairLength;
         dispatch(
           updatePrompt({
             character: {
@@ -51,14 +50,15 @@ export default function HairBangLengthForm(): JSX.Element {
               hair: {
                 ...(state.character.hair ?? {
                   texture: "wavy" as any,
-                  bang: { density: "full" as any, length: "short" as any },
-                }),
-                bang: {
-                  ...(state.character.hair?.bang ?? {
+                  length: "medium" as any,
+                  tidiness: "done" as any,
+                  bang: {
                     density: "full" as any,
-                  }),
-                  length: value,
-                },
+                    length: "short" as any,
+                    shape: "blunt" as any,
+                  },
+                }),
+                length: value,
               },
             },
           })
@@ -66,9 +66,7 @@ export default function HairBangLengthForm(): JSX.Element {
       },
       [dispatch, state.character]
     ),
-    selectedLength = state.character.hair?.bang?.length as
-      | HairBangLength
-      | undefined;
+    selectedLength = state.character.hair?.length as HairLength | undefined;
   return (
     <ErrorBoundary
       onError={(error, errorInfo) => {
@@ -80,25 +78,25 @@ export default function HairBangLengthForm(): JSX.Element {
     >
       <fieldset
         ref={formRef as RefObject<HTMLFieldSetElement>}
-        id="hairBangLengthForm"
+        id="hairLengthForm"
       >
-        <Forms.Header containerId="hblLeg" id="hblLegStack">
-          {FORM_DICT[lang as keyof typeof FORM_DICT]?.hbl ??
-            "What is the bang length of your character?"}
+        <Forms.Header containerId="hlnLeg" id="hlnLegStack">
+          {FORM_DICT[lang as keyof typeof FORM_DICT]?.hln ??
+            "What is the hair length of your character?"}
         </Forms.Header>
-        <OptionFieldset selector="hbl">
+        <OptionFieldset selector="hln">
           {lengthOptions.map((opt, i) => {
             const isChecked = selectedLength === opt.key;
             return (
               <OptionFigure
                 key={opt.key}
                 figureAddClasses={[CLASSES.STL_OPT]}
-                prefix="hbl"
+                prefix="hln"
                 suffix={`${i + 1}`}
                 value={opt.key}
                 checked={isChecked}
-                handleChange={handleBangLengthChange}
-                name="hbl"
+                handleChange={handleLengthChange}
+                name="hln"
                 src={opt.src}
                 caption={opt.friendlyName}
                 imgAddProps={{

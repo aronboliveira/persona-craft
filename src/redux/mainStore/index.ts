@@ -4,23 +4,23 @@ import formStrategyReducer from "./slices/formStrategySlice";
 import tipsReducer from "./slices/tipsSlice";
 export const STG_KEY = "promptCreatorPromptState";
 export const formsStore = configureStore({
+  devTools: import.meta.env.DEV,
+  preloadedState: ((): any => {
+    try {
+      const raw = sessionStorage.getItem(STG_KEY);
+      if (!raw) return undefined;
+      const parsed = JSON.parse(raw) as any;
+      return parsed;
+    } catch (error) {
+      console.error("Failed to parse forms state from sessionStorage:", error);
+      return undefined;
+    }
+  })(),
   reducer: combineReducers({
     prompt: promptReducer, // ? promptSlice.reducer
     formStrategy: formStrategyReducer,
     tips: tipsReducer,
   }) as any,
-  devTools: import.meta.env.DEV,
-  preloadedState: ((): any => {
-    try {
-      const raw = localStorage.getItem(STG_KEY);
-      if (!raw) return undefined;
-      const parsed = JSON.parse(raw) as any;
-      return parsed;
-    } catch (error) {
-      console.error("Failed to parse forms state from localStorage:", error);
-      return undefined;
-    }
-  })(),
   middleware: getDefaultMiddleware => {
     console.log("MIDDLEWARE");
     return getDefaultMiddleware({
@@ -39,7 +39,7 @@ formsStore.subscribe(() => {
   window.clearTimeout(timer);
   timer = window.setTimeout(() => {
     try {
-      localStorage.setItem(STG_KEY, JSON.stringify(state));
+      sessionStorage.setItem(STG_KEY, JSON.stringify(state));
     } catch {
       // fail silently
     }

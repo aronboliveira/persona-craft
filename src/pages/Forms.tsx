@@ -42,6 +42,9 @@ import BodyFatForm from "../components/forms/BodyFatForm";
 import HairTextureForm from "../components/forms/hair/HairTextureForm";
 import HairBangDensityForm from "../components/forms/hair/HairBangDensityForm";
 import HairBangLengthForm from "../components/forms/hair/HairBangLengthForm";
+import HairTidinessForm from "../components/forms/hair/HairTidiness";
+import HairBangShapeForm from "../components/forms/hair/HairBangShapeForm";
+import HairLengthForm from "../components/forms/hair/HairLengthForm";
 
 export default function Forms(): JSX.Element {
   useOpacityTransition();
@@ -83,7 +86,9 @@ export default function Forms(): JSX.Element {
     strategistRef = useRef<FormsStrategist | null>(strategist),
     selectedForm = useMemo<JSX.Element>(() => {
       strategistRef.current ??= new FormsStrategist();
-      switch (strategistRef.current.render({ order: stateOrder })) {
+      switch (
+        strategistRef.current.render({ order: stateOrder }) // ? this is a custom method, not a React.Root.prototype.render
+      ) {
         case MainStyleForm.name:
           return <MainStyleForm />;
         case GenderForm.name:
@@ -96,10 +101,16 @@ export default function Forms(): JSX.Element {
           return <BodyFatForm />;
         case HairTextureForm.name:
           return <HairTextureForm />;
+        case HairLengthForm.name:
+          return <HairLengthForm />;
+        case HairTidinessForm.name:
+          return <HairTidinessForm />;
         case HairBangDensityForm.name:
           return <HairBangDensityForm />;
         case HairBangLengthForm.name:
           return <HairBangLengthForm />;
+        case HairBangShapeForm.name:
+          return <HairBangShapeForm />;
         default:
           return (
             <div className="text-error">

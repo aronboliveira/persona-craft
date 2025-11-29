@@ -36,8 +36,31 @@ import {
   HairBangDensity,
   HairTexture,
   HairBangLength,
+  HairTidiness,
+  HairBangShape,
+  HairLength,
 } from "../types/anatomy";
 import { Side } from "../types/helpers";
+export interface HairLengthOption {
+  key: HairLength;
+  friendlyName: string;
+  src: string;
+}
+export interface HairBangShapeOption {
+  key: HairBangShape;
+  friendlyName: string;
+  src: string;
+}
+export interface HairTidinessOption {
+  key: HairTidiness;
+  friendlyName: string;
+  src: string;
+}
+export interface HairBangLengthOption {
+  key: HairBangLength;
+  friendlyName: string;
+  src: string;
+}
 export interface HairBangOption {
   key: HairBangDensity;
   friendlyName: string;
@@ -46,9 +69,12 @@ export interface HairBangOption {
 export interface HairBang {
   density: HairBangDensity;
   length: HairBangLength;
+  shape: HairBangShape;
 }
 export interface Hair {
   texture: HairTexture;
+  length: HairLength;
+  tidiness: HairTidiness;
   bang: HairBang;
 }
 export interface BodyFatOption {
