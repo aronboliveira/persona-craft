@@ -6,9 +6,16 @@ const initialState: PromptState = {
   character: {
     gender: "female",
     height: "average",
-    weight: "medium",
+    weight: "thin",
     age: "adult",
     muscle: "average",
+    hair: {
+      texture: "straight",
+      bang: {
+        density: "wispy",
+        length: "lash-length",
+      },
+    },
   },
   environment: {
     type: "indoor",

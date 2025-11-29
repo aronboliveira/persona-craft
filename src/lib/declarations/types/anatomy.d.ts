@@ -171,3 +171,23 @@ export type ChinHeight =
 export type ChinCleft = "absent" | "shallow" | "deep";
 export type LipTuberculeProminence = "absent" | "traced" | "mild" | "prominent";
 export type LipTuberculeShape = "rounded" | "flat-top" | "peaked" | "angular";
+export type HairTexture =
+  | "straight"
+  | "straight-wavy"
+  | "body-wavy"
+  | "wavy"
+  | "deep-wavy"
+  | "deep-curly"
+  | "kinky-curly"
+  | "afro"
+  | "kinky-straight";
+export type HairBangDensity = "full" | "fringe" | "piecey" | "wispy" | "absent";
+export type HairBangLength =
+  | "micro"
+  | "short"
+  | "eyebrow-skimming"
+  | "blunt-cut"
+  | "blunt-across"
+  | "lash-length"
+  | "cheekbone-length"
+  | "lip-length";

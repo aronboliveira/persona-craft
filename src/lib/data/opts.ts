@@ -3,6 +3,9 @@ import {
   BodyFat,
   BodyHeight,
   BodyMuscleTypes,
+  HairBangDensity,
+  HairBangLength,
+  HairTexture,
 } from "../declarations/types/anatomy";
 import {
   Gender,
@@ -51,6 +54,37 @@ export const bdTps = [
   "thick",
   "obese",
 ] as const satisfies BodyFat[]; // * removed duplicated "thin" previously
+
+export const hrTxt = [
+  "straight",
+  "straight-wavy",
+  "body-wavy",
+  "wavy",
+  "deep-wavy",
+  "deep-curly",
+  "kinky-curly",
+  "afro",
+  "kinky-straight",
+] as const satisfies HairTexture[];
+
+export const hrBgLg = [
+  "micro",
+  "short",
+  "blunt-across",
+  "blunt-cut",
+  "cheekbone-length",
+  "eyebrow-skimming",
+  "lash-length",
+  "lip-length",
+] as const satisfies HairBangLength[];
+
+export const hrBgDs = [
+  "full",
+  "fringe",
+  "piecey",
+  "wispy",
+  "absent",
+] as const satisfies HairBangDensity[];
 
 export const bdHgt = [
   "dwarfic",

@@ -16,13 +16,7 @@ import OptionFieldset from "../bloc/OptionFieldset";
 import OptionFigure from "../bloc/OptionFigure";
 import Forms from "../../pages/Forms";
 import { bdTps } from "../../lib/data/opts";
-
-type BodyFatOption = {
-  key: BodyFat;
-  friendlyName: string;
-  src: string;
-};
-
+import { BodyFatOption } from "../../lib/declarations/interfaces/anatomy";
 export default function BodyFatForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
     layoutParams: ["bodyFatForm"],

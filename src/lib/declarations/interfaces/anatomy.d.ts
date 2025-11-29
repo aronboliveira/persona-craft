@@ -1,4 +1,5 @@
 import {
+  BodyFat,
   EyeColor,
   EyeDepth,
   EyeEpicanthicFoldExtension,
@@ -32,8 +33,29 @@ import {
   EyebrowArchDistance,
   LipTuberculeProminence,
   LipTuberculeShape,
+  HairBangDensity,
+  HairTexture,
+  HairBangLength,
 } from "../types/anatomy";
 import { Side } from "../types/helpers";
+export interface HairBangOption {
+  key: HairBangDensity;
+  friendlyName: string;
+  src: string;
+}
+export interface HairBang {
+  density: HairBangDensity;
+  length: HairBangLength;
+}
+export interface Hair {
+  texture: HairTexture;
+  bang: HairBang;
+}
+export interface BodyFatOption {
+  key: BodyFat;
+  friendlyName: string;
+  src: string;
+}
 export interface EyebrowSlit {
   number: EyebrowSlitNumber;
   angle: EyebrowSlitAngle;

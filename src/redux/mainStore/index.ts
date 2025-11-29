@@ -5,7 +5,7 @@ import tipsReducer from "./slices/tipsSlice";
 export const STG_KEY = "promptCreatorPromptState";
 export const formsStore = configureStore({
   reducer: combineReducers({
-    prompt: promptReducer,
+    prompt: promptReducer, // ? promptSlice.reducer
     formStrategy: formStrategyReducer,
     tips: tipsReducer,
   }) as any,

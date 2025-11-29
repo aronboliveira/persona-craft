@@ -39,6 +39,9 @@ import { FormState } from "../lib/declarations/types/redux";
 import { useOptionGrid } from "../lib/hooks/mount/useOptsGrid";
 import HeightForm from "../components/forms/HeightForm";
 import BodyFatForm from "../components/forms/BodyFatForm";
+import HairTextureForm from "../components/forms/hair/HairTextureForm";
+import HairBangDensityForm from "../components/forms/hair/HairBangDensityForm";
+import HairBangLengthForm from "../components/forms/hair/HairBangLengthForm";
 
 export default function Forms(): JSX.Element {
   useOpacityTransition();
@@ -91,6 +94,12 @@ export default function Forms(): JSX.Element {
           return <HeightForm />;
         case BodyFatForm.name:
           return <BodyFatForm />;
+        case HairTextureForm.name:
+          return <HairTextureForm />;
+        case HairBangDensityForm.name:
+          return <HairBangDensityForm />;
+        case HairBangLengthForm.name:
+          return <HairBangLengthForm />;
         default:
           return (
             <div className="text-error">

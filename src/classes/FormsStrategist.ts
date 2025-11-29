@@ -6,6 +6,9 @@ import BodyTypeMuscleForm from "../components/forms/BodyTypeMuscleForm";
 import NarrativeForm from "../components/forms/NarrativeForm";
 import HeightForm from "../components/forms/HeightForm";
 import BodyFatForm from "../components/forms/BodyFatForm";
+import HairTextureForm from "../components/forms/hair/HairTextureForm";
+import HairBangDensityForm from "../components/forms/hair/HairBangDensityForm";
+import HairBangLengthForm from "../components/forms/hair/HairBangLengthForm";
 
 export default class FormsStrategist implements UIRenderingStrategy {
   render(context: Partial<PromptState & { order: number }>): string {
@@ -22,6 +25,12 @@ export default class FormsStrategist implements UIRenderingStrategy {
       case 4:
         return BodyFatForm.name;
       case 5:
+        return HairTextureForm.name;
+      case 6:
+        return HairBangDensityForm.name;
+      case 7:
+        return HairBangLengthForm.name;
+      case 8:
         return NarrativeForm.name;
       default:
         return "";
