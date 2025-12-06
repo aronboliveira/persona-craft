@@ -19,6 +19,15 @@ const initialState: PromptState = {
         shape: "curtain",
       },
     },
+    head: {
+      forehead: {
+        hairline: {
+          height: "average",
+          recidingLevel: "straight",
+          shape: "rounded",
+        },
+      },
+    },
   },
   environment: {
     type: "indoor",

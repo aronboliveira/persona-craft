@@ -39,6 +39,9 @@ import {
   HairTidiness,
   HairBangShape,
   HairLength,
+  ForeheadHairlineHeight,
+  RecidingLevel,
+  ForeheadHairlineShape,
 } from "../types/anatomy";
 import { Side } from "../types/helpers";
 export interface HairLengthOption {
@@ -166,4 +169,31 @@ export interface Lip {
 }
 export interface Mouth {
   lip: Lip;
+}
+export interface ForeheadHairline {
+  height: ForeheadHairlineHeight;
+  recidingLevel: RecidingLevel;
+  shape: ForeheadHairlineShape;
+}
+export interface Forehead {
+  hairline: ForeheadHairline;
+}
+export interface Head {
+  forehead: Forehead;
+  // ... include mouth and eye
+}
+export interface ForeheadHairlineHeightOption {
+  key: ForeheadHairlineHeight;
+  friendlyName: string;
+  src: string;
+}
+export interface ForeheadHairlineRecidingOption {
+  key: RecidingLevel;
+  friendlyName: string;
+  src: string;
+}
+export interface ForeheadHairlineShapeOption {
+  key: ForeheadHairlineShape;
+  friendlyName: string;
+  src: string;
 }

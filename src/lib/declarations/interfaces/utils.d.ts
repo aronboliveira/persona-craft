@@ -1,13 +1,14 @@
-import { BodyFat, BodyMuscleTypes } from "../types/anatomy";
+import { Age, BodyFat, BodyMuscleTypes } from "../types/anatomy";
 import { Gender } from "../types/helpers";
-import { Hair } from "./anatomy";
+import { Hair, Head } from "./anatomy";
 export interface Character {
   gender: Gender;
   height: BodyHeight;
   weight: BodyFat;
-  age: "child" | "teen" | "adult" | "senior";
+  age: Age;
   muscle: BodyMuscleTypes;
   hair: Hair;
+  head: Head;
 }
 export interface Environment {
   type: "indoor" | "outdoor";

@@ -1,6 +1,18 @@
 import { gds, styleSets } from "../../data/opts";
 import { QuestionId } from "./helpers";
 
+export type BasicMetricVariation = "low" | "medium" | "high";
+export type AveragedMetricVariation =
+  | "very-low"
+  | Exclude<BasicMetricVariation, "medium">
+  | "very-high";
+export type BasicLengthVariation = "short" | "average" | "long";
+export type BasicSizeVariation =
+  | "very-small"
+  | "small"
+  | "average"
+  | "large"
+  | "very-large";
 export type AvailableLang = "en" | "pt" | "es" | "fr" | "zh";
 export type IdKeys = "FORM_ID" | "GENDER_FORM_ID";
 export type ClsKeys =

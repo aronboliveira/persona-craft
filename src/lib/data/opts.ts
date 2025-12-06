@@ -2,12 +2,15 @@ import {
   BodyFat,
   BodyHeight,
   BodyMuscleTypes,
+  ForeheadHairlineHeight,
+  ForeheadHairlineShape,
   HairBangDensity,
   HairBangLength,
   HairBangShape,
   HairLength,
   HairTexture,
   HairTidiness,
+  RecidingLevel,
 } from "../declarations/types/anatomy";
 import {
   Gender,
@@ -102,6 +105,30 @@ export const hrBgSp = [
   "side-swept",
   "asymmetrical",
 ] as const satisfies HairBangShape[];
+export const frHdLnHg = [
+  "low",
+  "average",
+  "high",
+] as const satisfies ForeheadHairlineHeight[];
+export const frHdLnRcvLv = [
+  "straight",
+  "bitemporal",
+  "complete",
+  "diffuse",
+  "square",
+  "square",
+  "triangular",
+] as const satisfies RecidingLevel[];
+export const frHdLnShp = [
+  "rounded",
+  "asymmetrical",
+  "cowlick",
+  "cowlick",
+  "m-shaped",
+  "u-shaped",
+  "widow-s-peak",
+  "zigzag",
+] as const satisfies ForeheadHairlineShape[];
 export const bdHgt = [
   "dwarfic",
   "short",

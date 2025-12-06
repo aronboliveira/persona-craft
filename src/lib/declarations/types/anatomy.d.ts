@@ -1,3 +1,10 @@
+import {
+  AveragedMetricVariation,
+  BasicLengthVariation,
+  BasicMetricVariation,
+  BasicSizeVariation,
+} from "./utils";
+
 export type BodyMuscleTypes =
   | "frail"
   | "weak"
@@ -8,9 +15,7 @@ export type BodyFat = "scrawny" | "skinny" | "thin" | "thick" | "obese";
 export type BodyHeight = "dwarfic" | "short" | "average" | "tall" | "colossal";
 export type EyebrowHairLength =
   | "minimal"
-  | "short"
-  | "average"
-  | "long"
+  | BasicLengthVariation
   | "extremely-long";
 export type EyebrowHeight =
   | "very-close"
@@ -35,12 +40,7 @@ export type EyebrowArchAngle =
   | "very-acute"
   | "extremely-acute"
   | "s-shaped";
-export type EyebrowArchHeight =
-  | "very-low"
-  | "low"
-  | "average"
-  | "high"
-  | "very-high";
+export type EyebrowArchHeight = AveragedMetricVariation;
 export type EyebrowArchDistance =
   | "even"
   | "almost-even"
@@ -72,7 +72,7 @@ export type EyeLidCreaseNumber =
   | "doublelid"
   | "triplelid"
   | "quadruplelid";
-export type EyelidCreaseHeight = "low" | "medium" | "high";
+export type EyelidCreaseHeight = BasicMetricVariation;
 export type EyeHood = "hooded" | "partially-hooded" | "unhooded";
 export type EyeBagCountor =
   | "flat"
@@ -90,9 +90,7 @@ export type EyeLashesDensity = "sparse" | "average" | "dense" | "voluminous";
 export type EyeLashesLength =
   | "absent"
   | "very-short"
-  | "short"
-  | "average"
-  | "long"
+  | BasicLengthVariation
   | "extra-long";
 export type EyeLashesCurl =
   | "straight"
@@ -102,19 +100,10 @@ export type EyeLashesCurl =
   | "upward-curled";
 export type EyeBallSize =
   | "extremely-small"
-  | "very-small"
-  | "small"
-  | "average"
-  | "large"
-  | "very-large"
+  | BasicSizeVariation
   | "extremely-large"
   | "absurdly-large";
-export type PupilSize =
-  | "very-small"
-  | "small"
-  | "average"
-  | "large"
-  | "very-large";
+export type PupilSize = BasicSizeVariation;
 export type PupilPattern =
   | "round"
   | "vertical-slit"
@@ -162,12 +151,7 @@ export type ChinWidth =
   | "medium"
   | "wide"
   | "very-wide";
-export type ChinHeight =
-  | "very-short"
-  | "short"
-  | "average"
-  | "long"
-  | "very-long";
+export type ChinHeight = "very-short" | BasicLengthVariation | "very-long";
 export type ChinCleft = "absent" | "shallow" | "deep";
 export type LipTuberculeProminence = "absent" | "traced" | "mild" | "prominent";
 export type LipTuberculeShape = "rounded" | "flat-top" | "peaked" | "angular";
@@ -207,3 +191,27 @@ export type HairLength =
   | "long"
   | "very-long"
   | "extremely-long";
+export type Age = "child" | "teen" | "adult" | "senior";
+export type ForeheadHairlineHeight =
+  | Exclude<BasicMetricVariation, "medium">
+  | "average";
+export type RecidingLevel =
+  | "straight"
+  | "triangular"
+  | "square"
+  | "bitemporal"
+  | "diffuse"
+  | "complete";
+export type ForeheadHairlineShape =
+  | "rounded"
+  | "m-shaped"
+  | "widow-s-peak"
+  | "zigzag"
+  | "cowlick"
+  | "u-shaped"
+  | "asymmetrical";
+export type DeepOptional<T> = T extends (...args: any[]) => infer R
+  ? (...args: Parameters<T>) => DeepOptional<R>
+  : T extends object
+  ? { [K in keyof T]?: DeepOptional<T[K]> }
+  : T;
