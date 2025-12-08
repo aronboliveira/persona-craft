@@ -45,6 +45,16 @@ import HairBangLengthForm from "../components/forms/hair/HairBangLengthForm";
 import HairTidinessForm from "../components/forms/hair/HairTidiness";
 import HairBangShapeForm from "../components/forms/hair/HairBangShapeForm";
 import HairLengthForm from "../components/forms/hair/HairLengthForm";
+import ForeheadHairlineHeightForm from "../components/forms/head/forehead/ForeheadHairLineHeightForm";
+import ForeheadHairlineRecidingForm from "../components/forms/head/forehead/ForeheadHairlineRecidingForm";
+import ForeheadHairlineShapeForm from "../components/forms/head/forehead/ForeheadHairlineShapeForm";
+import ForeheadHeightForm from "../components/forms/head/forehead/ForeheadHeightForm";
+import EyebrowArchAngleForm from "../components/forms/head/eye/brow/EyebrowArchAngleForm";
+import EyebrowDensityForm from "../components/forms/head/eye/brow/EyebrowDensityForm";
+import EyebrowGrowthDirectionForm from "../components/forms/head/eye/brow/EyebrowGrowthDirectionForm";
+import EyebrowGrowthPatternForm from "../components/forms/head/eye/brow/EyebrowGrowthPatternForm";
+import EyebrowArchDistanceForm from "../components/forms/head/eye/brow/EyebrowArchDistanceForm";
+import EyebrowArchHeightForm from "../components/forms/head/eye/brow/EyebrowArchHeightForm";
 
 export default function Forms(): JSX.Element {
   useOpacityTransition();
@@ -111,6 +121,26 @@ export default function Forms(): JSX.Element {
           return <HairBangLengthForm />;
         case HairBangShapeForm.name:
           return <HairBangShapeForm />;
+        case ForeheadHairlineHeightForm.name:
+          return <ForeheadHairlineHeightForm />;
+        case ForeheadHairlineRecidingForm.name:
+          return <ForeheadHairlineRecidingForm />;
+        case ForeheadHairlineShapeForm.name:
+          return <ForeheadHairlineShapeForm />;
+        case ForeheadHeightForm.name:
+          return <ForeheadHeightForm />;
+        case EyebrowArchAngleForm.name:
+          return <EyebrowArchAngleForm />;
+        case EyebrowDensityForm.name:
+          return <EyebrowDensityForm />;
+        case EyebrowGrowthDirectionForm.name:
+          return <EyebrowGrowthDirectionForm />;
+        case EyebrowGrowthPatternForm.name:
+          return <EyebrowGrowthPatternForm />;
+        case EyebrowArchDistanceForm.name:
+          return <EyebrowArchDistanceForm />;
+        case EyebrowArchHeightForm.name:
+          return <EyebrowArchHeightForm />;
         default:
           return (
             <div className="text-error">

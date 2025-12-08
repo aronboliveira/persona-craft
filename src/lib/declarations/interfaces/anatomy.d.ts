@@ -42,8 +42,10 @@ import {
   ForeheadHairlineHeight,
   RecidingLevel,
   ForeheadHairlineShape,
+  ForeheadHeight,
 } from "../types/anatomy";
 import { Side } from "../types/helpers";
+import { DeepPartial, FriendlyNamed } from "../types/utils";
 export interface HairLengthOption {
   key: HairLength;
   friendlyName: string;
@@ -97,8 +99,8 @@ export interface EyebrowGrowth {
 }
 export interface EyebrowArch {
   angle: EyebrowArchAngle;
-  height: EyebrowArchHeight;
   distance: EyebrowArchDistance;
+  height: EyebrowArchHeight;
 }
 export interface Eyebrow {
   density: EyebrowDensity;
@@ -154,9 +156,9 @@ export interface EyeBall {
   pupil: Pupil;
 }
 export interface Eye {
-  bag: EyeBag;
-  shape: EyeShape;
   ball: EyeBall;
+  shape: EyeShape;
+  bag: EyeBag;
   brow?: Eyebrow;
   lashes?: EyeLash;
 }
@@ -177,23 +179,45 @@ export interface ForeheadHairline {
 }
 export interface Forehead {
   hairline: ForeheadHairline;
+  height: ForeheadHeight;
 }
 export interface Head {
   forehead: Forehead;
-  // ... include mouth and eye
+  eye: DeepPartial<Eye>; //todo remove partial later
+  // ... include mouth
 }
 export interface ForeheadHairlineHeightOption {
   key: ForeheadHairlineHeight;
   friendlyName: string;
   src: string;
 }
-export interface ForeheadHairlineRecidingOption {
+export interface ForeheadHairlineRecidingOption extends FriendlyNamed {
   key: RecidingLevel;
-  friendlyName: string;
-  src: string;
 }
-export interface ForeheadHairlineShapeOption {
+export interface ForeheadHairlineShapeOption extends FriendlyNamed {
   key: ForeheadHairlineShape;
-  friendlyName: string;
-  src: string;
+}
+export interface ForeheadHeightOption extends FriendlyNamed {
+  key: ForeheadHeight;
+}
+export interface EyebrowDensityOption extends FriendlyNamed {
+  key: EyebrowDensity;
+}
+export interface EyebrowDensityOption extends FriendlyNamed {
+  key: EyebrowDensity;
+}
+export interface EyebrowGrowthPatternOption extends FriendlyNamed {
+  key: EyebrowGrowthPattern;
+}
+export interface EyebrowGrowthDirectionOption extends FriendlyNamed {
+  key: EyebrowGrowthDirection;
+}
+export interface EyebrowArchAngleOption extends FriendlyNamed {
+  key: EyebrowArchAngle;
+}
+export interface EyebrowArchDistanceOption extends FriendlyNamed {
+  key: EyebrowArchDistance;
+}
+export interface EyebrowArchHeightOption extends FriendlyNamed {
+  key: EyebrowArchHeight;
 }

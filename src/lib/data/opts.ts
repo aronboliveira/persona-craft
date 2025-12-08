@@ -2,8 +2,15 @@ import {
   BodyFat,
   BodyHeight,
   BodyMuscleTypes,
+  EyebrowArchAngle,
+  EyebrowArchDistance,
+  EyebrowArchHeight,
+  EyebrowDensity,
+  EyebrowGrowthDirection,
+  EyebrowGrowthPattern,
   ForeheadHairlineHeight,
   ForeheadHairlineShape,
+  ForeheadHeight,
   HairBangDensity,
   HairBangLength,
   HairBangShape,
@@ -129,6 +136,55 @@ export const frHdLnShp = [
   "widow-s-peak",
   "zigzag",
 ] as const satisfies ForeheadHairlineShape[];
+export const frHdHgt = [
+  "short",
+  "average",
+  "tall",
+  "very-tall",
+] as const satisfies ForeheadHeight[];
+export const eyeBrwDst = [
+  "absent",
+  "bare",
+  "light",
+  "medium",
+  "dense",
+  "bushy",
+] as const satisfies EyebrowDensity[];
+export const eyeBrwGrwtPtn = [
+  "even",
+  "center-heavy",
+  "front-heavy",
+  "tail-heavy",
+] as const satisfies EyebrowGrowthPattern[];
+export const eyeBrwGrwtDir = [
+  "upward",
+  "upward-lateral",
+  "lateral",
+  "downward",
+  "downward-lateral",
+  "radial",
+] as const satisfies EyebrowGrowthDirection[];
+export const eyeBrwGrwArcAng = [
+  "radial",
+  "obtuse",
+  "acute",
+  "very-acute",
+  "extremely-acute",
+  "s-shaped",
+] as const satisfies EyebrowArchAngle[];
+export const eyeBrwTipsDst = [
+  "almost-even",
+  "even",
+  "uneven",
+  "extremely-uneven",
+] as const satisfies EyebrowArchDistance[];
+export const eyeBrwArchHgt = [
+  "very-low",
+  "low",
+  "average",
+  "high",
+  "very-high",
+] as const satisfies EyebrowArchHeight[];
 export const bdHgt = [
   "dwarfic",
   "short",

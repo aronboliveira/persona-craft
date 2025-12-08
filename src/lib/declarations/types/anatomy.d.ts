@@ -1,5 +1,6 @@
 import {
   AveragedMetricVariation,
+  BasicHeightVariation,
   BasicLengthVariation,
   BasicMetricVariation,
   BasicSizeVariation,
@@ -12,7 +13,7 @@ export type BodyMuscleTypes =
   | "athletic"
   | "herculean";
 export type BodyFat = "scrawny" | "skinny" | "thin" | "thick" | "obese";
-export type BodyHeight = "dwarfic" | "short" | "average" | "tall" | "colossal";
+export type BodyHeight = "dwarfic" | BasicHeightVariation | "colossal";
 export type EyebrowHairLength =
   | "minimal"
   | BasicLengthVariation
@@ -210,8 +211,4 @@ export type ForeheadHairlineShape =
   | "cowlick"
   | "u-shaped"
   | "asymmetrical";
-export type DeepOptional<T> = T extends (...args: any[]) => infer R
-  ? (...args: Parameters<T>) => DeepOptional<R>
-  : T extends object
-  ? { [K in keyof T]?: DeepOptional<T[K]> }
-  : T;
+export type ForeheadHeight = BasicHeightVariation | "very-tall";

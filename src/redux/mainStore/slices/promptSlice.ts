@@ -1,6 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UpdateFields } from "../../../lib/declarations/types/redux";
 import { PromptState } from "../../../lib/declarations/interfaces/redux";
+import {
+  Eye,
+  Eyebrow,
+  Forehead,
+  Hair,
+} from "../../../lib/declarations/interfaces/anatomy";
+import { defaultEye, defaultForehead, defaultHair } from "../../data/defaults";
+import { DeepPartial } from "../../../lib/declarations/types/utils";
+import { CharacterBuilder } from "../../data/classes/facades/CharacterBuilder";
+import { CharacterValidator } from "../../data/classes/facades/CharacterValidator";
 const initialState: PromptState = {
   style: "anime",
   character: {
@@ -9,24 +19,10 @@ const initialState: PromptState = {
     weight: "thin",
     age: "adult",
     muscle: "average",
-    hair: {
-      texture: "straight",
-      length: "medium",
-      tidiness: "done",
-      bang: {
-        density: "wispy",
-        length: "lash-length",
-        shape: "curtain",
-      },
-    },
+    hair: defaultHair as Hair,
     head: {
-      forehead: {
-        hairline: {
-          height: "average",
-          recidingLevel: "straight",
-          shape: "rounded",
-        },
-      },
+      forehead: defaultForehead as Forehead,
+      eye: defaultEye as Eye,
     },
   },
   environment: {
@@ -48,7 +44,19 @@ const promptSlice = createSlice({
       ...initialState,
       updatedAt: Date.now(),
     }),
+    updateEye(s: PromptState, a: PayloadAction<DeepPartial<Eye>>): void {
+      CharacterBuilder.mergeEye(
+        CharacterValidator.ensureEye(s) as Eye,
+        a.payload
+      );
+      s.updatedAt = Date.now();
+    },
+    updateBrow(s: PromptState, a: PayloadAction<DeepPartial<Eyebrow>>): void {
+      CharacterBuilder.mergeBrow(CharacterValidator.ensureBrow(s), a.payload);
+      s.updatedAt = Date.now();
+    },
   },
 });
-export const { updatePrompt, resetPrompt } = promptSlice.actions;
+export const { updatePrompt, resetPrompt, updateEye, updateBrow } =
+  promptSlice.actions;
 export default promptSlice.reducer;

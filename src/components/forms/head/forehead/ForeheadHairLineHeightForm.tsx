@@ -20,10 +20,11 @@ import OptionFigure from "../../../bloc/OptionFigure";
 import Forms from "../../../../pages/Forms";
 import { frHdLnHg } from "../../../../lib/data/opts";
 import { ForeheadHairlineHeightOption } from "../../../../lib/declarations/interfaces/anatomy";
+import { DeepOptional } from "../../../../lib/declarations/types/utils";
 export default function ForeheadHairlineHeightForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
       layoutParams: ["foreheadHairlineHeightForm"],
-    }),
+    }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     heightOptions = useMemo<ForeheadHairlineHeightOption[]>(() => {
@@ -39,7 +40,9 @@ export default function ForeheadHairlineHeightForm(): JSX.Element {
         src: `${basePath}/${key}.png`,
       }));
     }, []),
-    handleHeightChange = useCallback(
+    handleHeightChange = useCallback<
+      DeepOptional<(e: ChangeEvent<HTMLInputElement>) => void>
+    >(
       (e: ChangeEvent<HTMLInputElement>): void => {
         const value = e.target.value as ForeheadHairlineHeight;
         dispatch(
@@ -116,7 +119,8 @@ export default function ForeheadHairlineHeightForm(): JSX.Element {
                 caption={opt.friendlyName}
                 imgAddProps={{
                   alt: `${opt.friendlyName} — ${
-                    GENERIC_DICT[lang]?.img ?? "Image"
+                    GENERIC_DICT[lang as keyof typeof GENERIC_DICT]?.img ??
+                    "Image"
                   }`,
                 }}
                 imgStyle={{ objectFit: "contain" }}

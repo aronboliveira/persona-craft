@@ -6,7 +6,6 @@ import { useCallback, useMemo, RefObject, ChangeEvent, JSX } from "react";
 import { FORM_DICT } from "../../../../lib/states/lang/forms";
 import { GENERIC_DICT } from "../../../../lib/states/lang/generic";
 import {
-  DeepOptional,
   ForeheadHairlineShape,
   ForeheadHairlineHeight,
   RecidingLevel,
@@ -25,6 +24,7 @@ import OptionFigure from "../../../bloc/OptionFigure";
 import Forms from "../../../../pages/Forms";
 import { frHdLnShp } from "../../../../lib/data/opts";
 import { ForeheadHairlineShapeOption } from "../../../../lib/declarations/interfaces/anatomy";
+import { DeepOptional } from "../../../../lib/declarations/types/utils";
 export default function ForeheadHairlineShapeForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
       layoutParams: ["foreheadHairlineShapeForm"],

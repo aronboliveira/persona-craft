@@ -1,12 +1,15 @@
 import { gds, styleSets } from "../../data/opts";
+import { Character } from "../interfaces/utils";
 import { QuestionId } from "./helpers";
 
 export type BasicMetricVariation = "low" | "medium" | "high";
 export type AveragedMetricVariation =
   | "very-low"
   | Exclude<BasicMetricVariation, "medium">
+  | "average"
   | "very-high";
 export type BasicLengthVariation = "short" | "average" | "long";
+export type BasicHeightVariation = "short" | "average" | "tall";
 export type BasicSizeVariation =
   | "very-small"
   | "small"
@@ -45,4 +48,17 @@ export type ValidateOptsAgainstArrays<T> = {
       ? T[K]
       : never
     : T[K];
+};
+export type DeepOptional<T> = T extends (...args: any[]) => infer R
+  ? (...args: Parameters<T>) => DeepOptional<R>
+  : T extends object
+  ? { [K in keyof T]?: DeepOptional<T[K]> }
+  : T;
+export type DeepPartial<T> = T extends object
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : T | undefined;
+export type StateWithCharacter = { character: Character };
+export type FriendlyNamed = {
+  friendlyName: string;
+  src: string;
 };

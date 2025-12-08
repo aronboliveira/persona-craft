@@ -46,7 +46,7 @@ formsStore.subscribe(() => {
   }, 300);
 });
 export type RootState = ReturnType<typeof formsStore.getState>;
-export type AppDispatch = typeof formsStore.dispatch;
+export type AppDispatch = typeof formsStore.dispatch; // ? from spread of reducers / slice actions
 export type StoreFormStrategyOrder = ReturnType<
   typeof formStrategyReducer
 >["order"];
