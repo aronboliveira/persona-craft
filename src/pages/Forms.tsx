@@ -55,6 +55,14 @@ import EyebrowGrowthDirectionForm from "../components/forms/head/eye/brow/Eyebro
 import EyebrowGrowthPatternForm from "../components/forms/head/eye/brow/EyebrowGrowthPatternForm";
 import EyebrowArchDistanceForm from "../components/forms/head/eye/brow/EyebrowArchDistanceForm";
 import EyebrowArchHeightForm from "../components/forms/head/eye/brow/EyebrowArchHeightForm";
+import EyebrowTextureForm from "../components/forms/head/eye/brow/EyebrowTextureForm";
+import EyebrowHeightForm from "../components/forms/head/eye/brow/EyebrowHeightForm";
+import EyebrowLengthForm from "../components/forms/head/eye/brow/EyebrowLengthForm";
+import EyebrowThicknessForm from "../components/forms/head/eye/brow/EyebrowThicknessForm";
+import EyebrowUnibrowForm from "../components/forms/head/eye/brow/EyebrowUnibrowForm";
+import EyebrowTrimmingForm from "../components/forms/head/eye/brow/EyebroTrimmingForm";
+import EyebrowSlitAngleForm from "../components/forms/head/eye/brow/EyebrowSlitAngleForm";
+import EyebrowSlitNumberForm from "../components/forms/head/eye/brow/EyebrowSlitNumberForm";
 
 export default function Forms(): JSX.Element {
   useOpacityTransition();
@@ -101,6 +109,7 @@ export default function Forms(): JSX.Element {
       ) {
         case MainStyleForm.name:
           return <MainStyleForm />;
+        // * body sillouhette
         case GenderForm.name:
           return <GenderForm />;
         case BodyTypeMuscleForm.name:
@@ -109,6 +118,7 @@ export default function Forms(): JSX.Element {
           return <HeightForm />;
         case BodyFatForm.name:
           return <BodyFatForm />;
+        // * hair
         case HairTextureForm.name:
           return <HairTextureForm />;
         case HairLengthForm.name:
@@ -121,6 +131,7 @@ export default function Forms(): JSX.Element {
           return <HairBangLengthForm />;
         case HairBangShapeForm.name:
           return <HairBangShapeForm />;
+        // * forehead
         case ForeheadHairlineHeightForm.name:
           return <ForeheadHairlineHeightForm />;
         case ForeheadHairlineRecidingForm.name:
@@ -129,18 +140,37 @@ export default function Forms(): JSX.Element {
           return <ForeheadHairlineShapeForm />;
         case ForeheadHeightForm.name:
           return <ForeheadHeightForm />;
-        case EyebrowArchAngleForm.name:
-          return <EyebrowArchAngleForm />;
+        // * eyebrow general form
+        case EyebrowLengthForm.name:
+          return <EyebrowLengthForm />;
+        case EyebrowHeightForm.name:
+          return <EyebrowHeightForm />;
+        case EyebrowTextureForm.name:
+          return <EyebrowTextureForm />;
+        case EyebrowThicknessForm.name:
+          return <EyebrowThicknessForm />;
         case EyebrowDensityForm.name:
           return <EyebrowDensityForm />;
         case EyebrowGrowthDirectionForm.name:
           return <EyebrowGrowthDirectionForm />;
         case EyebrowGrowthPatternForm.name:
           return <EyebrowGrowthPatternForm />;
+        // * eyebrow arch
+        case EyebrowArchAngleForm.name:
+          return <EyebrowArchAngleForm />;
         case EyebrowArchDistanceForm.name:
           return <EyebrowArchDistanceForm />;
         case EyebrowArchHeightForm.name:
           return <EyebrowArchHeightForm />;
+        // * eyebrow others
+        case EyebrowUnibrowForm.name:
+          return <EyebrowUnibrowForm />;
+        case EyebrowTrimmingForm.name:
+          return <EyebrowTrimmingForm />;
+        case EyebrowSlitAngleForm.name:
+          return <EyebrowSlitAngleForm />;
+        case EyebrowSlitNumberForm.name:
+          return <EyebrowSlitNumberForm />;
         default:
           return (
             <div className="text-error">

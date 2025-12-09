@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import promptReducer from "./slices/promptSlice";
 import formStrategyReducer from "./slices/formStrategySlice";
 import tipsReducer from "./slices/tipsSlice";
+import { slitConsistencyMiddleware } from "./middlewares";
 export const STG_KEY = "promptCreatorPromptState";
 export const formsStore = configureStore({
   devTools: import.meta.env.DEV,
@@ -25,7 +26,7 @@ export const formsStore = configureStore({
     console.log("MIDDLEWARE");
     return getDefaultMiddleware({
       serializableCheck: false,
-    });
+    }).concat(slitConsistencyMiddleware);
   },
   enhancers: (getDefaultEnhancers: any): any => {
     console.log("ENHANCERS");

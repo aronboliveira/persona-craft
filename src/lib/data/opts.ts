@@ -8,6 +8,13 @@ import {
   EyebrowDensity,
   EyebrowGrowthDirection,
   EyebrowGrowthPattern,
+  EyebrowHairLength,
+  EyebrowHeight,
+  EyebrowSlitAngle,
+  EyebrowSlitNumber,
+  EyebrowTexture,
+  EyebrowThickness,
+  EyebrowTrimming,
   ForeheadHairlineHeight,
   ForeheadHairlineShape,
   ForeheadHeight,
@@ -18,6 +25,7 @@ import {
   HairTexture,
   HairTidiness,
   RecidingLevel,
+  Unibrow,
 } from "../declarations/types/anatomy";
 import {
   Gender,
@@ -185,6 +193,58 @@ export const eyeBrwArchHgt = [
   "high",
   "very-high",
 ] as const satisfies EyebrowArchHeight[];
+export const eyeBrwHght = [
+  "very-close",
+  "close",
+  "median",
+  "distant",
+  "very-distant",
+] as const satisfies EyebrowHeight[];
+export const eyeBrwLng = [
+  "minimal",
+  "short",
+  "average",
+  "long",
+  "extremely-long",
+] as const satisfies EyebrowHairLength[];
+export const eyeBrwTxt = [
+  "straight",
+  "wavy",
+  "curly",
+] as const satisfies EyebrowTexture[];
+export const eyeBrwThk = [
+  "vellus",
+  "fine",
+  "medium",
+  "coarse",
+] as const satisfies EyebrowThickness[];
+export const eyeBrwUnb = [
+  "absent",
+  "faint",
+  "partial",
+  "full",
+  "bushy",
+] as const satisfies Unibrow[];
+export const eyeBrwTrm = [
+  "clean",
+  "fine",
+  "feathered",
+  "heavy",
+  "laminated",
+  "natural",
+  "tapered",
+] as const satisfies EyebrowTrimming[];
+export const eyeBrwSltAng = [
+  "none",
+  "diagonal",
+  "vertical",
+] as const satisfies EyebrowSlitAngle[];
+export const eyeBrwSltNum = [
+  "none",
+  "one",
+  "two",
+  "three",
+] as const satisfies EyebrowSlitNumber[];
 export const bdHgt = [
   "dwarfic",
   "short",

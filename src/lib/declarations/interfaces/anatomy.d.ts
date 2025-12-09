@@ -43,9 +43,11 @@ import {
   RecidingLevel,
   ForeheadHairlineShape,
   ForeheadHeight,
+  EyebrowTrimming,
 } from "../types/anatomy";
 import { Side } from "../types/helpers";
-import { DeepPartial, FriendlyNamed } from "../types/utils";
+import { DeepPartial, FriendlyNamed, UnboxArray } from "../types/utils";
+import { Character } from "./utils";
 export interface HairLengthOption {
   key: HairLength;
   friendlyName: string;
@@ -103,16 +105,17 @@ export interface EyebrowArch {
   height: EyebrowArchHeight;
 }
 export interface Eyebrow {
-  density: EyebrowDensity;
-  thickness: EyebrowThickness;
-  texture: EyebrowTexture;
-  unibrow: Unibrow;
-  length: EyebrowHairLength;
-  height: EyebrowHeight;
-  growth: EyebrowGrowth;
   arch: EyebrowArch;
-  symmetric?: boolean;
+  density: EyebrowDensity;
+  growth: EyebrowGrowth;
+  height: EyebrowHeight;
+  length: EyebrowHairLength;
+  texture: EyebrowTexture;
+  thickness: EyebrowThickness;
+  unibrow: Unibrow;
+  trimming?: EyebrowTrimming;
   slit?: EyebrowSlit;
+  symmetric?: boolean;
 }
 export interface EyeLid {
   creaseNumber: EyeLidCreaseNumber;
@@ -220,4 +223,16 @@ export interface EyebrowArchDistanceOption extends FriendlyNamed {
 }
 export interface EyebrowArchHeightOption extends FriendlyNamed {
   key: EyebrowArchHeight;
+}
+export type DeepAnatomicKey<T, O = Character> = UnboxArray<T> extends infer U
+  ? U extends object
+    ? U extends O
+      ? never
+      : {
+          [K in keyof U]: U[K] extends object ? DeepAnatomicKey<U[K], O> : U[K];
+        }[keyof U]
+    : U
+  : never;
+export interface DeepAnatomicOption<T, O = Character> extends FriendlyNamed {
+  key: DeepAnatomicKey<T, O>;
 }

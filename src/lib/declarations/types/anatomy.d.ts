@@ -61,6 +61,14 @@ export type EyebrowGrowthDirection =
   | "radial";
 export type EyebrowSlitAngle = "none" | "diagonal" | "vertical";
 export type EyebrowSlitNumber = "none" | "one" | "two" | "three";
+export type EyebrowTrimming =
+  | "clean"
+  | "fine"
+  | "feathered"
+  | "heavy"
+  | "laminated"
+  | "natural"
+  | "tapered";
 export type Unibrow = "absent" | "faint" | "partial" | "bushy" | "full";
 export type EyeFissure = "round" | "almond" | "wide" | "narrow";
 export type EyeTilt = "upturned" | "downturned" | "neutral-turned";

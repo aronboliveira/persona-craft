@@ -7,7 +7,13 @@ import {
   Forehead,
   Hair,
 } from "../../../lib/declarations/interfaces/anatomy";
-import { defaultEye, defaultForehead, defaultHair } from "../../data/defaults";
+import {
+  defaultBrow,
+  defaultEye,
+  defaultForehead,
+  defaultHair,
+  VALID_SLIT_NUMBERS,
+} from "../../data/defaults";
 import { DeepPartial } from "../../../lib/declarations/types/utils";
 import { CharacterBuilder } from "../../data/classes/facades/CharacterBuilder";
 import { CharacterValidator } from "../../data/classes/facades/CharacterValidator";
@@ -52,7 +58,17 @@ const promptSlice = createSlice({
       s.updatedAt = Date.now();
     },
     updateBrow(s: PromptState, a: PayloadAction<DeepPartial<Eyebrow>>): void {
-      CharacterBuilder.mergeBrow(CharacterValidator.ensureBrow(s), a.payload);
+      const brow =
+        CharacterBuilder.mergeBrow(
+          CharacterValidator.ensureBrow(s),
+          a.payload
+        ) || defaultBrow;
+      if (
+        brow.slit &&
+        brow.slit.number &&
+        !VALID_SLIT_NUMBERS.includes(brow.slit.number)
+      )
+        brow.slit.angle = "none";
       s.updatedAt = Date.now();
     },
   },

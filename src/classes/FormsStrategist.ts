@@ -21,6 +21,14 @@ import EyebrowGrowthDirectionForm from "../components/forms/head/eye/brow/Eyebro
 import EyebrowGrowthPatternForm from "../components/forms/head/eye/brow/EyebrowGrowthPatternForm";
 import EyebrowArchHeightForm from "../components/forms/head/eye/brow/EyebrowArchHeightForm";
 import EyebrowArchDistanceForm from "../components/forms/head/eye/brow/EyebrowArchDistanceForm";
+import EyebrowHeightForm from "../components/forms/head/eye/brow/EyebrowHeightForm";
+import EyebrowLengthForm from "../components/forms/head/eye/brow/EyebrowLengthForm";
+import EyebrowTextureForm from "../components/forms/head/eye/brow/EyebrowTextureForm";
+import EyebrowThicknessForm from "../components/forms/head/eye/brow/EyebrowThicknessForm";
+import EyebrowUnibrowForm from "../components/forms/head/eye/brow/EyebrowUnibrowForm";
+import EyebrowTrimmingForm from "../components/forms/head/eye/brow/EyebroTrimmingForm";
+import EyebrowSlitAngleForm from "../components/forms/head/eye/brow/EyebrowSlitAngleForm";
+import EyebrowSlitNumberForm from "../components/forms/head/eye/brow/EyebrowSlitNumberForm";
 
 export default class FormsStrategist implements UIRenderingStrategy {
   render(context: Partial<PromptState & { order: number }>): string {
@@ -55,17 +63,33 @@ export default class FormsStrategist implements UIRenderingStrategy {
       case 13:
         return ForeheadHeightForm.name;
       case 14:
-        return EyebrowArchAngleForm.name;
+        return EyebrowHeightForm.name;
       case 15:
-        return EyebrowDensityForm.name;
+        return EyebrowLengthForm.name;
       case 16:
-        return EyebrowGrowthDirectionForm.name;
+        return EyebrowTextureForm.name;
       case 17:
-        return EyebrowGrowthPatternForm.name;
+        return EyebrowDensityForm.name;
       case 18:
-        return EyebrowArchHeightForm.name;
+        return EyebrowThicknessForm.name;
       case 19:
+        return EyebrowGrowthDirectionForm.name;
+      case 20:
+        return EyebrowGrowthPatternForm.name;
+      case 21:
+        return EyebrowArchAngleForm.name;
+      case 22:
+        return EyebrowArchHeightForm.name;
+      case 23:
         return EyebrowArchDistanceForm.name;
+      case 24:
+        return EyebrowUnibrowForm.name;
+      case 25:
+        return EyebrowTrimmingForm.name;
+      case 26:
+        return EyebrowSlitNumberForm.name;
+      case 27:
+        return EyebrowSlitAngleForm.name;
       // case 11:
       //   return NarrativeForm.name;
       default:

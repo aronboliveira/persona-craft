@@ -62,3 +62,4 @@ export type FriendlyNamed = {
   friendlyName: string;
   src: string;
 };
+export type UnboxArray<T> = T extends readonly (infer U)[] ? U : T;
