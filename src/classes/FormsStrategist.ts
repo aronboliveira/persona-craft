@@ -29,6 +29,15 @@ import EyebrowUnibrowForm from "../components/forms/head/eye/brow/EyebrowUnibrow
 import EyebrowTrimmingForm from "../components/forms/head/eye/brow/EyebroTrimmingForm";
 import EyebrowSlitAngleForm from "../components/forms/head/eye/brow/EyebrowSlitAngleForm";
 import EyebrowSlitNumberForm from "../components/forms/head/eye/brow/EyebrowSlitNumberForm";
+import EyeBallSizeForm from "../components/forms/head/eye/ball/EyeBallSizeForm";
+import EyeColorForm from "../components/forms/head/eye/ball/EyeColorForm";
+import IrisSizeForm from "../components/forms/head/eye/ball/IrisSizeForm";
+import PupilSizeForm from "../components/forms/head/eye/ball/PupilSizeForm";
+import PupilPatternForm from "../components/forms/head/eye/ball/PupilPatternForm";
+import EyeFissureForm from "../components/forms/head/eye/shape/EyeFissureForm";
+import EyeTiltForm from "../components/forms/head/eye/shape/EyeTiltForm";
+import EyeDepthForm from "../components/forms/head/eye/shape/EyeDepthForm";
+import EyeSpacingForm from "../components/forms/head/eye/shape/EyeSpacingForm";
 
 export default class FormsStrategist implements UIRenderingStrategy {
   render(context: Partial<PromptState & { order: number }>): string {
@@ -90,6 +99,24 @@ export default class FormsStrategist implements UIRenderingStrategy {
         return EyebrowSlitNumberForm.name;
       case 27:
         return EyebrowSlitAngleForm.name;
+      case 28:
+        return EyeBallSizeForm.name;
+      case 29:
+        return EyeColorForm.name;
+      case 30:
+        return IrisSizeForm.name;
+      case 31:
+        return PupilSizeForm.name;
+      case 32:
+        return PupilPatternForm.name;
+      case 33:
+        return EyeFissureForm.name;
+      case 34:
+        return EyeTiltForm.name;
+      case 35:
+        return EyeDepthForm.name;
+      case 36:
+        return EyeSpacingForm.name;
       // case 11:
       //   return NarrativeForm.name;
       default:

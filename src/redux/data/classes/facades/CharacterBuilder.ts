@@ -1,11 +1,43 @@
 // src/redux/mainStore/builders/CharacterBuilder.ts
 
 import { Draft } from "@reduxjs/toolkit";
-import { Eye, Eyebrow } from "../../../../lib/declarations/interfaces/anatomy";
+import {
+  Eye,
+  Eyebrow,
+  EyeShape,
+  Hair,
+  HairBang,
+} from "../../../../lib/declarations/interfaces/anatomy";
 import { DeepPartial } from "../../../../lib/declarations/types/utils";
 import { defaultEye } from "../../defaults";
 
 export class CharacterBuilder {
+  public static mergeHair(
+    target: Draft<Hair>,
+    patch: DeepPartial<Hair>
+  ): Draft<Hair> {
+    if (patch.bang)
+      target.bang = CharacterBuilder.mergeHairBang(target.bang, patch.bang);
+    if (patch.length) target.length = patch.length;
+    if (patch.texture) target.texture = patch.texture;
+    if (patch.tidiness) target.tidiness = patch.tidiness;
+    return {
+      ...target,
+      ...patch,
+    } as Draft<Hair>;
+  }
+
+  public static mergeHairBang(
+    target: Draft<HairBang> | undefined,
+    patch: DeepPartial<HairBang>
+  ): Draft<HairBang> {
+    const base = (target ?? {}) as Draft<HairBang>;
+    return {
+      ...base,
+      ...patch,
+    } as Draft<HairBang>;
+  }
+
   public static mergeEye(
     target: Draft<Eye>,
     patch: DeepPartial<Eye>
@@ -13,7 +45,7 @@ export class CharacterBuilder {
     if (patch.ball)
       target.ball = CharacterBuilder.mergeBall(target.ball, patch.ball);
     if (patch.shape)
-      target.shape = CharacterBuilder.mergeShape(target.shape, patch.shape);
+      target.shape = CharacterBuilder.mergeEyeShape(target.shape, patch.shape);
     if (patch.bag)
       target.bag = CharacterBuilder.mergeBag(target.bag, patch.bag);
     if (patch.brow)
@@ -34,15 +66,15 @@ export class CharacterBuilder {
     } as Draft<Eye>["ball"];
   }
 
-  public static mergeShape(
-    target: Draft<Eye>["shape"] | undefined,
-    patch: DeepPartial<Eye>["shape"]
-  ): Draft<Eye>["shape"] {
-    const base = (target ?? defaultEye.shape) as Draft<Eye>["shape"];
+  public static mergeEyeShape(
+    target: Draft<EyeShape> | undefined,
+    patch: DeepPartial<EyeShape>
+  ): Draft<EyeShape> {
+    const base = (target ?? defaultEye.shape) as Draft<EyeShape>;
     return {
       ...base,
       ...patch,
-    } as Draft<Eye>["shape"];
+    } as Draft<EyeShape>;
   }
 
   public static mergeBag(

@@ -10,11 +10,10 @@ export type AveragedMetricVariation =
   | "very-high";
 export type BasicLengthVariation = "short" | "average" | "long";
 export type BasicHeightVariation = "short" | "average" | "tall";
+export type NarrowedSizeVariation = "small" | "average" | "large";
 export type BasicSizeVariation =
   | "very-small"
-  | "small"
-  | "average"
-  | "large"
+  | NarrowedSizeVariation
   | "very-large";
 export type AvailableLang = "en" | "pt" | "es" | "fr" | "zh";
 export type IdKeys = "FORM_ID" | "GENDER_FORM_ID";

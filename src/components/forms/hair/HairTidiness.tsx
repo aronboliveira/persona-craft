@@ -1,10 +1,12 @@
+// src/components/forms/HairTidinessForm.tsx
+
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../../errors/GenericErrorComponent";
 import { useCallback, useMemo, RefObject, ChangeEvent, JSX } from "react";
 import { FORM_DICT } from "../../../lib/states/lang/forms";
 import { GENERIC_DICT } from "../../../lib/states/lang/generic";
 import { HairTidiness } from "../../../lib/declarations/types/anatomy";
-import { updatePrompt } from "../../../redux/mainStore/slices/promptSlice";
+import { updateHair } from "../../../redux/mainStore/slices/promptSlice";
 import { CLASSES } from "../../../lib/data/classes";
 import { useAppDispatch, useAppSelector } from "../../../redux/mainStore/hooks";
 import { RootState } from "../../../redux/mainStore";
@@ -14,14 +16,16 @@ import OptionFieldset from "../../bloc/OptionFieldset";
 import OptionFigure from "../../bloc/OptionFigure";
 import Forms from "../../../pages/Forms";
 import { hrTd } from "../../../lib/data/opts";
-import { HairTidinessOption } from "../../../lib/declarations/interfaces/anatomy";
+import { DeepOptional } from "../../../lib/declarations/types/utils";
+import { DeepAnatomicOption } from "../../../lib/declarations/interfaces/anatomy";
+
 export default function HairTidinessForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
       layoutParams: ["hairTidinessForm"],
-    }),
+    }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
-    tidinessOptions = useMemo<HairTidinessOption[]>(() => {
+    tidinessOptions = useMemo<DeepAnatomicOption<HairTidiness>[]>(() => {
       const basePath = "/imgs/hair/tidiness",
         labelMap: Record<HairTidiness, string> = {
           done: "Neatly done",
@@ -35,26 +39,18 @@ export default function HairTidinessForm(): JSX.Element {
         src: `${basePath}/${key}.png`,
       }));
     }, []),
-    handleTidinessChange = useCallback(
+    handleTidinessChange = useCallback<
+      DeepOptional<(e: ChangeEvent<HTMLInputElement>) => void>
+    >(
       (e: ChangeEvent<HTMLInputElement>): void => {
         const value = e.target.value as HairTidiness;
         dispatch(
-          updatePrompt({
-            character: {
-              ...state.character,
-              hair: {
-                ...(state.character.hair ?? {
-                  texture: "wavy" as any,
-                  tidiness: "done" as any,
-                  bang: { density: "full" as any, length: "short" as any },
-                }),
-                tidiness: value,
-              },
-            },
+          updateHair({
+            tidiness: value,
           })
         );
       },
-      [dispatch, state.character]
+      [dispatch]
     ),
     selectedTidiness = state.character.hair?.tidiness as
       | HairTidiness
@@ -93,7 +89,8 @@ export default function HairTidinessForm(): JSX.Element {
                 caption={opt.friendlyName}
                 imgAddProps={{
                   alt: `${opt.friendlyName} — ${
-                    GENERIC_DICT[lang]?.img ?? "Image"
+                    GENERIC_DICT[lang as keyof typeof GENERIC_DICT]?.img ??
+                    "Image"
                   }`,
                 }}
                 imgStyle={{ objectFit: "contain" }}

@@ -3,6 +3,10 @@ import {
   Eye,
   Hair,
   Eyebrow,
+  EyeBall,
+  Iris,
+  Pupil,
+  EyeShape,
 } from "../../lib/declarations/interfaces/anatomy";
 import { EyebrowSlitNumber } from "../../lib/declarations/types/anatomy";
 import { DeepPartial } from "../../lib/declarations/types/utils";
@@ -42,8 +46,37 @@ export const defaultBrow: Readonly<Eyebrow> = Object.freeze({
   } as Eyebrow["slit"],
   symmetric: true,
 });
+export const defaultEyeBall: Readonly<EyeBall> = Object.freeze({
+  size: "average",
+  iris: {
+    color: "hazel",
+    size: "average",
+    symmetric: true,
+  } as Iris,
+  pupil: {
+    size: "average",
+    pattern: "round",
+    symmetric: true,
+  } as Pupil,
+});
 export const defaultEye: Readonly<DeepPartial<Eye>> = Object.freeze({
   // todo remove deeppartial later
+  ball: defaultEyeBall as EyeBall,
+  shape: {
+    fissure: "wide",
+    tilt: "neutral-turned",
+    depth: "neutral-set",
+    spacing: "average-distanced",
+    epicanthicFold: "none",
+    epicanthicFoldVariation: "none",
+    lid: {
+      creaseNumber: "doublelid",
+      creaseHeight: "medium",
+      symmetric: true,
+    },
+    symmetric: true,
+    hood: "partially-hooded",
+  } as EyeShape,
   brow: defaultBrow as Eyebrow,
 });
 export const defaultHair: Readonly<Hair> = Object.freeze({

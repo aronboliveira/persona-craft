@@ -2,6 +2,7 @@ import {
   BodyFat,
   BodyHeight,
   BodyMuscleTypes,
+  EyeBallSize,
   EyebrowArchAngle,
   EyebrowArchDistance,
   EyebrowArchHeight,
@@ -15,6 +16,11 @@ import {
   EyebrowTexture,
   EyebrowThickness,
   EyebrowTrimming,
+  EyeColor,
+  EyeDepth,
+  EyeFissure,
+  EyeSpacing,
+  EyeTilt,
   ForeheadHairlineHeight,
   ForeheadHairlineShape,
   ForeheadHeight,
@@ -24,6 +30,9 @@ import {
   HairLength,
   HairTexture,
   HairTidiness,
+  IrisSize,
+  PupilPattern,
+  PupilSize,
   RecidingLevel,
   Unibrow,
 } from "../declarations/types/anatomy";
@@ -245,6 +254,70 @@ export const eyeBrwSltNum = [
   "two",
   "three",
 ] as const satisfies EyebrowSlitNumber[];
+export const eyeBlSz = [
+  "extremely-small",
+  "very-small",
+  "small",
+  "average",
+  "large",
+  "very-large",
+  "extremely-large",
+  "absurdly-large",
+] as const satisfies EyeBallSize[];
+export const eyeClr = [
+  "hazel",
+  "black",
+  "blue",
+  "green",
+  "blind",
+  "scar",
+  "fire",
+  "light",
+  "demon",
+] as const satisfies EyeColor[];
+export const eyeIrisSz = [
+  "small",
+  "average",
+  "large",
+] as const satisfies IrisSize[];
+export const eyePplSz = [
+  "very-small",
+  "small",
+  "average",
+  "large",
+  "very-large",
+] as const satisfies PupilSize[];
+export const eyePplPtn = [
+  "round",
+  "vertical-slit",
+  "heart",
+  "star",
+  "cross",
+  "diamond",
+  "horizontal-slit",
+  "square",
+] as const satisfies PupilPattern[];
+export const eyeFs = [
+  "narrow",
+  "wide",
+  "almond",
+  "round",
+] as const satisfies EyeFissure[];
+export const eyeTlt = [
+  "downturned",
+  "neutral-turned",
+  "upturned",
+] as const satisfies EyeTilt[];
+export const eyeDpt = [
+  "deep-set",
+  "neutral-set",
+  "protruding",
+] as const satisfies EyeDepth[];
+export const eyeSpc = [
+  "close-set",
+  "average-distanced",
+  "wide-set",
+] as const satisfies EyeSpacing[];
 export const bdHgt = [
   "dwarfic",
   "short",

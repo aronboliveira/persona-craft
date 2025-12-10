@@ -6,7 +6,7 @@ import { useCallback, useMemo, RefObject, ChangeEvent, JSX } from "react";
 import { FORM_DICT } from "../../../lib/states/lang/forms";
 import { GENERIC_DICT } from "../../../lib/states/lang/generic";
 import { HairBangShape } from "../../../lib/declarations/types/anatomy";
-import { updatePrompt } from "../../../redux/mainStore/slices/promptSlice";
+import { updateHair } from "../../../redux/mainStore/slices/promptSlice";
 import { CLASSES } from "../../../lib/data/classes";
 import { useAppDispatch, useAppSelector } from "../../../redux/mainStore/hooks";
 import { RootState } from "../../../redux/mainStore";
@@ -16,14 +16,16 @@ import OptionFieldset from "../../bloc/OptionFieldset";
 import OptionFigure from "../../bloc/OptionFigure";
 import Forms from "../../../pages/Forms";
 import { hrBgSp } from "../../../lib/data/opts";
-import { HairBangShapeOption } from "../../../lib/declarations/interfaces/anatomy";
+import { DeepOptional } from "../../../lib/declarations/types/utils";
+import { DeepAnatomicOption } from "../../../lib/declarations/interfaces/anatomy";
+
 export default function HairBangShapeForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
       layoutParams: ["hairBangShapeForm"],
-    }),
+    }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
-    shapeOptions = useMemo<HairBangShapeOption[]>(() => {
+    shapeOptions = useMemo<DeepAnatomicOption<HairBangShape>[]>(() => {
       const basePath = "/imgs/hair/bang-shape",
         labelMap: Record<HairBangShape, string> = {
           blunt: "Blunt",
@@ -39,37 +41,20 @@ export default function HairBangShapeForm(): JSX.Element {
         src: `${basePath}/${key}.png`,
       }));
     }, []),
-    handleBangShapeChange = useCallback(
+    handleBangShapeChange = useCallback<
+      DeepOptional<(e: ChangeEvent<HTMLInputElement>) => void>
+    >(
       (e: ChangeEvent<HTMLInputElement>): void => {
         const value = e.target.value as HairBangShape;
         dispatch(
-          updatePrompt({
-            character: {
-              ...state.character,
-              hair: {
-                ...(state.character.hair ?? {
-                  texture: "wavy" as any,
-                  tidiness: "done" as any,
-                  bang: {
-                    density: "full" as any,
-                    length: "short" as any,
-                    shape: "blunt" as any,
-                  },
-                }),
-                bang: {
-                  ...(state.character.hair?.bang ?? {
-                    density: "full" as any,
-                    length: "short" as any,
-                    shape: "blunt" as any,
-                  }),
-                  shape: value,
-                },
-              },
+          updateHair({
+            bang: {
+              shape: value,
             },
           })
         );
       },
-      [dispatch, state.character]
+      [dispatch]
     ),
     selectedShape = state.character.hair?.bang?.shape as
       | HairBangShape
@@ -108,7 +93,8 @@ export default function HairBangShapeForm(): JSX.Element {
                 caption={opt.friendlyName}
                 imgAddProps={{
                   alt: `${opt.friendlyName} — ${
-                    GENERIC_DICT[lang]?.img ?? "Image"
+                    GENERIC_DICT[lang as keyof typeof GENERIC_DICT]?.img ??
+                    "Image"
                   }`,
                 }}
                 imgStyle={{ objectFit: "contain" }}

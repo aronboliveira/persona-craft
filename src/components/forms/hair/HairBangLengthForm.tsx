@@ -6,7 +6,7 @@ import { useCallback, useMemo, RefObject, ChangeEvent, JSX } from "react";
 import { FORM_DICT } from "../../../lib/states/lang/forms";
 import { GENERIC_DICT } from "../../../lib/states/lang/generic";
 import { HairBangLength } from "../../../lib/declarations/types/anatomy";
-import { updatePrompt } from "../../../redux/mainStore/slices/promptSlice";
+import { updateHair } from "../../../redux/mainStore/slices/promptSlice";
 import { CLASSES } from "../../../lib/data/classes";
 import { useAppDispatch, useAppSelector } from "../../../redux/mainStore/hooks";
 import { RootState } from "../../../redux/mainStore";
@@ -16,15 +16,17 @@ import OptionFieldset from "../../bloc/OptionFieldset";
 import OptionFigure from "../../bloc/OptionFigure";
 import Forms from "../../../pages/Forms";
 import { hrBgLg } from "../../../lib/data/opts";
-import { HairBangLengthOption } from "../../../lib/declarations/interfaces/anatomy";
+import { DeepOptional } from "../../../lib/declarations/types/utils";
+import { DeepAnatomicOption } from "../../../lib/declarations/interfaces/anatomy";
+
 export default function HairBangLengthForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
       layoutParams: ["hairBangLengthForm"],
-    }),
+    }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
-    lengthOptions = useMemo<HairBangLengthOption[]>(() => {
-      const basePath = "/imgs/hair/bang-length", // expects /public/imgs/hair/bang-length/{key}.png
+    lengthOptions = useMemo<DeepAnatomicOption<HairBangLength>[]>(() => {
+      const basePath = "/imgs/hair/bang-length",
         labelMap: Record<HairBangLength, string> = {
           micro: "Micro",
           short: "Short",
@@ -41,30 +43,20 @@ export default function HairBangLengthForm(): JSX.Element {
         src: `${basePath}/${key}.png`,
       }));
     }, []),
-    handleBangLengthChange = useCallback(
+    handleBangLengthChange = useCallback<
+      DeepOptional<(e: ChangeEvent<HTMLInputElement>) => void>
+    >(
       (e: ChangeEvent<HTMLInputElement>): void => {
         const value = e.target.value as HairBangLength;
         dispatch(
-          updatePrompt({
-            character: {
-              ...state.character,
-              hair: {
-                ...(state.character.hair ?? {
-                  texture: "wavy" as any,
-                  bang: { density: "full" as any, length: "short" as any },
-                }),
-                bang: {
-                  ...(state.character.hair?.bang ?? {
-                    density: "full" as any,
-                  }),
-                  length: value,
-                },
-              },
+          updateHair({
+            bang: {
+              length: value,
             },
           })
         );
       },
-      [dispatch, state.character]
+      [dispatch]
     ),
     selectedLength = state.character.hair?.bang?.length as
       | HairBangLength
@@ -103,7 +95,8 @@ export default function HairBangLengthForm(): JSX.Element {
                 caption={opt.friendlyName}
                 imgAddProps={{
                   alt: `${opt.friendlyName} — ${
-                    GENERIC_DICT[lang]?.img ?? "Image"
+                    GENERIC_DICT[lang as keyof typeof GENERIC_DICT]?.img ??
+                    "Image"
                   }`,
                 }}
                 imgStyle={{ objectFit: "contain" }}

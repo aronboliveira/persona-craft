@@ -4,6 +4,7 @@ import {
   BasicLengthVariation,
   BasicMetricVariation,
   BasicSizeVariation,
+  NarrowedSizeVariation,
 } from "./utils";
 
 export type BodyMuscleTypes =
@@ -75,7 +76,11 @@ export type EyeTilt = "upturned" | "downturned" | "neutral-turned";
 export type EyeDepth = "deep-set" | "neutral-set" | "protruding";
 export type EyeSpacing = "close-set" | "average-distanced" | "wide-set";
 export type EyeEpicanthicFoldExtension = "none" | "partial" | "full";
-export type EyeEpicanthicFoldClass = "tarsal" | "palpebral" | "inverted";
+export type EyeEpicanthicFoldClass =
+  | "none"
+  | "tarsal"
+  | "palpebral"
+  | "inverted";
 export type EyeLidCreaseNumber =
   | "monolid"
   | "doublelid"
@@ -122,7 +127,7 @@ export type PupilPattern =
   | "diamond"
   | "star"
   | "cross";
-export type IrisSize = "small" | "average" | "large";
+export type IrisSize = NarrowedSizeVariation;
 export type EyeColor =
   | "hazel"
   | "black"
@@ -131,10 +136,9 @@ export type EyeColor =
   | "fire"
   | "light"
   | "demon"
-  | "feline"
   | "blind"
   | "scar";
-export type EyeShape =
+export type EyeShapeVariation =
   | "almond"
   | "closeSet"
   | "downTurned"

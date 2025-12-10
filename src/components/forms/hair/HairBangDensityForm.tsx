@@ -6,7 +6,7 @@ import { useCallback, useMemo, RefObject, ChangeEvent, JSX } from "react";
 import { FORM_DICT } from "../../../lib/states/lang/forms";
 import { GENERIC_DICT } from "../../../lib/states/lang/generic";
 import { HairBangDensity } from "../../../lib/declarations/types/anatomy";
-import { updatePrompt } from "../../../redux/mainStore/slices/promptSlice";
+import { updateHair } from "../../../redux/mainStore/slices/promptSlice";
 import { CLASSES } from "../../../lib/data/classes";
 import { useAppDispatch, useAppSelector } from "../../../redux/mainStore/hooks";
 import { RootState } from "../../../redux/mainStore";
@@ -16,61 +16,48 @@ import OptionFieldset from "../../bloc/OptionFieldset";
 import OptionFigure from "../../bloc/OptionFigure";
 import Forms from "../../../pages/Forms";
 import { hrBgDs } from "../../../lib/data/opts";
-import { HairBangOption } from "../../../lib/declarations/interfaces/anatomy";
+import { DeepOptional } from "../../../lib/declarations/types/utils";
+import { DeepAnatomicOption } from "../../../lib/declarations/interfaces/anatomy";
 
 export default function HairBangDensityForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
-    layoutParams: ["hairBangDensityForm"],
-  });
-
-  const dispatch = useAppDispatch();
-
-  const state = useAppSelector((s: RootState) => s.prompt as PromptState);
-
-  const bangOptions = useMemo<HairBangOption[]>(() => {
-    const basePath = "/imgs/hair/bang"; // expects /public/imgs/hair/bang/{key}.png
-
-    const labelMap: Record<HairBangDensity, string> = {
-      full: "Full",
-      fringe: "Fringe",
-      piecey: "Piecey",
-      wispy: "Wispy",
-      absent: "Absent",
-    };
-
-    return hrBgDs.map(key => ({
-      key,
-      friendlyName: labelMap[key],
-      src: `${basePath}/${key}.png`,
-    }));
-  }, []);
-
-  const handleBangDensityChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>): void => {
-      const value = e.target.value as HairBangDensity;
-
-      dispatch(
-        updatePrompt({
-          character: {
-            ...state.character,
-            hair: {
-              ...(state.character.hair ?? { texture: "wavy" as any }),
-              bang: {
-                ...(state.character.hair?.bang ?? {}),
-                density: value,
-              },
+      layoutParams: ["hairBangDensityForm"],
+    }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
+    dispatch = useAppDispatch(),
+    state = useAppSelector((s: RootState) => s.prompt as PromptState),
+    bangOptions = useMemo<DeepAnatomicOption<HairBangDensity>[]>(() => {
+      const basePath = "/imgs/hair/bang",
+        labelMap: Record<HairBangDensity, string> = {
+          full: "Full",
+          fringe: "Fringe",
+          piecey: "Piecey",
+          wispy: "Wispy",
+          absent: "Absent",
+        };
+      return hrBgDs.map(key => ({
+        key,
+        friendlyName: labelMap[key],
+        src: `${basePath}/${key}.png`,
+      }));
+    }, []),
+    handleBangDensityChange = useCallback<
+      DeepOptional<(e: ChangeEvent<HTMLInputElement>) => void>
+    >(
+      (e: ChangeEvent<HTMLInputElement>): void => {
+        const value = e.target.value as HairBangDensity;
+        dispatch(
+          updateHair({
+            bang: {
+              density: value,
             },
-          },
-        })
-      );
-    },
-    [dispatch, state.character]
-  );
-
-  const selectedDensity = state.character.hair?.bang?.density as
-    | HairBangDensity
-    | undefined;
-
+          })
+        );
+      },
+      [dispatch]
+    ),
+    selectedDensity = state.character.hair?.bang?.density as
+      | HairBangDensity
+      | undefined;
   return (
     <ErrorBoundary
       onError={(error, errorInfo) => {
@@ -88,11 +75,9 @@ export default function HairBangDensityForm(): JSX.Element {
           {FORM_DICT[lang as keyof typeof FORM_DICT]?.hbd ??
             "What is the bang density of your character?"}
         </Forms.Header>
-
         <OptionFieldset selector="hbd">
           {bangOptions.map((opt, i) => {
             const isChecked = selectedDensity === opt.key;
-
             return (
               <OptionFigure
                 key={opt.key}
@@ -107,7 +92,8 @@ export default function HairBangDensityForm(): JSX.Element {
                 caption={opt.friendlyName}
                 imgAddProps={{
                   alt: `${opt.friendlyName} — ${
-                    GENERIC_DICT[lang]?.img ?? "Image"
+                    GENERIC_DICT[lang as keyof typeof GENERIC_DICT]?.img ??
+                    "Image"
                   }`,
                 }}
                 imgStyle={{ objectFit: "contain" }}
@@ -116,7 +102,6 @@ export default function HairBangDensityForm(): JSX.Element {
           })}
         </OptionFieldset>
       </fieldset>
-
       <Forms.Result variable={selectedDensity ?? ""} />
     </ErrorBoundary>
   );

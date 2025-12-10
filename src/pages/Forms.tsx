@@ -63,6 +63,15 @@ import EyebrowUnibrowForm from "../components/forms/head/eye/brow/EyebrowUnibrow
 import EyebrowTrimmingForm from "../components/forms/head/eye/brow/EyebroTrimmingForm";
 import EyebrowSlitAngleForm from "../components/forms/head/eye/brow/EyebrowSlitAngleForm";
 import EyebrowSlitNumberForm from "../components/forms/head/eye/brow/EyebrowSlitNumberForm";
+import EyeBallSizeForm from "../components/forms/head/eye/ball/EyeBallSizeForm";
+import EyeColorForm from "../components/forms/head/eye/ball/EyeColorForm";
+import IrisSizeForm from "../components/forms/head/eye/ball/IrisSizeForm";
+import PupilPatternForm from "../components/forms/head/eye/ball/PupilPatternForm";
+import PupilSizeForm from "../components/forms/head/eye/ball/PupilSizeForm";
+import EyeFissureForm from "../components/forms/head/eye/shape/EyeFissureForm";
+import EyeTiltForm from "../components/forms/head/eye/shape/EyeTiltForm";
+import EyeDepthForm from "../components/forms/head/eye/shape/EyeDepthForm";
+import EyeSpacingForm from "../components/forms/head/eye/shape/EyeSpacingForm";
 
 export default function Forms(): JSX.Element {
   useOpacityTransition();
@@ -171,6 +180,25 @@ export default function Forms(): JSX.Element {
           return <EyebrowSlitAngleForm />;
         case EyebrowSlitNumberForm.name:
           return <EyebrowSlitNumberForm />;
+        // * eye ball
+        case EyeBallSizeForm.name:
+          return <EyeBallSizeForm />;
+        case EyeColorForm.name:
+          return <EyeColorForm />;
+        case IrisSizeForm.name:
+          return <IrisSizeForm />;
+        case PupilPatternForm.name:
+          return <PupilPatternForm />;
+        case PupilSizeForm.name:
+          return <PupilSizeForm />;
+        case EyeFissureForm.name:
+          return <EyeFissureForm />;
+        case EyeTiltForm.name:
+          return <EyeTiltForm />;
+        case EyeDepthForm.name:
+          return <EyeDepthForm />;
+        case EyeSpacingForm.name:
+          return <EyeSpacingForm />;
         default:
           return (
             <div className="text-error">

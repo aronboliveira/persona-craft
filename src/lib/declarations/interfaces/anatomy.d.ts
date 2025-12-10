@@ -44,35 +44,11 @@ import {
   ForeheadHairlineShape,
   ForeheadHeight,
   EyebrowTrimming,
+  EyeBallSize,
 } from "../types/anatomy";
 import { Side } from "../types/helpers";
 import { DeepPartial, FriendlyNamed, UnboxArray } from "../types/utils";
 import { Character } from "./utils";
-export interface HairLengthOption {
-  key: HairLength;
-  friendlyName: string;
-  src: string;
-}
-export interface HairBangShapeOption {
-  key: HairBangShape;
-  friendlyName: string;
-  src: string;
-}
-export interface HairTidinessOption {
-  key: HairTidiness;
-  friendlyName: string;
-  src: string;
-}
-export interface HairBangLengthOption {
-  key: HairBangLength;
-  friendlyName: string;
-  src: string;
-}
-export interface HairBangOption {
-  key: HairBangDensity;
-  friendlyName: string;
-  src: string;
-}
 export interface HairBang {
   density: HairBangDensity;
   length: HairBangLength;
@@ -155,6 +131,7 @@ export interface Iris {
   symmetric?: boolean;
 }
 export interface EyeBall {
+  size: EyeBallSize;
   iris: Iris;
   pupil: Pupil;
 }

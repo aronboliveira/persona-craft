@@ -6,7 +6,7 @@ import { useCallback, useMemo, RefObject, ChangeEvent, JSX } from "react";
 import { FORM_DICT } from "../../../lib/states/lang/forms";
 import { GENERIC_DICT } from "../../../lib/states/lang/generic";
 import { HairTexture } from "../../../lib/declarations/types/anatomy";
-import { updatePrompt } from "../../../redux/mainStore/slices/promptSlice";
+import { updateHair } from "../../../redux/mainStore/slices/promptSlice";
 import { CLASSES } from "../../../lib/data/classes";
 import { useAppDispatch, useAppSelector } from "../../../redux/mainStore/hooks";
 import { RootState } from "../../../redux/mainStore";
@@ -16,67 +16,48 @@ import OptionFieldset from "../../bloc/OptionFieldset";
 import OptionFigure from "../../bloc/OptionFigure";
 import Forms from "../../../pages/Forms";
 import { hrTxt } from "../../../lib/data/opts";
-
-type HairTextureOption = {
-  key: HairTexture;
-  friendlyName: string;
-  src: string;
-};
+import { DeepOptional } from "../../../lib/declarations/types/utils";
+import { DeepAnatomicOption } from "../../../lib/declarations/interfaces/anatomy";
 
 export default function HairTextureForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
-    layoutParams: ["hairTextureForm"],
-  });
-
-  const dispatch = useAppDispatch();
-
-  const state = useAppSelector((s: RootState) => s.prompt as PromptState);
-
-  const hairOptions = useMemo<HairTextureOption[]>(() => {
-    const basePath = "/imgs/hair";
-
-    const labelMap: Record<HairTexture, string> = {
-      straight: "Straight",
-      "straight-wavy": "Straight/Wavy",
-      "body-wavy": "Body Wavy",
-      wavy: "Wavy",
-      "deep-wavy": "Deep Wavy",
-      "deep-curly": "Deep Curly",
-      "kinky-curly": "Kinky Curly",
-      afro: "Afro",
-      "kinky-straight": "Kinky Straight",
-    };
-
-    return hrTxt.map(key => ({
-      key,
-      friendlyName: labelMap[key],
-      src: `${basePath}/${key}.png`,
-    }));
-  }, []);
-
-  const handleHairTextureChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>): void => {
-      const value = e.target.value as HairTexture;
-
-      dispatch(
-        updatePrompt({
-          character: {
-            ...state.character,
-            hair: {
-              ...state.character.hair,
-              texture: value,
-            },
-          },
-        })
-      );
-    },
-    [dispatch, state.character]
-  );
-
-  const selectedTexture = state.character.hair.texture as
-    | HairTexture
-    | undefined;
-
+      layoutParams: ["hairTextureForm"],
+    }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
+    dispatch = useAppDispatch(),
+    state = useAppSelector((s: RootState) => s.prompt as PromptState),
+    hairOptions = useMemo<DeepAnatomicOption<HairTexture>[]>(() => {
+      const basePath = "/imgs/hair",
+        labelMap: Record<HairTexture, string> = {
+          straight: "Straight",
+          "straight-wavy": "Straight/Wavy",
+          "body-wavy": "Body Wavy",
+          wavy: "Wavy",
+          "deep-wavy": "Deep Wavy",
+          "deep-curly": "Deep Curly",
+          "kinky-curly": "Kinky Curly",
+          afro: "Afro",
+          "kinky-straight": "Kinky Straight",
+        };
+      return hrTxt.map(key => ({
+        key,
+        friendlyName: labelMap[key],
+        src: `${basePath}/${key}.png`,
+      }));
+    }, []),
+    handleHairTextureChange = useCallback<
+      DeepOptional<(e: ChangeEvent<HTMLInputElement>) => void>
+    >(
+      (e: ChangeEvent<HTMLInputElement>): void => {
+        const value = e.target.value as HairTexture;
+        dispatch(
+          updateHair({
+            texture: value,
+          })
+        );
+      },
+      [dispatch]
+    ),
+    selectedTexture = state.character.hair?.texture as HairTexture | undefined;
   return (
     <ErrorBoundary
       onError={(error, errorInfo) => {
@@ -94,11 +75,9 @@ export default function HairTextureForm(): JSX.Element {
           {FORM_DICT[lang as keyof typeof FORM_DICT]?.hrt ??
             "What is the hair texture of your character?"}
         </Forms.Header>
-
         <OptionFieldset selector="hrt">
           {hairOptions.map((opt, i) => {
             const isChecked = selectedTexture === opt.key;
-
             return (
               <OptionFigure
                 key={opt.key}
@@ -113,7 +92,8 @@ export default function HairTextureForm(): JSX.Element {
                 caption={opt.friendlyName}
                 imgAddProps={{
                   alt: `${opt.friendlyName} — ${
-                    GENERIC_DICT[lang]?.img ?? "Image"
+                    GENERIC_DICT[lang as keyof typeof GENERIC_DICT]?.img ??
+                    "Image"
                   }`,
                 }}
                 imgStyle={{ objectFit: "contain" }}
@@ -122,7 +102,6 @@ export default function HairTextureForm(): JSX.Element {
           })}
         </OptionFieldset>
       </fieldset>
-
       <Forms.Result variable={selectedTexture ?? ""} />
     </ErrorBoundary>
   );

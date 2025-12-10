@@ -17,6 +17,7 @@ import {
 import { DeepPartial } from "../../../lib/declarations/types/utils";
 import { CharacterBuilder } from "../../data/classes/facades/CharacterBuilder";
 import { CharacterValidator } from "../../data/classes/facades/CharacterValidator";
+import { EyeShape } from "../../../lib/declarations/interfaces/anatomy";
 const initialState: PromptState = {
   style: "anime",
   character: {
@@ -50,11 +51,23 @@ const promptSlice = createSlice({
       ...initialState,
       updatedAt: Date.now(),
     }),
+    updateHair(s: PromptState, a: PayloadAction<DeepPartial<Hair>>): void {
+      CharacterBuilder.mergeHair(CharacterValidator.ensureHair(s), a.payload);
+      s.updatedAt = Date.now();
+    },
     updateEye(s: PromptState, a: PayloadAction<DeepPartial<Eye>>): void {
-      CharacterBuilder.mergeEye(
+      const eye = CharacterBuilder.mergeEye(
         CharacterValidator.ensureEye(s) as Eye,
         a.payload
       );
+      if (
+        eye.brow?.slit &&
+        eye.brow.slit.number &&
+        !VALID_SLIT_NUMBERS.includes(eye.brow.slit.number)
+      )
+        eye.brow.slit.angle = "none";
+      if (eye.shape.epicanthicFold === "none")
+        eye.shape.epicanthicFoldVariation = "none";
       s.updatedAt = Date.now();
     },
     updateBrow(s: PromptState, a: PayloadAction<DeepPartial<Eyebrow>>): void {
@@ -71,8 +84,26 @@ const promptSlice = createSlice({
         brow.slit.angle = "none";
       s.updatedAt = Date.now();
     },
+    updateEyeShape(
+      s: PromptState,
+      a: PayloadAction<DeepPartial<EyeShape>>
+    ): void {
+      const shape = CharacterBuilder.mergeEyeShape(
+        CharacterValidator.ensureEyeShape(s),
+        a.payload
+      );
+      if (shape.epicanthicFold === "none")
+        shape.epicanthicFoldVariation = "none";
+      s.updatedAt = Date.now();
+    },
   },
 });
-export const { updatePrompt, resetPrompt, updateEye, updateBrow } =
-  promptSlice.actions;
+export const {
+  updatePrompt,
+  resetPrompt,
+  updateEye,
+  updateEyeShape,
+  updateBrow,
+  updateHair,
+} = promptSlice.actions;
 export default promptSlice.reducer;
