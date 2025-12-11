@@ -18,7 +18,11 @@ import {
   EyebrowTrimming,
   EyeColor,
   EyeDepth,
+  EyeEpicanthicFoldClass,
+  EyeEpicanthicFoldExtension,
   EyeFissure,
+  EyelidCreaseHeight,
+  EyeLidCreaseNumber,
   EyeSpacing,
   EyeTilt,
   ForeheadHairlineHeight,
@@ -318,6 +322,28 @@ export const eyeSpc = [
   "average-distanced",
   "wide-set",
 ] as const satisfies EyeSpacing[];
+export const eyeLidCrsN = [
+  "monolid",
+  "doublelid",
+  "triplelid",
+  "quadruplelid",
+] as const satisfies EyeLidCreaseNumber[];
+export const eyeLidCrsH = [
+  "low",
+  "medium",
+  "high",
+] as const satisfies EyelidCreaseHeight[];
+export const eyeLidEpcExt = [
+  "none",
+  "partial",
+  "full",
+] as const satisfies EyeEpicanthicFoldExtension[];
+export const eyeLidEpcCls = [
+  "none",
+  "tarsal",
+  "palpebral",
+  "inverted",
+] as const satisfies EyeEpicanthicFoldClass[];
 export const bdHgt = [
   "dwarfic",
   "short",

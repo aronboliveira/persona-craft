@@ -20,7 +20,7 @@ import OptionFigure from "../../../../bloc/OptionFigure";
 import Forms from "../../../../../pages/Forms";
 import { eyeBrwDst } from "../../../../../lib/data/opts";
 import { DeepOptional } from "../../../../../lib/declarations/types/utils";
-import { EyebrowDensityOption } from "../../../../../lib/declarations/interfaces/anatomy";
+import { DeepAnatomicOption } from "../../../../../lib/declarations/interfaces/anatomy";
 
 export default function EyebrowDensityForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
@@ -28,7 +28,7 @@ export default function EyebrowDensityForm(): JSX.Element {
     }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
-    densityOptions = useMemo<EyebrowDensityOption[]>(() => {
+    densityOptions = useMemo<DeepAnatomicOption<EyebrowDensity>[]>(() => {
       const basePath = "/imgs/head/eyebrow-density",
         labelMap: Record<EyebrowDensity, string> = {
           absent: "Absent",

@@ -38,6 +38,10 @@ import EyeFissureForm from "../components/forms/head/eye/shape/EyeFissureForm";
 import EyeTiltForm from "../components/forms/head/eye/shape/EyeTiltForm";
 import EyeDepthForm from "../components/forms/head/eye/shape/EyeDepthForm";
 import EyeSpacingForm from "../components/forms/head/eye/shape/EyeSpacingForm";
+import EyeLidCreaseNumberForm from "../components/forms/head/eye/shape/EyeLidCreaseNumberForm";
+import EyeLidCreaseHeightForm from "../components/forms/head/eye/shape/EyeLidCreaseHeightForm";
+import EyeLidEpicanthicFoldExtensionForm from "../components/forms/head/eye/shape/EyeLidEpicanthicFoldExtensionForm";
+import EyeLidEpicanthicFoldClassForm from "../components/forms/head/eye/shape/EyeLidEpicanthicFoldClassForm";
 
 export default class FormsStrategist implements UIRenderingStrategy {
   render(context: Partial<PromptState & { order: number }>): string {
@@ -117,6 +121,14 @@ export default class FormsStrategist implements UIRenderingStrategy {
         return EyeDepthForm.name;
       case 36:
         return EyeSpacingForm.name;
+      case 37:
+        return EyeLidCreaseNumberForm.name;
+      case 38:
+        return EyeLidCreaseHeightForm.name;
+      case 39:
+        return EyeLidEpicanthicFoldExtensionForm.name;
+      case 40:
+        return EyeLidEpicanthicFoldClassForm.name;
       // case 11:
       //   return NarrativeForm.name;
       default:

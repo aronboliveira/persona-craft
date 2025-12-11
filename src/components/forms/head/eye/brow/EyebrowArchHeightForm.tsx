@@ -20,7 +20,7 @@ import OptionFigure from "../../../../bloc/OptionFigure";
 import Forms from "../../../../../pages/Forms";
 import { eyeBrwArchHgt } from "../../../../../lib/data/opts";
 import { DeepOptional } from "../../../../../lib/declarations/types/utils";
-import { EyebrowArchHeightOption } from "../../../../../lib/declarations/interfaces/anatomy";
+import { DeepAnatomicOption } from "../../../../../lib/declarations/interfaces/anatomy";
 
 export default function EyebrowArchHeightForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
@@ -28,7 +28,7 @@ export default function EyebrowArchHeightForm(): JSX.Element {
     }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
-    heightOptions = useMemo<EyebrowArchHeightOption[]>(() => {
+    heightOptions = useMemo<DeepAnatomicOption<EyebrowArchHeight>[]>(() => {
       const basePath = "/imgs/head/eyebrow-arch-height",
         labelMap: Record<EyebrowArchHeight, string> = {
           "very-low": "Very low",

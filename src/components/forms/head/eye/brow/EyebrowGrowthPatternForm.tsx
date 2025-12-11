@@ -20,7 +20,7 @@ import OptionFigure from "../../../../bloc/OptionFigure";
 import Forms from "../../../../../pages/Forms";
 import { eyeBrwGrwtPtn } from "../../../../../lib/data/opts";
 import { DeepOptional } from "../../../../../lib/declarations/types/utils";
-import { EyebrowGrowthPatternOption } from "../../../../../lib/declarations/interfaces/anatomy";
+import { DeepAnatomicOption } from "../../../../../lib/declarations/interfaces/anatomy";
 
 export default function EyebrowGrowthPatternForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
@@ -28,7 +28,7 @@ export default function EyebrowGrowthPatternForm(): JSX.Element {
     }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
-    patternOptions = useMemo<EyebrowGrowthPatternOption[]>(() => {
+    patternOptions = useMemo<DeepAnatomicOption<EyebrowGrowthPattern>[]>(() => {
       const basePath = "/imgs/head/eyebrow-growth-pattern",
         labelMap: Record<EyebrowGrowthPattern, string> = {
           even: "Even",

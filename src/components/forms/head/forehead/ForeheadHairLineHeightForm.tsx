@@ -19,7 +19,7 @@ import OptionFieldset from "../../../bloc/OptionFieldset";
 import OptionFigure from "../../../bloc/OptionFigure";
 import Forms from "../../../../pages/Forms";
 import { frHdLnHg } from "../../../../lib/data/opts";
-import { ForeheadHairlineHeightOption } from "../../../../lib/declarations/interfaces/anatomy";
+import { DeepAnatomicOption } from "../../../../lib/declarations/interfaces/anatomy";
 import { DeepOptional } from "../../../../lib/declarations/types/utils";
 export default function ForeheadHairlineHeightForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
@@ -27,7 +27,9 @@ export default function ForeheadHairlineHeightForm(): JSX.Element {
     }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
-    heightOptions = useMemo<ForeheadHairlineHeightOption[]>(() => {
+    heightOptions = useMemo<
+      DeepAnatomicOption<ForeheadHairlineHeight>[]
+    >(() => {
       const basePath = "/imgs/head/forehead-hairline-height",
         labelMap: Record<ForeheadHairlineHeight, string> = {
           low: "Low hairline",

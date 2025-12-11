@@ -20,7 +20,7 @@ import OptionFigure from "../../../../bloc/OptionFigure";
 import Forms from "../../../../../pages/Forms";
 import { eyeBrwGrwtDir } from "../../../../../lib/data/opts";
 import { DeepOptional } from "../../../../../lib/declarations/types/utils";
-import { EyebrowGrowthDirectionOption } from "../../../../../lib/declarations/interfaces/anatomy";
+import { DeepAnatomicOption } from "../../../../../lib/declarations/interfaces/anatomy";
 
 export default function EyebrowGrowthDirectionForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
@@ -28,7 +28,9 @@ export default function EyebrowGrowthDirectionForm(): JSX.Element {
     }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
-    directionOptions = useMemo<EyebrowGrowthDirectionOption[]>(() => {
+    directionOptions = useMemo<
+      DeepAnatomicOption<EyebrowGrowthDirection>[]
+    >(() => {
       const basePath = "/imgs/head/eyebrow-growth-direction",
         labelMap: Record<EyebrowGrowthDirection, string> = {
           upward: "Upward",

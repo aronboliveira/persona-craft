@@ -96,6 +96,8 @@ export interface Eyebrow {
 export interface EyeLid {
   creaseNumber: EyeLidCreaseNumber;
   creaseHeight: EyelidCreaseHeight;
+  epicanthicFold: EyeEpicanthicFoldExtension;
+  epicanthicFoldVariation?: EyeEpicanthicFoldClass;
   symmetric?: boolean;
 }
 export interface EyeBag {
@@ -114,8 +116,6 @@ export interface EyeShape {
   tilt: EyeTilt;
   depth: EyeDepth;
   spacing: EyeSpacing;
-  epicanthicFold: EyeEpicanthicFoldExtension;
-  epicanthicFoldVariation?: EyeEpicanthicFoldClass;
   lid: EyeLid;
   symmetric?: boolean;
   hood?: EyeHood;
@@ -165,41 +165,6 @@ export interface Head {
   forehead: Forehead;
   eye: DeepPartial<Eye>; //todo remove partial later
   // ... include mouth
-}
-export interface ForeheadHairlineHeightOption {
-  key: ForeheadHairlineHeight;
-  friendlyName: string;
-  src: string;
-}
-export interface ForeheadHairlineRecidingOption extends FriendlyNamed {
-  key: RecidingLevel;
-}
-export interface ForeheadHairlineShapeOption extends FriendlyNamed {
-  key: ForeheadHairlineShape;
-}
-export interface ForeheadHeightOption extends FriendlyNamed {
-  key: ForeheadHeight;
-}
-export interface EyebrowDensityOption extends FriendlyNamed {
-  key: EyebrowDensity;
-}
-export interface EyebrowDensityOption extends FriendlyNamed {
-  key: EyebrowDensity;
-}
-export interface EyebrowGrowthPatternOption extends FriendlyNamed {
-  key: EyebrowGrowthPattern;
-}
-export interface EyebrowGrowthDirectionOption extends FriendlyNamed {
-  key: EyebrowGrowthDirection;
-}
-export interface EyebrowArchAngleOption extends FriendlyNamed {
-  key: EyebrowArchAngle;
-}
-export interface EyebrowArchDistanceOption extends FriendlyNamed {
-  key: EyebrowArchDistance;
-}
-export interface EyebrowArchHeightOption extends FriendlyNamed {
-  key: EyebrowArchHeight;
 }
 export type DeepAnatomicKey<T, O = Character> = UnboxArray<T> extends infer U
   ? U extends object

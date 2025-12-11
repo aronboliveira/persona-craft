@@ -22,7 +22,7 @@ import OptionFieldset from "../../../bloc/OptionFieldset";
 import OptionFigure from "../../../bloc/OptionFigure";
 import Forms from "../../../../pages/Forms";
 import { frHdLnRcvLv } from "../../../../lib/data/opts";
-import { ForeheadHairlineRecidingOption } from "../../../../lib/declarations/interfaces/anatomy";
+import { DeepAnatomicOption } from "../../../../lib/declarations/interfaces/anatomy";
 import { DeepOptional } from "../../../../lib/declarations/types/utils";
 export default function ForeheadHairlineRecidingForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
@@ -30,7 +30,7 @@ export default function ForeheadHairlineRecidingForm(): JSX.Element {
     }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
-    recidingOptions = useMemo<ForeheadHairlineRecidingOption[]>(() => {
+    recidingOptions = useMemo<DeepAnatomicOption<RecidingLevel>[]>(() => {
       const basePath = "/imgs/head/forehead-hairline-reciding",
         labelMap: Record<RecidingLevel, string> = {
           straight: "Straight hairline",

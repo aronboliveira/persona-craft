@@ -4,6 +4,7 @@ import { PromptState } from "../../../lib/declarations/interfaces/redux";
 import {
   Eye,
   Eyebrow,
+  EyeLid,
   Forehead,
   Hair,
 } from "../../../lib/declarations/interfaces/anatomy";
@@ -12,12 +13,14 @@ import {
   defaultEye,
   defaultForehead,
   defaultHair,
+  defaultEyeLid,
   VALID_SLIT_NUMBERS,
 } from "../../data/defaults";
 import { DeepPartial } from "../../../lib/declarations/types/utils";
 import { CharacterBuilder } from "../../data/classes/facades/CharacterBuilder";
 import { CharacterValidator } from "../../data/classes/facades/CharacterValidator";
 import { EyeShape } from "../../../lib/declarations/interfaces/anatomy";
+
 const initialState: PromptState = {
   style: "anime",
   character: {
@@ -39,6 +42,7 @@ const initialState: PromptState = {
   },
   updatedAt: Date.now(),
 };
+
 const promptSlice = createSlice({
   name: "prompt",
   initialState,
@@ -55,6 +59,10 @@ const promptSlice = createSlice({
       CharacterBuilder.mergeHair(CharacterValidator.ensureHair(s), a.payload);
       s.updatedAt = Date.now();
     },
+    resetHair(s: PromptState): void {
+      s.character.hair = defaultHair as Hair;
+      s.updatedAt = Date.now();
+    },
     updateEye(s: PromptState, a: PayloadAction<DeepPartial<Eye>>): void {
       const eye = CharacterBuilder.mergeEye(
         CharacterValidator.ensureEye(s) as Eye,
@@ -66,8 +74,12 @@ const promptSlice = createSlice({
         !VALID_SLIT_NUMBERS.includes(eye.brow.slit.number)
       )
         eye.brow.slit.angle = "none";
-      if (eye.shape.epicanthicFold === "none")
-        eye.shape.epicanthicFoldVariation = "none";
+      if (eye.shape?.lid?.epicanthicFold === "none")
+        eye.shape.lid.epicanthicFoldVariation = "none";
+      s.updatedAt = Date.now();
+    },
+    resetEye(s: PromptState): void {
+      s.character.head.eye = defaultEye as Eye;
       s.updatedAt = Date.now();
     },
     updateBrow(s: PromptState, a: PayloadAction<DeepPartial<Eyebrow>>): void {
@@ -84,6 +96,10 @@ const promptSlice = createSlice({
         brow.slit.angle = "none";
       s.updatedAt = Date.now();
     },
+    resetBrow(s: PromptState): void {
+      s.character.head.eye.brow = defaultBrow as Eyebrow;
+      s.updatedAt = Date.now();
+    },
     updateEyeShape(
       s: PromptState,
       a: PayloadAction<DeepPartial<EyeShape>>
@@ -92,18 +108,48 @@ const promptSlice = createSlice({
         CharacterValidator.ensureEyeShape(s),
         a.payload
       );
-      if (shape.epicanthicFold === "none")
-        shape.epicanthicFoldVariation = "none";
+      if (shape.lid?.epicanthicFold === "none")
+        shape.lid.epicanthicFoldVariation = "none";
+      s.updatedAt = Date.now();
+    },
+    resetEyeShape(s: PromptState): void {
+      s.character.head.eye.shape = defaultEye.shape as EyeShape;
+      s.updatedAt = Date.now();
+    },
+    updateEyeLid(s: PromptState, a: PayloadAction<DeepPartial<EyeLid>>): void {
+      const lid = CharacterBuilder.mergeEyeLid(
+        CharacterValidator.ensureEyeLid(s),
+        a.payload
+      );
+      if (lid.epicanthicFold === "none") lid.epicanthicFoldVariation = "none";
+      s.updatedAt = Date.now();
+    },
+    resetEyeLid(s: PromptState): void {
+      if (!s?.character?.head?.eye?.shape)
+        s.character.head.eye.shape = defaultEye.shape as EyeShape;
+      s.character.head.eye.shape.lid = defaultEyeLid as EyeLid;
+      s.updatedAt = Date.now();
+    },
+    resetForehead(s: PromptState): void {
+      s.character.head.forehead = defaultForehead as Forehead;
       s.updatedAt = Date.now();
     },
   },
 });
+
 export const {
   updatePrompt,
   resetPrompt,
   updateEye,
+  resetEye,
   updateEyeShape,
+  resetEyeShape,
+  updateEyeLid,
+  resetEyeLid,
   updateBrow,
+  resetBrow,
   updateHair,
+  resetHair,
+  resetForehead,
 } = promptSlice.actions;
 export default promptSlice.reducer;

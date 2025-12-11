@@ -23,7 +23,7 @@ import OptionFieldset from "../../../bloc/OptionFieldset";
 import OptionFigure from "../../../bloc/OptionFigure";
 import Forms from "../../../../pages/Forms";
 import { frHdLnShp } from "../../../../lib/data/opts";
-import { ForeheadHairlineShapeOption } from "../../../../lib/declarations/interfaces/anatomy";
+import { DeepAnatomicOption } from "../../../../lib/declarations/interfaces/anatomy";
 import { DeepOptional } from "../../../../lib/declarations/types/utils";
 export default function ForeheadHairlineShapeForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
@@ -31,7 +31,7 @@ export default function ForeheadHairlineShapeForm(): JSX.Element {
     }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
-    shapeOptions = useMemo<ForeheadHairlineShapeOption[]>(() => {
+    shapeOptions = useMemo<DeepAnatomicOption<ForeheadHairlineShape>[]>(() => {
       const basePath = "/imgs/head/forehead-hairline-shape",
         labelMap: Record<ForeheadHairlineShape, string> = {
           rounded: "Rounded",

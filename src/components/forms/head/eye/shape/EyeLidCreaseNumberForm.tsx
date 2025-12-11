@@ -1,11 +1,12 @@
-// src/components/forms/EyebrowArchAngleForm.tsx
+// src/components/forms/EyeLidCreaseNumberForm.tsx
 
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../../../../errors/GenericErrorComponent";
 import { useCallback, useMemo, RefObject, ChangeEvent, JSX } from "react";
 import { FORM_DICT } from "../../../../../lib/states/lang/forms";
 import { GENERIC_DICT } from "../../../../../lib/states/lang/generic";
-import { EyebrowArchAngle } from "../../../../../lib/declarations/types/anatomy";
+import { EyeLidCreaseNumber } from "../../../../../lib/declarations/types/anatomy";
+import { updateEyeLid } from "../../../../../redux/mainStore/slices/promptSlice";
 import { CLASSES } from "../../../../../lib/data/classes";
 import {
   useAppDispatch,
@@ -17,50 +18,46 @@ import { useOptFormCtx } from "../../../../../lib/hooks/contexts/useOptFormCtx";
 import OptionFieldset from "../../../../bloc/OptionFieldset";
 import OptionFigure from "../../../../bloc/OptionFigure";
 import Forms from "../../../../../pages/Forms";
-import { eyeBrwGrwArcAng } from "../../../../../lib/data/opts";
+import { eyeLidCrsN } from "../../../../../lib/data/opts";
 import { DeepOptional } from "../../../../../lib/declarations/types/utils";
 import { DeepAnatomicOption } from "../../../../../lib/declarations/interfaces/anatomy";
-import { updateBrow } from "../../../../../redux/mainStore/slices/promptSlice";
-export default function EyebrowArchAngleForm(): JSX.Element {
+
+export default function EyeLidCreaseNumberForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
-      layoutParams: ["eyebrowArchAngleForm"],
+      layoutParams: ["eyeLidCreaseNumberForm"],
     }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
-    angleOptions = useMemo<DeepAnatomicOption<EyebrowArchAngle>[]>(() => {
-      const basePath = "/imgs/head/eyebrow-arch-angle",
-        labelMap: Record<EyebrowArchAngle, string> = {
-          radial: "Radial",
-          obtuse: "Obtuse",
-          acute: "Acute",
-          "very-acute": "Very acute",
-          "extremely-acute": "Extremely acute",
-          "s-shaped": "S-shaped",
+    creaseOptions = useMemo<DeepAnatomicOption<EyeLidCreaseNumber>[]>(() => {
+      const basePath = "/imgs/head/eyelid-crease-number",
+        labelMap: Record<EyeLidCreaseNumber, string> = {
+          monolid: "Monolid",
+          doublelid: "Double lid",
+          triplelid: "Triple lid",
+          quadruplelid: "Quadruple lid",
         },
-        uniqueAngles = Array.from(
-          new Set(eyeBrwGrwArcAng)
-        ) as EyebrowArchAngle[];
-      return uniqueAngles.map(key => ({
+        uniqueCreases = Array.from(new Set(eyeLidCrsN)) as EyeLidCreaseNumber[];
+      return uniqueCreases.map(key => ({
         key,
         friendlyName: labelMap[key],
         src: `${basePath}/${key}.png`,
       }));
     }, []),
-    handleAngleChange = useCallback<
+    handleCreaseChange = useCallback<
       DeepOptional<(e: ChangeEvent<HTMLInputElement>) => void>
     >(
       (e: ChangeEvent<HTMLInputElement>): void => {
-        const value = e.target.value as EyebrowArchAngle;
+        const value = e.target.value as EyeLidCreaseNumber;
         dispatch(
-          updateBrow({
-            arch: { angle: value },
+          updateEyeLid({
+            creaseNumber: value,
           })
         );
       },
       [dispatch]
     ),
-    selectedAngle = state.character.head?.eye?.brow?.arch?.angle as
-      | EyebrowArchAngle
+    selectedCrease = state.character.head?.eye?.shape?.lid?.creaseNumber as
+      | EyeLidCreaseNumber
       | undefined;
   return (
     <ErrorBoundary
@@ -73,25 +70,25 @@ export default function EyebrowArchAngleForm(): JSX.Element {
     >
       <fieldset
         ref={formRef as RefObject<HTMLFieldSetElement>}
-        id="eyebrowArchAngleForm"
+        id="eyeLidCreaseNumberForm"
       >
-        <Forms.Header containerId="ebaaLeg" id="ebaaLegStack">
-          {FORM_DICT[lang as keyof typeof FORM_DICT]?.ebaa ??
-            "What is the eyebrow arch angle of your character?"}
+        <Forms.Header containerId="elcLeg" id="elcLegStack">
+          {FORM_DICT[lang as keyof typeof FORM_DICT]?.elc ??
+            "How many eyelid creases does your character have?"}
         </Forms.Header>
-        <OptionFieldset selector="ebaa">
-          {angleOptions.map((opt, i) => {
-            const isChecked = selectedAngle === opt.key;
+        <OptionFieldset selector="elc">
+          {creaseOptions.map((opt, i) => {
+            const isChecked = selectedCrease === opt.key;
             return (
               <OptionFigure
                 key={opt.key}
                 figureAddClasses={[CLASSES.STL_OPT]}
-                prefix="ebaa"
+                prefix="elc"
                 suffix={`${i + 1}`}
                 value={opt.key}
                 checked={isChecked}
-                handleChange={handleAngleChange}
-                name="ebaa"
+                handleChange={handleCreaseChange}
+                name="elc"
                 src={opt.src}
                 caption={opt.friendlyName}
                 imgAddProps={{
@@ -106,7 +103,7 @@ export default function EyebrowArchAngleForm(): JSX.Element {
           })}
         </OptionFieldset>
       </fieldset>
-      <Forms.Result variable={selectedAngle ?? ""} />
+      <Forms.Result variable={selectedCrease ?? ""} />
     </ErrorBoundary>
   );
 }

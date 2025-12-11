@@ -1,11 +1,12 @@
-// src/components/forms/EyebrowArchAngleForm.tsx
+// src/components/forms/EyeLidEpicanthicFoldExtensionForm.tsx
 
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../../../../errors/GenericErrorComponent";
 import { useCallback, useMemo, RefObject, ChangeEvent, JSX } from "react";
 import { FORM_DICT } from "../../../../../lib/states/lang/forms";
 import { GENERIC_DICT } from "../../../../../lib/states/lang/generic";
-import { EyebrowArchAngle } from "../../../../../lib/declarations/types/anatomy";
+import { EyeEpicanthicFoldExtension } from "../../../../../lib/declarations/types/anatomy";
+import { updateEyeLid } from "../../../../../redux/mainStore/slices/promptSlice";
 import { CLASSES } from "../../../../../lib/data/classes";
 import {
   useAppDispatch,
@@ -17,50 +18,49 @@ import { useOptFormCtx } from "../../../../../lib/hooks/contexts/useOptFormCtx";
 import OptionFieldset from "../../../../bloc/OptionFieldset";
 import OptionFigure from "../../../../bloc/OptionFigure";
 import Forms from "../../../../../pages/Forms";
-import { eyeBrwGrwArcAng } from "../../../../../lib/data/opts";
+import { eyeLidEpcExt } from "../../../../../lib/data/opts";
 import { DeepOptional } from "../../../../../lib/declarations/types/utils";
 import { DeepAnatomicOption } from "../../../../../lib/declarations/interfaces/anatomy";
-import { updateBrow } from "../../../../../redux/mainStore/slices/promptSlice";
-export default function EyebrowArchAngleForm(): JSX.Element {
+
+export default function EyeLidEpicanthicFoldExtensionForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
-      layoutParams: ["eyebrowArchAngleForm"],
+      layoutParams: ["eyeLidEpicanthicFoldExtensionForm"],
     }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
-    angleOptions = useMemo<DeepAnatomicOption<EyebrowArchAngle>[]>(() => {
-      const basePath = "/imgs/head/eyebrow-arch-angle",
-        labelMap: Record<EyebrowArchAngle, string> = {
-          radial: "Radial",
-          obtuse: "Obtuse",
-          acute: "Acute",
-          "very-acute": "Very acute",
-          "extremely-acute": "Extremely acute",
-          "s-shaped": "S-shaped",
+    foldOptions = useMemo<
+      DeepAnatomicOption<EyeEpicanthicFoldExtension>[]
+    >(() => {
+      const basePath = "/imgs/head/eyelid-epicanthic-fold-extension",
+        labelMap: Record<EyeEpicanthicFoldExtension, string> = {
+          none: "No epicanthic fold",
+          partial: "Partial epicanthic fold",
+          full: "Full epicanthic fold",
         },
-        uniqueAngles = Array.from(
-          new Set(eyeBrwGrwArcAng)
-        ) as EyebrowArchAngle[];
-      return uniqueAngles.map(key => ({
+        uniqueFolds = Array.from(
+          new Set(eyeLidEpcExt)
+        ) as EyeEpicanthicFoldExtension[];
+      return uniqueFolds.map(key => ({
         key,
         friendlyName: labelMap[key],
         src: `${basePath}/${key}.png`,
       }));
     }, []),
-    handleAngleChange = useCallback<
+    handleFoldChange = useCallback<
       DeepOptional<(e: ChangeEvent<HTMLInputElement>) => void>
     >(
       (e: ChangeEvent<HTMLInputElement>): void => {
-        const value = e.target.value as EyebrowArchAngle;
+        const value = e.target.value as EyeEpicanthicFoldExtension;
         dispatch(
-          updateBrow({
-            arch: { angle: value },
+          updateEyeLid({
+            epicanthicFold: value,
           })
         );
       },
       [dispatch]
     ),
-    selectedAngle = state.character.head?.eye?.brow?.arch?.angle as
-      | EyebrowArchAngle
+    selectedFold = state.character.head?.eye?.shape?.lid?.epicanthicFold as
+      | EyeEpicanthicFoldExtension
       | undefined;
   return (
     <ErrorBoundary
@@ -73,25 +73,25 @@ export default function EyebrowArchAngleForm(): JSX.Element {
     >
       <fieldset
         ref={formRef as RefObject<HTMLFieldSetElement>}
-        id="eyebrowArchAngleForm"
+        id="eyeLidEpicanthicFoldExtensionForm"
       >
-        <Forms.Header containerId="ebaaLeg" id="ebaaLegStack">
-          {FORM_DICT[lang as keyof typeof FORM_DICT]?.ebaa ??
-            "What is the eyebrow arch angle of your character?"}
+        <Forms.Header containerId="elefLeg" id="elefLegStack">
+          {FORM_DICT[lang as keyof typeof FORM_DICT]?.elef ??
+            "What is the epicanthic fold extension of your character?"}
         </Forms.Header>
-        <OptionFieldset selector="ebaa">
-          {angleOptions.map((opt, i) => {
-            const isChecked = selectedAngle === opt.key;
+        <OptionFieldset selector="elef">
+          {foldOptions.map((opt, i) => {
+            const isChecked = selectedFold === opt.key;
             return (
               <OptionFigure
                 key={opt.key}
                 figureAddClasses={[CLASSES.STL_OPT]}
-                prefix="ebaa"
+                prefix="elef"
                 suffix={`${i + 1}`}
                 value={opt.key}
                 checked={isChecked}
-                handleChange={handleAngleChange}
-                name="ebaa"
+                handleChange={handleFoldChange}
+                name="elef"
                 src={opt.src}
                 caption={opt.friendlyName}
                 imgAddProps={{
@@ -106,7 +106,7 @@ export default function EyebrowArchAngleForm(): JSX.Element {
           })}
         </OptionFieldset>
       </fieldset>
-      <Forms.Result variable={selectedAngle ?? ""} />
+      <Forms.Result variable={selectedFold ?? ""} />
     </ErrorBoundary>
   );
 }

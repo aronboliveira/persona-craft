@@ -20,14 +20,14 @@ import OptionFigure from "../../../../bloc/OptionFigure";
 import Forms from "../../../../../pages/Forms";
 import { eyeBrwTipsDst } from "../../../../../lib/data/opts";
 import { DeepOptional } from "../../../../../lib/declarations/types/utils";
-import { EyebrowArchDistanceOption } from "../../../../../lib/declarations/interfaces/anatomy";
+import { DeepAnatomicOption } from "../../../../../lib/declarations/interfaces/anatomy";
 export default function EyebrowArchDistanceForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
       layoutParams: ["eyebrowArchDistanceForm"],
     }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
-    distanceOptions = useMemo<EyebrowArchDistanceOption[]>(() => {
+    distanceOptions = useMemo<DeepAnatomicOption<EyebrowArchDistance>[]>(() => {
       const basePath = "/imgs/head/eyebrow-arch-distance",
         labelMap: Record<EyebrowArchDistance, string> = {
           even: "Even",

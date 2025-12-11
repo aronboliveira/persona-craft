@@ -3,6 +3,7 @@ import {
   Eye,
   EyeBall,
   Eyebrow,
+  EyeLid,
   EyeShape,
   Forehead,
   Hair,
@@ -11,6 +12,7 @@ import {
 import {
   defaultEye,
   defaultEyeBall,
+  defaultEyeLid,
   defaultForehead,
   defaultHair,
 } from "../../defaults";
@@ -68,5 +70,13 @@ export class CharacterValidator {
     const eye = this.ensureEye(state);
     if (!eye.shape) eye.shape = defaultEye.shape as EyeShape;
     return eye.shape as Draft<EyeShape>;
+  }
+  public static ensureEyeLid<T extends StateWithCharacter>(
+    state: T
+  ): Draft<EyeLid> {
+    const shape = this.ensureEyeShape(state);
+    if (!shape.lid)
+      shape.lid = (defaultEye.shape?.lid ?? defaultEyeLid) as EyeLid;
+    return shape.lid as Draft<EyeLid>;
   }
 }

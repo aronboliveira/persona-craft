@@ -7,6 +7,7 @@ import {
   Iris,
   Pupil,
   EyeShape,
+  EyeLid,
 } from "../../lib/declarations/interfaces/anatomy";
 import { EyebrowSlitNumber } from "../../lib/declarations/types/anatomy";
 import { DeepPartial } from "../../lib/declarations/types/utils";
@@ -14,7 +15,7 @@ export const VALID_SLIT_NUMBERS: Readonly<EyebrowSlitNumber[]> = Object.freeze([
   "one",
   "two",
   "three",
-]);
+]) satisfies Readonly<EyebrowSlitNumber[]>;
 export const defaultForehead: Readonly<Forehead> = Object.freeze({
   hairline: {
     height: "average",
@@ -22,7 +23,7 @@ export const defaultForehead: Readonly<Forehead> = Object.freeze({
     shape: "rounded",
   } as Forehead["hairline"],
   height: "average" as Forehead["height"],
-});
+}) satisfies Forehead;
 export const defaultBrow: Readonly<Eyebrow> = Object.freeze({
   arch: {
     angle: "obtuse",
@@ -45,7 +46,7 @@ export const defaultBrow: Readonly<Eyebrow> = Object.freeze({
     angle: "none",
   } as Eyebrow["slit"],
   symmetric: true,
-});
+}) satisfies Eyebrow;
 export const defaultEyeBall: Readonly<EyeBall> = Object.freeze({
   size: "average",
   iris: {
@@ -58,7 +59,14 @@ export const defaultEyeBall: Readonly<EyeBall> = Object.freeze({
     pattern: "round",
     symmetric: true,
   } as Pupil,
-});
+}) satisfies EyeBall;
+export const defaultEyeLid: Readonly<EyeLid> = Object.freeze({
+  creaseNumber: "doublelid",
+  creaseHeight: "medium",
+  epicanthicFold: "none",
+  epicanthicFoldVariation: "none",
+  symmetric: true,
+}) satisfies EyeLid;
 export const defaultEye: Readonly<DeepPartial<Eye>> = Object.freeze({
   // todo remove deeppartial later
   ball: defaultEyeBall as EyeBall,
@@ -67,18 +75,18 @@ export const defaultEye: Readonly<DeepPartial<Eye>> = Object.freeze({
     tilt: "neutral-turned",
     depth: "neutral-set",
     spacing: "average-distanced",
-    epicanthicFold: "none",
-    epicanthicFoldVariation: "none",
     lid: {
       creaseNumber: "doublelid",
       creaseHeight: "medium",
+      epicanthicFold: "none",
+      epicanthicFoldVariation: "none",
       symmetric: true,
     },
     symmetric: true,
     hood: "partially-hooded",
   } as EyeShape,
   brow: defaultBrow as Eyebrow,
-});
+}) satisfies DeepPartial<Eye>;
 export const defaultHair: Readonly<Hair> = Object.freeze({
   texture: "straight",
   length: "medium",
@@ -88,4 +96,4 @@ export const defaultHair: Readonly<Hair> = Object.freeze({
     length: "lash-length",
     shape: "curtain",
   } as Hair["bang"],
-});
+}) satisfies Hair;
