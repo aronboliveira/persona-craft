@@ -1,6 +1,7 @@
 import { Draft } from "@reduxjs/toolkit";
 import {
   Eye,
+  EyeBag,
   EyeBall,
   Eyebrow,
   EyeLid,
@@ -11,6 +12,7 @@ import {
 } from "../../../../lib/declarations/interfaces/anatomy";
 import {
   defaultEye,
+  defaultEyeBag,
   defaultEyeBall,
   defaultEyeLid,
   defaultForehead,
@@ -78,5 +80,12 @@ export class CharacterValidator {
     if (!shape.lid)
       shape.lid = (defaultEye.shape?.lid ?? defaultEyeLid) as EyeLid;
     return shape.lid as Draft<EyeLid>;
+  }
+  public static ensureEyeBag<T extends StateWithCharacter>(
+    state: T
+  ): Draft<EyeBag> {
+    const eye = this.ensureEye(state);
+    if (!eye.bag) eye.bag = (defaultEye.bag ?? defaultEyeBag) as EyeBag;
+    return eye.bag as Draft<EyeBag>;
   }
 }

@@ -2,6 +2,7 @@ import {
   BodyFat,
   BodyHeight,
   BodyMuscleTypes,
+  EyeBagCountor,
   EyeBallSize,
   EyebrowArchAngle,
   EyebrowArchDistance,
@@ -344,6 +345,12 @@ export const eyeLidEpcCls = [
   "palpebral",
   "inverted",
 ] as const satisfies EyeEpicanthicFoldClass[];
+export const eyeBagCnt = [
+  "flat",
+  "low-budge",
+  "average-budge",
+  "high-budge",
+] as const satisfies EyeBagCountor[];
 export const bdHgt = [
   "dwarfic",
   "short",

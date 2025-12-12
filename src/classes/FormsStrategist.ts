@@ -44,8 +44,14 @@ import EyeLidEpicanthicFoldExtensionForm from "../components/forms/head/eye/shap
 import EyeLidEpicanthicFoldClassForm from "../components/forms/head/eye/shape/EyeLidEpicanthicFoldClassForm";
 
 export default class FormsStrategist implements UIRenderingStrategy {
-  render(context: Partial<PromptState & { order: number }>): string {
+  render(context: Partial<PromptState & { order: number | string }>): string {
     if (!context?.order) return MainStyleForm.name;
+    if (typeof context.order === "number") {
+      if (!Number.isInteger(context.order))
+        context.order = this.map(context.order) as number;
+      if (context.order < 0) context.order = Math.abs(context.order);
+    }
+    if (context.order === 41) context.order = this.map(context.order) as string;
     switch (context.order) {
       case 0:
         return MainStyleForm.name;
@@ -129,10 +135,36 @@ export default class FormsStrategist implements UIRenderingStrategy {
         return EyeLidEpicanthicFoldExtensionForm.name;
       case 40:
         return EyeLidEpicanthicFoldClassForm.name;
+      case "epicanthic-fold-symmetry":
+        // todo change this later
+        return EyeLidEpicanthicFoldClassForm.name;
       // case 11:
       //   return NarrativeForm.name;
       default:
         return "";
+    }
+  }
+  map(
+    value: string | number | bigint | symbol
+  ): string | number | bigint | symbol {
+    if (
+      typeof value === "object" ||
+      typeof value === "boolean" ||
+      typeof value === "function" ||
+      !value
+    )
+      return value;
+    if (typeof value === "number") {
+      if (!Number.isFinite(value)) return value;
+      value = Math.trunc(value);
+    }
+    if (typeof value === "string" && /^\d+$/.test(value))
+      value = parseInt(value, 10);
+    switch (value) {
+      case 41:
+        return "epicanthic-fold-symmetry";
+      default:
+        return value;
     }
   }
 }

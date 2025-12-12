@@ -13,7 +13,7 @@ import {
   HairBang,
 } from "../../../../lib/declarations/interfaces/anatomy";
 import { DeepPartial } from "../../../../lib/declarations/types/utils";
-import { defaultEye } from "../../defaults";
+import { defaultEye, defaultEyeBag } from "../../defaults";
 
 export class CharacterBuilder {
   public static mergeHair(
@@ -137,5 +137,16 @@ export class CharacterBuilder {
       ...base,
       ...patch,
     } as Draft<EyeLid>;
+  }
+
+  public static mergeEyeBag(
+    target: Draft<EyeBag> | undefined,
+    patch: DeepPartial<EyeBag>
+  ): Draft<EyeBag> {
+    const base = (target ?? defaultEyeBag ?? {}) as Draft<EyeBag>;
+    return {
+      ...base,
+      ...patch,
+    } as Draft<EyeBag>;
   }
 }

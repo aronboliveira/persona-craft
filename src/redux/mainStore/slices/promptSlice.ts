@@ -3,6 +3,7 @@ import { UpdateFields } from "../../../lib/declarations/types/redux";
 import { PromptState } from "../../../lib/declarations/interfaces/redux";
 import {
   Eye,
+  EyeBag,
   Eyebrow,
   EyeLid,
   Forehead,
@@ -15,6 +16,7 @@ import {
   defaultHair,
   defaultEyeLid,
   VALID_SLIT_NUMBERS,
+  defaultEyeBag,
 } from "../../data/defaults";
 import { DeepPartial } from "../../../lib/declarations/types/utils";
 import { CharacterBuilder } from "../../data/classes/facades/CharacterBuilder";
@@ -56,7 +58,11 @@ const promptSlice = createSlice({
       updatedAt: Date.now(),
     }),
     updateHair(s: PromptState, a: PayloadAction<DeepPartial<Hair>>): void {
-      CharacterBuilder.mergeHair(CharacterValidator.ensureHair(s), a.payload);
+      const hair = CharacterBuilder.mergeHair(
+        CharacterValidator.ensureHair(s),
+        a.payload
+      );
+      s.character.hair = hair;
       s.updatedAt = Date.now();
     },
     resetHair(s: PromptState): void {
@@ -76,6 +82,7 @@ const promptSlice = createSlice({
         eye.brow.slit.angle = "none";
       if (eye.shape?.lid?.epicanthicFold === "none")
         eye.shape.lid.epicanthicFoldVariation = "none";
+      s.character.head.eye = eye;
       s.updatedAt = Date.now();
     },
     resetEye(s: PromptState): void {
@@ -94,6 +101,7 @@ const promptSlice = createSlice({
         !VALID_SLIT_NUMBERS.includes(brow.slit.number)
       )
         brow.slit.angle = "none";
+      s.character.head.eye.brow = brow;
       s.updatedAt = Date.now();
     },
     resetBrow(s: PromptState): void {
@@ -110,6 +118,7 @@ const promptSlice = createSlice({
       );
       if (shape.lid?.epicanthicFold === "none")
         shape.lid.epicanthicFoldVariation = "none";
+      s.character.head.eye.shape = shape;
       s.updatedAt = Date.now();
     },
     resetEyeShape(s: PromptState): void {
@@ -122,12 +131,24 @@ const promptSlice = createSlice({
         a.payload
       );
       if (lid.epicanthicFold === "none") lid.epicanthicFoldVariation = "none";
+      if (s.character.head.eye.shape) s.character.head.eye.shape.lid = lid;
       s.updatedAt = Date.now();
     },
     resetEyeLid(s: PromptState): void {
       if (!s?.character?.head?.eye?.shape)
         s.character.head.eye.shape = defaultEye.shape as EyeShape;
       s.character.head.eye.shape.lid = defaultEyeLid as EyeLid;
+      s.updatedAt = Date.now();
+    },
+    updateEyeBag(s: PromptState, a: PayloadAction<DeepPartial<EyeBag>>): void {
+      s.character.head.eye.bag = CharacterBuilder.mergeEyeBag(
+        CharacterValidator.ensureEyeBag(s),
+        a.payload
+      );
+      s.updatedAt = Date.now();
+    },
+    resetEyeBag(s: PromptState): void {
+      s.character.head.eye.bag = defaultEyeBag as EyeBag;
       s.updatedAt = Date.now();
     },
     resetForehead(s: PromptState): void {
@@ -148,6 +169,8 @@ export const {
   resetEyeLid,
   updateBrow,
   resetBrow,
+  updateEyeBag,
+  resetEyeBag,
   updateHair,
   resetHair,
   resetForehead,

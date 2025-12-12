@@ -8,6 +8,7 @@ import {
   Pupil,
   EyeShape,
   EyeLid,
+  EyeBag,
 } from "../../lib/declarations/interfaces/anatomy";
 import { EyebrowSlitNumber } from "../../lib/declarations/types/anatomy";
 import { DeepPartial } from "../../lib/declarations/types/utils";
@@ -67,6 +68,11 @@ export const defaultEyeLid: Readonly<EyeLid> = Object.freeze({
   epicanthicFoldVariation: "none",
   symmetric: true,
 }) satisfies EyeLid;
+export const defaultEyeBag: Readonly<EyeBag> = Object.freeze({
+  countor: "flat",
+  color: "skin-tone",
+  symmetric: true,
+}) satisfies EyeBag;
 export const defaultEye: Readonly<DeepPartial<Eye>> = Object.freeze({
   // todo remove deeppartial later
   ball: defaultEyeBall as EyeBall,
@@ -85,6 +91,7 @@ export const defaultEye: Readonly<DeepPartial<Eye>> = Object.freeze({
     symmetric: true,
     hood: "partially-hooded",
   } as EyeShape,
+  bag: defaultEyeBag as EyeBag,
   brow: defaultBrow as Eyebrow,
 }) satisfies DeepPartial<Eye>;
 export const defaultHair: Readonly<Hair> = Object.freeze({

@@ -195,6 +195,7 @@ export default function Forms(): JSX.Element {
           return <PupilPatternForm />;
         case PupilSizeForm.name:
           return <PupilSizeForm />;
+        // * eye shape (skin + bone structure)
         case EyeFissureForm.name:
           return <EyeFissureForm />;
         case EyeTiltForm.name:
@@ -203,6 +204,7 @@ export default function Forms(): JSX.Element {
           return <EyeDepthForm />;
         case EyeSpacingForm.name:
           return <EyeSpacingForm />;
+        // * eyelid
         case EyeLidCreaseNumberForm.name:
           return <EyeLidCreaseNumberForm />;
         case EyeLidCreaseHeightForm.name:
