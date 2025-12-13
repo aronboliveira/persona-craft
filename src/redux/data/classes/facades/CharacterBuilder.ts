@@ -9,11 +9,23 @@ import {
   EyeLash,
   EyeLid,
   EyeShape,
+  Forehead,
   Hair,
   HairBang,
 } from "../../../../lib/declarations/interfaces/anatomy";
 import { DeepPartial } from "../../../../lib/declarations/types/utils";
-import { defaultEye, defaultEyeBag } from "../../defaults";
+import {
+  defaultBrow,
+  defaultEye,
+  defaultEyeBag,
+  defaultEyeBall,
+  defaultEyeLash,
+  defaultEyeLid,
+  defaultEyeShape,
+  defaultForehead,
+  defaultHair,
+  defaultHairBang,
+} from "../../defaults";
 
 export class CharacterBuilder {
   public static mergeHair(
@@ -22,24 +34,33 @@ export class CharacterBuilder {
   ): Draft<Hair> {
     if (patch.bang)
       target.bang = CharacterBuilder.mergeHairBang(target.bang, patch.bang);
-    if (patch.length) target.length = patch.length;
-    if (patch.texture) target.texture = patch.texture;
-    if (patch.tidiness) target.tidiness = patch.tidiness;
     return {
+      ...defaultHair,
       ...target,
       ...patch,
     } as Draft<Hair>;
   }
 
   public static mergeHairBang(
-    target: Draft<HairBang> | undefined,
+    target: Draft<HairBang>,
     patch: DeepPartial<HairBang>
   ): Draft<HairBang> {
-    const base = (target ?? {}) as Draft<HairBang>;
     return {
-      ...base,
+      ...defaultHairBang,
+      ...target,
       ...patch,
     } as Draft<HairBang>;
+  }
+
+  public static mergeForehead(
+    target: Draft<Forehead>,
+    patch: DeepPartial<Forehead>
+  ): Draft<Forehead> {
+    return {
+      ...defaultForehead,
+      ...target,
+      ...patch,
+    } as Draft<Forehead>;
   }
 
   public static mergeEye(
@@ -56,16 +77,16 @@ export class CharacterBuilder {
       target.brow = CharacterBuilder.mergeBrow(target.brow, patch.brow);
     if (patch.lashes)
       target.lashes = CharacterBuilder.mergeLashes(target.lashes, patch.lashes);
-    return target;
+    return { ...defaultEye, ...target } as Draft<Eye>;
   }
 
   public static mergeBall(
     target: Draft<EyeBall> | undefined,
     patch: DeepPartial<EyeBall>
   ): Draft<EyeBall> {
-    const base = (target ?? defaultEye.ball ?? {}) as Draft<EyeBall>;
     return {
-      ...base,
+      ...defaultEyeBall,
+      ...target,
       ...patch,
     } as Draft<EyeBall>;
   }
@@ -74,9 +95,9 @@ export class CharacterBuilder {
     target: Draft<EyeShape> | undefined,
     patch: DeepPartial<EyeShape>
   ): Draft<EyeShape> {
-    const base = (target ?? defaultEye.shape ?? {}) as Draft<EyeShape>;
     return {
-      ...base,
+      ...defaultEyeShape,
+      ...target,
       ...patch,
     } as Draft<EyeShape>;
   }
@@ -85,9 +106,9 @@ export class CharacterBuilder {
     target: Draft<EyeBag> | undefined,
     patch: DeepPartial<EyeBag>
   ): Draft<EyeBag> {
-    const base = (target ?? defaultEye.bag ?? {}) as Draft<EyeBag>;
     return {
-      ...base,
+      ...defaultEyeBag,
+      ...target,
       ...patch,
     } as Draft<EyeBag>;
   }
@@ -96,24 +117,10 @@ export class CharacterBuilder {
     target: Draft<Eyebrow> | undefined,
     patch: DeepPartial<Eyebrow>
   ): Draft<Eyebrow> {
-    const base = (target ?? defaultEye.brow ?? {}) as Draft<Eyebrow>;
-    const mergedArch = patch?.arch
-      ? {
-          ...(base.arch ?? ({} as any)),
-          ...patch.arch,
-        }
-      : base.arch;
-    const mergedGrowth = patch?.growth
-      ? {
-          ...(base.growth ?? ({} as any)),
-          ...patch.growth,
-        }
-      : base.growth;
     return {
-      ...base,
+      ...defaultBrow,
+      ...target,
       ...patch,
-      arch: mergedArch,
-      growth: mergedGrowth,
     } as Draft<Eyebrow>;
   }
 
@@ -121,9 +128,9 @@ export class CharacterBuilder {
     target: Draft<EyeLash> | undefined,
     patch: DeepPartial<EyeLash>
   ): Draft<EyeLash> {
-    const base = (target ?? defaultEye.lashes ?? {}) as Draft<EyeLash>;
     return {
-      ...base,
+      ...defaultEyeLash,
+      ...target,
       ...patch,
     } as Draft<EyeLash>;
   }
@@ -132,9 +139,9 @@ export class CharacterBuilder {
     target: Draft<EyeLid> | undefined,
     patch: DeepPartial<EyeLid>
   ): Draft<EyeLid> {
-    const base = (target ?? defaultEye.shape?.lid ?? {}) as Draft<EyeLid>;
     return {
-      ...base,
+      ...defaultEyeLid,
+      ...target,
       ...patch,
     } as Draft<EyeLid>;
   }
@@ -143,10 +150,21 @@ export class CharacterBuilder {
     target: Draft<EyeBag> | undefined,
     patch: DeepPartial<EyeBag>
   ): Draft<EyeBag> {
-    const base = (target ?? defaultEyeBag ?? {}) as Draft<EyeBag>;
     return {
-      ...base,
+      ...defaultEyeBag,
+      ...target,
       ...patch,
     } as Draft<EyeBag>;
+  }
+
+  public static mergeEyeLash(
+    target: Draft<EyeLash> | undefined,
+    patch: DeepPartial<EyeLash>
+  ): Draft<EyeLash> {
+    return {
+      ...defaultEyeLash,
+      ...target,
+      ...patch,
+    } as Draft<EyeLash>;
   }
 }

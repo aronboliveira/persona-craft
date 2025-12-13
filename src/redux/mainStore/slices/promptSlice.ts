@@ -5,6 +5,7 @@ import {
   Eye,
   EyeBag,
   Eyebrow,
+  EyeLash,
   EyeLid,
   Forehead,
   Hair,
@@ -151,6 +152,31 @@ const promptSlice = createSlice({
       s.character.head.eye.bag = defaultEyeBag as EyeBag;
       s.updatedAt = Date.now();
     },
+    updateEyelash(
+      s: PromptState,
+      a: PayloadAction<DeepPartial<EyeLash>>
+    ): void {
+      s.character.head.eye.lashes = CharacterBuilder.mergeEyeLash(
+        CharacterValidator.ensureEyeLash(s),
+        a.payload
+      );
+      s.updatedAt = Date.now();
+    },
+    resetEyelash(s: PromptState): void {
+      s.character.head.eye.lashes = undefined;
+      s.updatedAt = Date.now();
+    },
+    updateForehead(
+      s: PromptState,
+      a: PayloadAction<DeepPartial<Forehead>>
+    ): void {
+      const forehead = CharacterBuilder.mergeForehead(
+        CharacterValidator.ensureForehead(s),
+        a.payload
+      );
+      s.character.head.forehead = forehead;
+      s.updatedAt = Date.now();
+    },
     resetForehead(s: PromptState): void {
       s.character.head.forehead = defaultForehead as Forehead;
       s.updatedAt = Date.now();
@@ -171,8 +197,11 @@ export const {
   resetBrow,
   updateEyeBag,
   resetEyeBag,
+  updateEyelash,
+  resetEyelash,
   updateHair,
   resetHair,
+  updateForehead,
   resetForehead,
 } = promptSlice.actions;
 export default promptSlice.reducer;

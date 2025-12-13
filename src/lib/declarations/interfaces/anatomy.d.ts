@@ -73,7 +73,6 @@ export interface EyebrowSlit {
 export interface EyebrowGrowth {
   pattern: EyebrowGrowthPattern;
   direction: EyebrowGrowthDirection;
-  symmetric?: boolean;
 }
 export interface EyebrowArch {
   angle: EyebrowArchAngle;
@@ -96,7 +95,7 @@ export interface Eyebrow {
 export interface EyeLid {
   creaseNumber: EyeLidCreaseNumber;
   creaseHeight: EyelidCreaseHeight;
-  epicanthicFold: EyeEpicanthicFoldExtension;
+  epicanthicFold?: EyeEpicanthicFoldExtension;
   epicanthicFoldVariation?: EyeEpicanthicFoldClass;
   symmetric?: boolean;
 }
@@ -117,8 +116,8 @@ export interface EyeShape {
   depth: EyeDepth;
   spacing: EyeSpacing;
   lid: EyeLid;
+  hood?: EyeHood; // todo missing this
   symmetric?: boolean;
-  hood?: EyeHood;
 }
 export interface Pupil {
   size: PupilSize;

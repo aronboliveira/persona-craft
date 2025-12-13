@@ -42,6 +42,11 @@ import EyeLidCreaseNumberForm from "../components/forms/head/eye/shape/EyeLidCre
 import EyeLidCreaseHeightForm from "../components/forms/head/eye/shape/EyeLidCreaseHeightForm";
 import EyeLidEpicanthicFoldExtensionForm from "../components/forms/head/eye/shape/EyeLidEpicanthicFoldExtensionForm";
 import EyeLidEpicanthicFoldClassForm from "../components/forms/head/eye/shape/EyeLidEpicanthicFoldClassForm";
+import EyeBagCountorForm from "../components/forms/head/eye/bag/EyeBagCountorForm";
+import EyeBagColorForm from "../components/forms/head/eye/bag/EyeBagColorForm";
+import EyeLashesDensityForm from "../components/forms/head/eye/lash/EyeLashesDensityForm";
+import EyeLashesLengthForm from "../components/forms/head/eye/lash/EyeLashesLengthForm";
+import EyeLashesCurlForm from "../components/forms/head/eye/lash/EyeLashesCurlForm";
 
 export default class FormsStrategist implements UIRenderingStrategy {
   render(context: Partial<PromptState & { order: number | string }>): string {
@@ -109,35 +114,51 @@ export default class FormsStrategist implements UIRenderingStrategy {
         return EyebrowSlitNumberForm.name;
       case 27:
         return EyebrowSlitAngleForm.name;
-      case 28:
-        return EyeBallSizeForm.name;
       case 29:
-        return EyeColorForm.name;
+        return EyeBallSizeForm.name;
       case 30:
-        return IrisSizeForm.name;
+        return EyeColorForm.name;
       case 31:
-        return PupilSizeForm.name;
-      case 32:
-        return PupilPatternForm.name;
+        return IrisSizeForm.name;
       case 33:
-        return EyeFissureForm.name;
+        return PupilSizeForm.name;
       case 34:
-        return EyeTiltForm.name;
-      case 35:
-        return EyeDepthForm.name;
+        return PupilPatternForm.name;
       case 36:
-        return EyeSpacingForm.name;
+        return EyeFissureForm.name;
       case 37:
-        return EyeLidCreaseNumberForm.name;
+        return EyeTiltForm.name;
       case 38:
-        return EyeLidCreaseHeightForm.name;
+        return EyeDepthForm.name;
       case 39:
+        return EyeSpacingForm.name;
+      case 41:
+        return EyeLidCreaseNumberForm.name;
+      case 42:
+        return EyeLidCreaseHeightForm.name;
+      case 43:
         return EyeLidEpicanthicFoldExtensionForm.name;
-      case 40:
+      case 44:
         return EyeLidEpicanthicFoldClassForm.name;
-      case "epicanthic-fold-symmetry":
+      case 46:
+        return EyeBagCountorForm.name;
+      case 47:
+        return EyeBagColorForm.name;
+      case 49:
+        return EyeLashesDensityForm.name;
+      case 50:
+        return EyeLashesLengthForm.name;
+      case 51:
+        return EyeLashesCurlForm.name;
+      case "eyebrow-symmetry": // 28
+      case "eyelid-symmetry": // 45
+      case "eyebag-symmetry": // 48
+      case "eyelash-symmetry": // 52
+      case "eyeshape-symmetry": // 40
+      case "pupil-symmetry": // 35
+      case "iris-symmetry": // 32
         // todo change this later
-        return EyeLidEpicanthicFoldClassForm.name;
+        return "symmetry";
       // case 11:
       //   return NarrativeForm.name;
       default:
@@ -161,8 +182,20 @@ export default class FormsStrategist implements UIRenderingStrategy {
     if (typeof value === "string" && /^\d+$/.test(value))
       value = parseInt(value, 10);
     switch (value) {
-      case 41:
-        return "epicanthic-fold-symmetry";
+      case 28:
+        return "eyebrow-symmetry";
+      case 32:
+        return "iris-symmetry";
+      case 35:
+        return "pupil-symmetry";
+      case 40:
+        return "eyeshape-symmetry";
+      case 45:
+        return "eyelid-symmetry";
+      case 48:
+        return "eyebag-symmetry";
+      case 52:
+        return "eyelash-symmetry";
       default:
         return value;
     }

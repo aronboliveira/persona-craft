@@ -76,6 +76,11 @@ import EyeLidCreaseNumberForm from "../components/forms/head/eye/shape/EyeLidCre
 import EyeLidCreaseHeightForm from "../components/forms/head/eye/shape/EyeLidCreaseHeightForm";
 import EyeLidEpicanthicFoldExtensionForm from "../components/forms/head/eye/shape/EyeLidEpicanthicFoldExtensionForm";
 import EyeLidEpicanthicFoldClassForm from "../components/forms/head/eye/shape/EyeLidEpicanthicFoldClassForm";
+import EyeBagCountorForm from "../components/forms/head/eye/bag/EyeBagCountorForm";
+import EyeBagColorForm from "../components/forms/head/eye/bag/EyeBagColorForm";
+import EyeLashesDensityForm from "../components/forms/head/eye/lash/EyeLashesDensityForm";
+import EyeLashesLengthForm from "../components/forms/head/eye/lash/EyeLashesLengthForm";
+import EyeLashesCurlForm from "../components/forms/head/eye/lash/EyeLashesCurlForm";
 
 export default function Forms(): JSX.Element {
   useOpacityTransition();
@@ -213,6 +218,25 @@ export default function Forms(): JSX.Element {
           return <EyeLidEpicanthicFoldExtensionForm />;
         case EyeLidEpicanthicFoldClassForm.name:
           return <EyeLidEpicanthicFoldClassForm />;
+        // * eyebag
+        case EyeBagCountorForm.name:
+          return <EyeBagCountorForm />;
+        case EyeBagColorForm.name:
+          return <EyeBagColorForm />;
+        // * eyelashes
+        case EyeLashesDensityForm.name:
+          return <EyeLashesDensityForm />;
+        case EyeLashesLengthForm.name:
+          return <EyeLashesLengthForm />;
+        case EyeLashesCurlForm.name:
+          return <EyeLashesCurlForm />;
+        // * symmetry forms (placeholders)
+        case "symmetry":
+          return (
+            <div className="text-mute">
+              <b>This should have been a form for simmetry. Skip for now!</b>
+            </div>
+          );
         default:
           return (
             <div className="text-error">

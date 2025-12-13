@@ -2,6 +2,7 @@ import {
   BodyFat,
   BodyHeight,
   BodyMuscleTypes,
+  EyeBagColor,
   EyeBagCountor,
   EyeBallSize,
   EyebrowArchAngle,
@@ -22,6 +23,9 @@ import {
   EyeEpicanthicFoldClass,
   EyeEpicanthicFoldExtension,
   EyeFissure,
+  EyeLashesCurl,
+  EyeLashesDensity,
+  EyeLashesLength,
   EyelidCreaseHeight,
   EyeLidCreaseNumber,
   EyeSpacing,
@@ -351,6 +355,35 @@ export const eyeBagCnt = [
   "average-budge",
   "high-budge",
 ] as const satisfies EyeBagCountor[];
+export const eyeBagClr = [
+  "skin-tone",
+  "dark",
+  "blue-violet",
+  "purple-maroon",
+  "reddish",
+  "yellow-brown",
+] as const satisfies EyeBagColor[];
+export const eyeLshDst = [
+  "sparse",
+  "average",
+  "dense",
+  "voluminous",
+] as const satisfies EyeLashesDensity[];
+export const eyeLshLgt = [
+  "absent",
+  "very-short",
+  "short",
+  "average",
+  "long",
+  "extra-long",
+] as const satisfies EyeLashesLength[];
+export const eyeLshCrl = [
+  "upward-curled",
+  "slightly-upward-curled",
+  "straight",
+  "slightly-downward-curled",
+  "downward-curled",
+] as const satisfies EyeLashesCurl[];
 export const bdHgt = [
   "dwarfic",
   "short",
