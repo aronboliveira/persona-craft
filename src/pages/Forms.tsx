@@ -8,6 +8,7 @@ import {
   PropsWithChildren,
   useContext,
   ActionDispatch,
+  useLayoutEffect,
 } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../components/errors/GenericErrorComponent";
@@ -81,10 +82,14 @@ import EyeBagColorForm from "../components/forms/head/eye/bag/EyeBagColorForm";
 import EyeLashesDensityForm from "../components/forms/head/eye/lash/EyeLashesDensityForm";
 import EyeLashesLengthForm from "../components/forms/head/eye/lash/EyeLashesLengthForm";
 import EyeLashesCurlForm from "../components/forms/head/eye/lash/EyeLashesCurlForm";
+import EyeHoodForm from "../components/forms/head/eye/shape/EyeHoodForm";
+import AccessibilityHandler from "../lib/utils/AcessibilityHandler";
 
 export default function Forms(): JSX.Element {
   useOpacityTransition();
   const { lang } = useLanguage(),
+    mainRef = useRef<NHtEl>(null),
+    mainId = "main-forms-stack-section",
     dispatch = useDispatch<AppDispatch>(),
     stateOrder = useSelector(
       (s: RootState) => (s.formStrategy as unknown as FormState).order
@@ -209,6 +214,8 @@ export default function Forms(): JSX.Element {
           return <EyeDepthForm />;
         case EyeSpacingForm.name:
           return <EyeSpacingForm />;
+        case EyeHoodForm.name:
+          return <EyeHoodForm />;
         // * eyelid
         case EyeLidCreaseNumberForm.name:
           return <EyeLidCreaseNumberForm />;
@@ -234,7 +241,7 @@ export default function Forms(): JSX.Element {
         case "symmetry":
           return (
             <div className="text-mute">
-              <b>This should have been a form for simmetry. Skip for now!</b>
+              <b>This should have been a form for symmetry. Skip for now!</b>
             </div>
           );
         default:
@@ -255,13 +262,15 @@ export default function Forms(): JSX.Element {
       dispatch(resetForm());
     }, [dispatch]),
     selectedFormRef = useRef<NHtEl>(null);
-
   useOptionGrid({
     selectedFormRef,
     setColumns: setColumnRepeat,
     order: stateOrder,
   });
-
+  useLayoutEffect(() => {
+    mainRef.current ??= document.getElementById(mainId) as NHtEl;
+    mainRef.current && AccessibilityHandler.trackAriaState(mainRef.current);
+  }, [mainRef]);
   return (
     <ErrorBoundary
       onError={(error, errorInfo) => {
@@ -294,6 +303,8 @@ export default function Forms(): JSX.Element {
             component="section"
             alignItems={"center"}
             sx={{ px: 2, py: 3 }}
+            ref={mainRef}
+            id={mainId}
           >
             <Box
               sx={{

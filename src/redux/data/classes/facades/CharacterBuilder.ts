@@ -1,5 +1,3 @@
-// src/redux/mainStore/builders/CharacterBuilder.ts
-
 import { Draft } from "@reduxjs/toolkit";
 import {
   Eye,
@@ -12,6 +10,9 @@ import {
   Forehead,
   Hair,
   HairBang,
+  Lip,
+  LipTubercule,
+  Mouth,
 } from "../../../../lib/declarations/interfaces/anatomy";
 import { DeepPartial } from "../../../../lib/declarations/types/utils";
 import {
@@ -25,7 +26,11 @@ import {
   defaultForehead,
   defaultHair,
   defaultHairBang,
+  defaultLip,
+  defaultMouth,
+  defaultLipTubercule,
 } from "../../defaults";
+import ObjectHelper from "../../../../lib/utils/ObjectHelper";
 
 export class CharacterBuilder {
   public static mergeHair(
@@ -35,7 +40,7 @@ export class CharacterBuilder {
     if (patch.bang)
       target.bang = CharacterBuilder.mergeHairBang(target.bang, patch.bang);
     return {
-      ...defaultHair,
+      ...ObjectHelper.deepCopyObj(defaultHair),
       ...target,
       ...patch,
     } as Draft<Hair>;
@@ -46,7 +51,7 @@ export class CharacterBuilder {
     patch: DeepPartial<HairBang>
   ): Draft<HairBang> {
     return {
-      ...defaultHairBang,
+      ...ObjectHelper.deepCopyObj(defaultHairBang),
       ...target,
       ...patch,
     } as Draft<HairBang>;
@@ -57,7 +62,7 @@ export class CharacterBuilder {
     patch: DeepPartial<Forehead>
   ): Draft<Forehead> {
     return {
-      ...defaultForehead,
+      ...ObjectHelper.deepCopyObj(defaultForehead),
       ...target,
       ...patch,
     } as Draft<Forehead>;
@@ -77,7 +82,7 @@ export class CharacterBuilder {
       target.brow = CharacterBuilder.mergeBrow(target.brow, patch.brow);
     if (patch.lashes)
       target.lashes = CharacterBuilder.mergeLashes(target.lashes, patch.lashes);
-    return { ...defaultEye, ...target } as Draft<Eye>;
+    return { ...ObjectHelper.deepCopyObj(defaultEye), ...target } as Draft<Eye>;
   }
 
   public static mergeBall(
@@ -85,7 +90,7 @@ export class CharacterBuilder {
     patch: DeepPartial<EyeBall>
   ): Draft<EyeBall> {
     return {
-      ...defaultEyeBall,
+      ...ObjectHelper.deepCopyObj(defaultEyeBall),
       ...target,
       ...patch,
     } as Draft<EyeBall>;
@@ -96,7 +101,7 @@ export class CharacterBuilder {
     patch: DeepPartial<EyeShape>
   ): Draft<EyeShape> {
     return {
-      ...defaultEyeShape,
+      ...ObjectHelper.deepCopyObj(defaultEyeShape),
       ...target,
       ...patch,
     } as Draft<EyeShape>;
@@ -107,7 +112,7 @@ export class CharacterBuilder {
     patch: DeepPartial<EyeBag>
   ): Draft<EyeBag> {
     return {
-      ...defaultEyeBag,
+      ...ObjectHelper.deepCopyObj(defaultEyeBag),
       ...target,
       ...patch,
     } as Draft<EyeBag>;
@@ -118,7 +123,7 @@ export class CharacterBuilder {
     patch: DeepPartial<Eyebrow>
   ): Draft<Eyebrow> {
     return {
-      ...defaultBrow,
+      ...ObjectHelper.deepCopyObj(defaultBrow),
       ...target,
       ...patch,
     } as Draft<Eyebrow>;
@@ -129,7 +134,7 @@ export class CharacterBuilder {
     patch: DeepPartial<EyeLash>
   ): Draft<EyeLash> {
     return {
-      ...defaultEyeLash,
+      ...ObjectHelper.deepCopyObj(defaultEyeLash),
       ...target,
       ...patch,
     } as Draft<EyeLash>;
@@ -140,7 +145,7 @@ export class CharacterBuilder {
     patch: DeepPartial<EyeLid>
   ): Draft<EyeLid> {
     return {
-      ...defaultEyeLid,
+      ...ObjectHelper.deepCopyObj(defaultEyeLid),
       ...target,
       ...patch,
     } as Draft<EyeLid>;
@@ -151,7 +156,7 @@ export class CharacterBuilder {
     patch: DeepPartial<EyeBag>
   ): Draft<EyeBag> {
     return {
-      ...defaultEyeBag,
+      ...ObjectHelper.deepCopyObj(defaultEyeBag),
       ...target,
       ...patch,
     } as Draft<EyeBag>;
@@ -162,9 +167,42 @@ export class CharacterBuilder {
     patch: DeepPartial<EyeLash>
   ): Draft<EyeLash> {
     return {
-      ...defaultEyeLash,
+      ...ObjectHelper.deepCopyObj(defaultEyeLash),
       ...target,
       ...patch,
     } as Draft<EyeLash>;
+  }
+
+  public static mergeMouth(
+    target: Draft<Mouth>,
+    patch: DeepPartial<Mouth>
+  ): Draft<Mouth> {
+    return {
+      ...ObjectHelper.deepCopyObj(defaultMouth),
+      ...target,
+      ...patch,
+    } as Draft<Mouth>;
+  }
+
+  public static mergeLip(
+    target: Draft<Lip>,
+    patch: DeepPartial<Lip>
+  ): Draft<Lip> {
+    return {
+      ...ObjectHelper.deepCopyObj(defaultLip),
+      ...target,
+      ...patch,
+    } as Draft<Lip>;
+  }
+
+  public static mergeLipTubercule(
+    target: Draft<LipTubercule>,
+    patch: DeepPartial<LipTubercule>
+  ): Draft<LipTubercule> {
+    return {
+      ...ObjectHelper.deepCopyObj(defaultLipTubercule),
+      ...target,
+      ...patch,
+    } as Draft<LipTubercule>;
   }
 }

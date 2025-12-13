@@ -9,6 +9,9 @@ import {
   EyeLid,
   Forehead,
   Hair,
+  Lip,
+  LipTubercule,
+  Mouth,
 } from "../../../lib/declarations/interfaces/anatomy";
 import {
   defaultBrow,
@@ -18,26 +21,19 @@ import {
   defaultEyeLid,
   VALID_SLIT_NUMBERS,
   defaultEyeBag,
+  defaultMouth,
+  defaultCharacter,
 } from "../../data/defaults";
 import { DeepPartial } from "../../../lib/declarations/types/utils";
 import { CharacterBuilder } from "../../data/classes/facades/CharacterBuilder";
 import { CharacterValidator } from "../../data/classes/facades/CharacterValidator";
 import { EyeShape } from "../../../lib/declarations/interfaces/anatomy";
+import { Character } from "../../../lib/declarations/interfaces/utils";
+import ObjectHelper from "../../../lib/utils/ObjectHelper";
 
 const initialState: PromptState = {
   style: "anime",
-  character: {
-    gender: "female",
-    height: "average",
-    weight: "thin",
-    age: "adult",
-    muscle: "average",
-    hair: defaultHair as Hair,
-    head: {
-      forehead: defaultForehead as Forehead,
-      eye: defaultEye as Eye,
-    },
-  },
+  character: ObjectHelper.deepCopyObj(defaultCharacter) as Character,
   environment: {
     type: "indoor",
     lighting: "bright",
@@ -67,7 +63,7 @@ const promptSlice = createSlice({
       s.updatedAt = Date.now();
     },
     resetHair(s: PromptState): void {
-      s.character.hair = defaultHair as Hair;
+      s.character.hair = ObjectHelper.deepCopyObj(defaultHair) as Hair;
       s.updatedAt = Date.now();
     },
     updateEye(s: PromptState, a: PayloadAction<DeepPartial<Eye>>): void {
@@ -87,7 +83,7 @@ const promptSlice = createSlice({
       s.updatedAt = Date.now();
     },
     resetEye(s: PromptState): void {
-      s.character.head.eye = defaultEye as Eye;
+      s.character.head.eye = ObjectHelper.deepCopyObj(defaultEye) as Eye;
       s.updatedAt = Date.now();
     },
     updateBrow(s: PromptState, a: PayloadAction<DeepPartial<Eyebrow>>): void {
@@ -95,7 +91,7 @@ const promptSlice = createSlice({
         CharacterBuilder.mergeBrow(
           CharacterValidator.ensureBrow(s),
           a.payload
-        ) || defaultBrow;
+        ) || ObjectHelper.deepCopyObj(defaultBrow);
       if (
         brow.slit &&
         brow.slit.number &&
@@ -106,7 +102,9 @@ const promptSlice = createSlice({
       s.updatedAt = Date.now();
     },
     resetBrow(s: PromptState): void {
-      s.character.head.eye.brow = defaultBrow as Eyebrow;
+      s.character.head.eye.brow = ObjectHelper.deepCopyObj(
+        defaultBrow
+      ) as Eyebrow;
       s.updatedAt = Date.now();
     },
     updateEyeShape(
@@ -123,7 +121,9 @@ const promptSlice = createSlice({
       s.updatedAt = Date.now();
     },
     resetEyeShape(s: PromptState): void {
-      s.character.head.eye.shape = defaultEye.shape as EyeShape;
+      s.character.head.eye.shape = ObjectHelper.deepCopyObj(
+        defaultEye.shape
+      ) as EyeShape;
       s.updatedAt = Date.now();
     },
     updateEyeLid(s: PromptState, a: PayloadAction<DeepPartial<EyeLid>>): void {
@@ -137,8 +137,12 @@ const promptSlice = createSlice({
     },
     resetEyeLid(s: PromptState): void {
       if (!s?.character?.head?.eye?.shape)
-        s.character.head.eye.shape = defaultEye.shape as EyeShape;
-      s.character.head.eye.shape.lid = defaultEyeLid as EyeLid;
+        s.character.head.eye.shape = ObjectHelper.deepCopyObj(
+          defaultEye.shape
+        ) as EyeShape;
+      s.character.head.eye.shape.lid = ObjectHelper.deepCopyObj(
+        defaultEyeLid
+      ) as EyeLid;
       s.updatedAt = Date.now();
     },
     updateEyeBag(s: PromptState, a: PayloadAction<DeepPartial<EyeBag>>): void {
@@ -149,7 +153,9 @@ const promptSlice = createSlice({
       s.updatedAt = Date.now();
     },
     resetEyeBag(s: PromptState): void {
-      s.character.head.eye.bag = defaultEyeBag as EyeBag;
+      s.character.head.eye.bag = ObjectHelper.deepCopyObj(
+        defaultEyeBag
+      ) as EyeBag;
       s.updatedAt = Date.now();
     },
     updateEyelash(
@@ -178,7 +184,52 @@ const promptSlice = createSlice({
       s.updatedAt = Date.now();
     },
     resetForehead(s: PromptState): void {
-      s.character.head.forehead = defaultForehead as Forehead;
+      s.character.head.forehead = ObjectHelper.deepCopyObj(
+        defaultForehead
+      ) as Forehead;
+      s.updatedAt = Date.now();
+    },
+    updateMouth(s: PromptState, a: PayloadAction<DeepPartial<Mouth>>): void {
+      const mouth = CharacterBuilder.mergeMouth(
+        CharacterValidator.ensureMouth(s),
+        a.payload
+      );
+      s.character.head.mouth = mouth;
+      s.updatedAt = Date.now();
+    },
+    resetMouth(s: PromptState): void {
+      s.character.head.mouth = ObjectHelper.deepCopyObj(defaultMouth) as Mouth;
+      s.updatedAt = Date.now();
+    },
+    updateLip(s: PromptState, a: PayloadAction<DeepPartial<Lip>>): void {
+      const lip = CharacterBuilder.mergeLip(
+        CharacterValidator.ensureLip(s),
+        a.payload
+      );
+      s.character.head.mouth.lip = lip;
+      s.updatedAt = Date.now();
+    },
+    resetLip(s: PromptState): void {
+      s.character.head.mouth.lip = ObjectHelper.deepCopyObj(
+        defaultMouth.lip
+      ) as Lip;
+      s.updatedAt = Date.now();
+    },
+    updateLipTubercule(
+      s: PromptState,
+      a: PayloadAction<DeepPartial<LipTubercule>>
+    ): void {
+      const lipTubercule = CharacterBuilder.mergeLipTubercule(
+        CharacterValidator.ensureLipTubercule(s),
+        a.payload
+      );
+      s.character.head.mouth.lip.tubercule = lipTubercule;
+      s.updatedAt = Date.now();
+    },
+    resetLipTubercule(s: PromptState): void {
+      s.character.head.mouth.lip.tubercule = ObjectHelper.deepCopyObj(
+        defaultMouth.lip.tubercule
+      ) as LipTubercule;
       s.updatedAt = Date.now();
     },
   },
@@ -203,5 +254,11 @@ export const {
   resetHair,
   updateForehead,
   resetForehead,
+  updateMouth,
+  resetMouth,
+  updateLip,
+  resetLip,
+  updateLipTubercule,
+  resetLipTubercule,
 } = promptSlice.actions;
 export default promptSlice.reducer;

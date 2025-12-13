@@ -47,7 +47,7 @@ import {
   EyeBallSize,
 } from "../types/anatomy";
 import { Side } from "../types/helpers";
-import { DeepPartial, FriendlyNamed, UnboxArray } from "../types/utils";
+import { DeepAnatomicKey, FriendlyNamed } from "../types/utils";
 import { Character } from "./utils";
 export interface HairBang {
   density: HairBangDensity;
@@ -116,7 +116,7 @@ export interface EyeShape {
   depth: EyeDepth;
   spacing: EyeSpacing;
   lid: EyeLid;
-  hood?: EyeHood; // todo missing this
+  hood?: EyeHood;
   symmetric?: boolean;
 }
 export interface Pupil {
@@ -162,18 +162,9 @@ export interface Forehead {
 }
 export interface Head {
   forehead: Forehead;
-  eye: DeepPartial<Eye>; //todo remove partial later
-  // ... include mouth
+  eye: Eye;
+  mouth: Mouth;
 }
-export type DeepAnatomicKey<T, O = Character> = UnboxArray<T> extends infer U
-  ? U extends object
-    ? U extends O
-      ? never
-      : {
-          [K in keyof U]: U[K] extends object ? DeepAnatomicKey<U[K], O> : U[K];
-        }[keyof U]
-    : U
-  : never;
 export interface DeepAnatomicOption<T, O = Character> extends FriendlyNamed {
   key: DeepAnatomicKey<T, O>;
 }

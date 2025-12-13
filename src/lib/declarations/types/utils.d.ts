@@ -25,18 +25,53 @@ export type ClsKeys =
   | "BTN_PRIM"
   | "OPT_FIMG"
   | "STL_OPT";
-
 export type OptValue<K extends QuestionId> = K extends "stl"
   ? StyleSets
   : K extends "gd"
   ? Gender
   : string;
-
 export type OptsMap<K extends QuestionId> = {
   [P in K]: OptValue<P>;
 };
-
 export type ArrayElement<T extends readonly any[]> = T[number];
+export type UnboxArray<T> = T extends readonly (infer U)[] ? U : T;
+export type Primitive =
+  | string
+  | number
+  | boolean
+  | bigint
+  | symbol
+  | undefined
+  | null;
+export type Builtin =
+  | Primitive
+  | ((...args: any[]) => any)
+  | Date
+  | RegExp
+  | Error;
+export type DeepWritable<T> = T extends Builtin
+  ? T
+  : T extends Map<infer K, infer V>
+  ? Map<DeepWritable<K>, DeepWritable<V>>
+  : T extends ReadonlyMap<infer K, infer V>
+  ? Map<DeepWritable<K>, DeepWritable<V>>
+  : T extends WeakMap<infer K, infer V>
+  ? WeakMap<DeepWritable<K>, DeepWritable<V>>
+  : T extends Set<infer U>
+  ? Set<DeepWritable<U>>
+  : T extends ReadonlySet<infer U>
+  ? Set<DeepWritable<U>>
+  : T extends WeakSet<infer U>
+  ? WeakSet<DeepWritable<U>>
+  : T extends Promise<infer U>
+  ? Promise<DeepWritable<U>>
+  : T extends Array<infer U>
+  ? Array<DeepWritable<U>>
+  : T extends ReadonlyArray<infer U>
+  ? Array<DeepWritable<U>>
+  : T extends object
+  ? { -readonly [P in keyof T]: DeepWritable<T[P]> }
+  : T;
 export type ValidateOptsAgainstArrays<T> = {
   [K in keyof T]: K extends "stl"
     ? T[K] extends ArrayElement<typeof styleSets>
@@ -56,9 +91,17 @@ export type DeepOptional<T> = T extends (...args: any[]) => infer R
 export type DeepPartial<T> = T extends object
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : T | undefined;
+export type DeepAnatomicKey<T, O = Character> = UnboxArray<T> extends infer U
+  ? U extends object
+    ? U extends O
+      ? never
+      : {
+          [K in keyof U]: U[K] extends object ? DeepAnatomicKey<U[K], O> : U[K];
+        }[keyof U]
+    : U
+  : never;
 export type StateWithCharacter = { character: Character };
 export type FriendlyNamed = {
   friendlyName: string;
   src: string;
 };
-export type UnboxArray<T> = T extends readonly (infer U)[] ? U : T;

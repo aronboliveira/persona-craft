@@ -47,6 +47,7 @@ import EyeBagColorForm from "../components/forms/head/eye/bag/EyeBagColorForm";
 import EyeLashesDensityForm from "../components/forms/head/eye/lash/EyeLashesDensityForm";
 import EyeLashesLengthForm from "../components/forms/head/eye/lash/EyeLashesLengthForm";
 import EyeLashesCurlForm from "../components/forms/head/eye/lash/EyeLashesCurlForm";
+import EyeHoodForm from "../components/forms/head/eye/shape/EyeHoodForm";
 
 export default class FormsStrategist implements UIRenderingStrategy {
   render(context: Partial<PromptState & { order: number | string }>): string {
@@ -140,20 +141,22 @@ export default class FormsStrategist implements UIRenderingStrategy {
         return EyeLidEpicanthicFoldExtensionForm.name;
       case 44:
         return EyeLidEpicanthicFoldClassForm.name;
-      case 46:
-        return EyeBagCountorForm.name;
+      case 45:
+        return EyeHoodForm.name;
       case 47:
+        return EyeBagCountorForm.name;
+      case 48:
         return EyeBagColorForm.name;
-      case 49:
-        return EyeLashesDensityForm.name;
       case 50:
-        return EyeLashesLengthForm.name;
+        return EyeLashesDensityForm.name;
       case 51:
+        return EyeLashesLengthForm.name;
+      case 52:
         return EyeLashesCurlForm.name;
       case "eyebrow-symmetry": // 28
-      case "eyelid-symmetry": // 45
-      case "eyebag-symmetry": // 48
-      case "eyelash-symmetry": // 52
+      case "eyelid-symmetry": // 46
+      case "eyebag-symmetry": // 49
+      case "eyelash-symmetry": // 53
       case "eyeshape-symmetry": // 40
       case "pupil-symmetry": // 35
       case "iris-symmetry": // 32
@@ -190,11 +193,11 @@ export default class FormsStrategist implements UIRenderingStrategy {
         return "pupil-symmetry";
       case 40:
         return "eyeshape-symmetry";
-      case 45:
+      case 46:
         return "eyelid-symmetry";
-      case 48:
+      case 49:
         return "eyebag-symmetry";
-      case 52:
+      case 53:
         return "eyelash-symmetry";
       default:
         return value;

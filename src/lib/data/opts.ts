@@ -23,6 +23,7 @@ import {
   EyeEpicanthicFoldClass,
   EyeEpicanthicFoldExtension,
   EyeFissure,
+  EyeHood,
   EyeLashesCurl,
   EyeLashesDensity,
   EyeLashesLength,
@@ -40,6 +41,8 @@ import {
   HairTexture,
   HairTidiness,
   IrisSize,
+  LipTuberculeProminence,
+  LipTuberculeShape,
   PupilPattern,
   PupilSize,
   RecidingLevel,
@@ -349,6 +352,11 @@ export const eyeLidEpcCls = [
   "palpebral",
   "inverted",
 ] as const satisfies EyeEpicanthicFoldClass[];
+export const eyeHd = [
+  "hooded",
+  "partially-hooded",
+  "unhooded",
+] as const satisfies EyeHood[];
 export const eyeBagCnt = [
   "flat",
   "low-budge",
@@ -384,6 +392,18 @@ export const eyeLshCrl = [
   "slightly-downward-curled",
   "downward-curled",
 ] as const satisfies EyeLashesCurl[];
+export const mtLpTrbPrm = [
+  "absent",
+  "traced",
+  "mild",
+  "prominent",
+] as const satisfies LipTuberculeProminence[];
+export const mtLpTrbShp = [
+  "rounded",
+  "peaked",
+  "angular",
+  "flat-top",
+] as const satisfies LipTuberculeShape[];
 export const bdHgt = [
   "dwarfic",
   "short",

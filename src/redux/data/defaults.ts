@@ -11,9 +11,13 @@ import {
   EyeBag,
   EyeLash,
   HairBang,
+  Mouth,
+  Lip,
+  LipTubercule,
+  Head,
 } from "../../lib/declarations/interfaces/anatomy";
+import { Character } from "../../lib/declarations/interfaces/utils";
 import { EyebrowSlitNumber } from "../../lib/declarations/types/anatomy";
-import { DeepPartial } from "../../lib/declarations/types/utils";
 export const VALID_SLIT_NUMBERS: Readonly<EyebrowSlitNumber[]> = Object.freeze([
   "one",
   "two",
@@ -81,30 +85,22 @@ export const defaultEyeLash: Readonly<EyeLash> = Object.freeze({
   curl: "slightly-upward-curled",
   symmetric: true,
 }) satisfies EyeLash;
-export const defaultEyeLi: Readonly<EyeLid> = Object.freeze({
-  creaseNumber: "doublelid",
-  creaseHeight: "medium",
-  epicanthicFold: "none",
-  epicanthicFoldVariation: "none",
-  symmetric: true,
-}) satisfies EyeLid;
 export const defaultEyeShape: Readonly<EyeShape> = Object.freeze({
   fissure: "wide",
   tilt: "neutral-turned",
   depth: "neutral-set",
   spacing: "average-distanced",
   lid: defaultEyeLid as EyeLid,
-  symmetric: true,
   hood: "partially-hooded",
-} as EyeShape) satisfies EyeShape;
-export const defaultEye: Readonly<DeepPartial<Eye>> = Object.freeze({
-  // todo remove deeppartial later
+  symmetric: true,
+}) satisfies EyeShape;
+export const defaultEye: Readonly<Eye> = Object.freeze({
   ball: defaultEyeBall as EyeBall,
   shape: defaultEyeShape as EyeShape,
   bag: defaultEyeBag as EyeBag,
   brow: defaultBrow as Eyebrow,
-}) satisfies DeepPartial<Eye>;
-export const defaultHairBang: Readonly<Hair["bang"]> = Object.freeze({
+}) satisfies Eye;
+export const defaultHairBang: Readonly<HairBang> = Object.freeze({
   density: "wispy",
   length: "lash-length",
   shape: "curtain",
@@ -115,3 +111,27 @@ export const defaultHair: Readonly<Hair> = Object.freeze({
   tidiness: "done",
   bang: defaultHairBang,
 }) satisfies Hair;
+export const defaultLipTubercule: Readonly<LipTubercule> = Object.freeze({
+  prominence: "mild",
+  shape: "rounded",
+}) satisfies LipTubercule;
+export const defaultLip: Readonly<Lip> = Object.freeze({
+  tubercule: defaultLipTubercule as LipTubercule,
+}) satisfies Lip;
+export const defaultMouth: Readonly<Mouth> = Object.freeze({
+  lip: defaultLip as Lip,
+}) satisfies Mouth;
+export const defaultHead: Readonly<Head> = Object.freeze({
+  forehead: defaultForehead as Forehead,
+  eye: defaultEye as Eye,
+  mouth: defaultMouth as Mouth,
+}) satisfies Head;
+export const defaultCharacter: Readonly<Character> = Object.freeze({
+  gender: "female",
+  height: "average",
+  weight: "thin",
+  age: "adult",
+  muscle: "average",
+  hair: defaultHair as Hair,
+  head: defaultHead as Head,
+}) satisfies Character;
