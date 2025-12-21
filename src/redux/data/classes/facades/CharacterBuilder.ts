@@ -33,6 +33,18 @@ import {
 import ObjectHelper from "../../../../lib/utils/ObjectHelper";
 
 export class CharacterBuilder {
+  public static merge<T>(
+    defaultValue: T,
+    target: Draft<T> | undefined,
+    patch: DeepPartial<T>
+  ): Draft<T> {
+    return {
+      ...ObjectHelper.deepCopyObj(defaultValue),
+      ...(target || {}),
+      ...patch,
+    } as Draft<T>;
+  }
+
   public static mergeHair(
     target: Draft<Hair>,
     patch: DeepPartial<Hair>

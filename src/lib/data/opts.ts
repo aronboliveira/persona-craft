@@ -2,6 +2,8 @@ import {
   BodyFat,
   BodyHeight,
   BodyMuscleTypes,
+  CupidBowHeight,
+  CupidBowWidth,
   EyeBagColor,
   EyeBagCountor,
   EyeBallSize,
@@ -47,6 +49,7 @@ import {
   PupilSize,
   RecidingLevel,
   Unibrow,
+  UpperLipThickness,
 } from "../declarations/types/anatomy";
 import {
   Gender,
@@ -392,6 +395,24 @@ export const eyeLshCrl = [
   "slightly-downward-curled",
   "downward-curled",
 ] as const satisfies EyeLashesCurl[];
+export const mtUpLpVlm = [
+  "very-flat",
+  "flat",
+  "average",
+  "full",
+  "very-full",
+  "extremely-full",
+] as const satisfies UpperLipThickness[];
+export const mtCpBwWd = [
+  "narrow",
+  "average",
+  "wide",
+] as const satisfies CupidBowWidth[];
+export const mtCpBwHgt = [
+  "short",
+  "average",
+  "tall",
+] as const satisfies CupidBowHeight[];
 export const mtLpTrbPrm = [
   "absent",
   "traced",

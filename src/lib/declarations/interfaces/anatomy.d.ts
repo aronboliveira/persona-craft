@@ -45,6 +45,9 @@ import {
   ForeheadHeight,
   EyebrowTrimming,
   EyeBallSize,
+  CupidBowHeight,
+  CupidBowWidth,
+  UpperLipThickness,
 } from "../types/anatomy";
 import { Side } from "../types/helpers";
 import { DeepAnatomicKey, FriendlyNamed } from "../types/utils";
@@ -145,8 +148,19 @@ export interface LipTubercule {
   prominence: LipTuberculeProminence;
   shape: LipTuberculeShape;
 }
-export interface Lip {
+export interface CupidBow {
+  width: CupidBowWidth;
+  height: CupidBowHeight;
+}
+export interface UpperLip {
   tubercule: LipTubercule;
+  volume: UpperLipThickness;
+  cupidBow?: CupidBow;
+}
+// export interface LowerLip {}
+export interface Lip {
+  upper: UpperLip;
+  // lower: LowerLip;
 }
 export interface Mouth {
   lip: Lip;

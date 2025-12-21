@@ -1,12 +1,12 @@
-// src/components/forms/LipTuberculeProminenceForm.tsx
+// src/components/forms/CupidBowWidthForm.tsx
 
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../../../../../errors/GenericErrorComponent";
 import { useCallback, useMemo, RefObject, ChangeEvent, JSX } from "react";
 import { FORM_DICT } from "../../../../../../lib/states/lang/forms";
 import { GENERIC_DICT } from "../../../../../../lib/states/lang/generic";
-import { LipTuberculeProminence } from "../../../../../../lib/declarations/types/anatomy";
-import { updateLipTubercule } from "../../../../../../redux/mainStore/slices/promptSlice";
+import { CupidBowWidth } from "../../../../../../lib/declarations/types/anatomy";
+import { updateUpperLip } from "../../../../../../redux/mainStore/slices/promptSlice";
 import { CLASSES } from "../../../../../../lib/data/classes";
 import {
   useAppDispatch,
@@ -18,50 +18,46 @@ import { useOptFormCtx } from "../../../../../../lib/hooks/contexts/useOptFormCt
 import OptionFieldset from "../../../../../bloc/OptionFieldset";
 import OptionFigure from "../../../../../bloc/OptionFigure";
 import Forms from "../../../../../../pages/Forms";
-import { mtLpTrbPrm } from "../../../../../../lib/data/opts";
+import { mtCpBwWd } from "../../../../../../lib/data/opts";
 import { DeepOptional } from "../../../../../../lib/declarations/types/utils";
 import { DeepAnatomicOption } from "../../../../../../lib/declarations/interfaces/anatomy";
 
-export default function LipTuberculeProminenceForm(): JSX.Element {
+export default function CupidBowWidthForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
-      layoutParams: ["lipTuberculeProminenceForm"],
+      layoutParams: ["cupidBowWidthForm"],
     }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
-    prominenceOptions = useMemo<
-      DeepAnatomicOption<LipTuberculeProminence>[]
-    >(() => {
-      const basePath = "/imgs/mouth/lip-tubercule-prominence",
-        labelMap: Record<LipTuberculeProminence, string> = {
-          absent: "Absent",
-          traced: "Traced",
-          mild: "Mild",
-          prominent: "Prominent",
+    widthOptions = useMemo<DeepAnatomicOption<CupidBowWidth>[]>(() => {
+      const basePath = "/imgs/mouth/cupid-bow-width",
+        labelMap: Record<CupidBowWidth, string> = {
+          narrow: "Narrow",
+          average: "Average",
+          wide: "Wide",
         },
-        uniqueProminences = Array.from(
-          new Set(mtLpTrbPrm)
-        ) as LipTuberculeProminence[];
-      return uniqueProminences.map(key => ({
+        uniqueWidths = Array.from(new Set(mtCpBwWd)) as CupidBowWidth[];
+      return uniqueWidths.map(key => ({
         key,
         friendlyName: labelMap[key],
         src: `${basePath}/${key}.png`,
       }));
     }, []),
-    handleProminenceChange = useCallback<
+    handleWidthChange = useCallback<
       DeepOptional<(e: ChangeEvent<HTMLInputElement>) => void>
     >(
       (e: ChangeEvent<HTMLInputElement>): void => {
-        const value = e.target.value as LipTuberculeProminence;
+        const value = e.target.value as CupidBowWidth;
         dispatch(
-          updateLipTubercule({
-            prominence: value,
+          updateUpperLip({
+            cupidBow: { width: value },
           })
         );
       },
       [dispatch]
     ),
-    selectedProminence = state.character.head?.mouth?.lip?.upper?.tubercule
-      ?.prominence as LipTuberculeProminence | undefined;
+    selectedWidth = state.character.head?.mouth?.lip?.upper?.cupidBow?.width as
+      | CupidBowWidth
+      | undefined;
   return (
     <ErrorBoundary
       onError={(error, errorInfo) => {
@@ -73,25 +69,25 @@ export default function LipTuberculeProminenceForm(): JSX.Element {
     >
       <fieldset
         ref={formRef as RefObject<HTMLFieldSetElement>}
-        id="lipTuberculeProminenceForm"
+        id="cupidBowWidthForm"
       >
-        <Forms.Header containerId="ltpLeg" id="ltpLegStack">
-          {FORM_DICT[lang as keyof typeof FORM_DICT]?.ltp ??
-            "How prominent is the lip tubercule of your character?"}
+        <Forms.Header containerId="cbwLeg" id="cbwLegStack">
+          {FORM_DICT[lang as keyof typeof FORM_DICT]?.cbw ??
+            "What is the cupid bow width of your character?"}
         </Forms.Header>
-        <OptionFieldset selector="ltp">
-          {prominenceOptions.map((opt, i) => {
-            const isChecked = selectedProminence === opt.key;
+        <OptionFieldset selector="cbw">
+          {widthOptions.map((opt, i) => {
+            const isChecked = selectedWidth === opt.key;
             return (
               <OptionFigure
                 key={opt.key}
                 figureAddClasses={[CLASSES.STL_OPT]}
-                prefix="ltp"
+                prefix="cbw"
                 suffix={`${i + 1}`}
                 value={opt.key}
                 checked={isChecked}
-                handleChange={handleProminenceChange}
-                name="ltp"
+                handleChange={handleWidthChange}
+                name="cbw"
                 src={opt.src}
                 caption={opt.friendlyName}
                 imgAddProps={{
@@ -106,7 +102,7 @@ export default function LipTuberculeProminenceForm(): JSX.Element {
           })}
         </OptionFieldset>
       </fieldset>
-      <Forms.Result variable={selectedProminence ?? ""} />
+      <Forms.Result variable={selectedWidth ?? ""} />
     </ErrorBoundary>
   );
 }

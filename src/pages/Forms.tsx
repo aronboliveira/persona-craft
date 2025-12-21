@@ -17,7 +17,7 @@ import useLanguage from "../lib/hooks/resources/useLanguage";
 import MainFormCtx from "../lib/states/contexts/MainFormCtx";
 import MainStyleForm from "../components/forms/MainStyleForm";
 import { GENERIC_DICT } from "../lib/states/lang/generic";
-import FormsStrategist from "../classes/FormsStrategist";
+import FormsStrategist from "../classes/strategists/FormsStrategist";
 import { FORM_DICT } from "../lib/states/lang/forms";
 import { useFormsStrategist } from "../lib/hooks/contexts/useStrategy";
 import GenderForm from "../components/forms/GenderForm";

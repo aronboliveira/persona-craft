@@ -56,9 +56,8 @@ export default function LipTuberculeShapeForm(): JSX.Element {
       },
       [dispatch]
     ),
-    selectedShape = state.character.head?.mouth?.lip?.tubercule?.shape as
-      | LipTuberculeShape
-      | undefined;
+    selectedShape = state.character.head?.mouth?.lip?.upper?.tubercule
+      ?.shape as LipTuberculeShape | undefined;
   return (
     <ErrorBoundary
       onError={(error, errorInfo) => {

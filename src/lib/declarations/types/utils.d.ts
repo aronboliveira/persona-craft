@@ -10,6 +10,8 @@ export type AveragedMetricVariation =
   | "very-high";
 export type BasicLengthVariation = "short" | "average" | "long";
 export type BasicHeightVariation = "short" | "average" | "tall";
+export type BasicWidthVariation = "narrow" | "average" | "wide";
+export type BasicVolumeVariation = "flat" | "average" | "full";
 export type NarrowedSizeVariation = "small" | "average" | "large";
 export type BasicSizeVariation =
   | "very-small"
@@ -105,3 +107,92 @@ export type FriendlyNamed = {
   friendlyName: string;
   src: string;
 };
+export type TemporalKind =
+  | "date"
+  | "datetime-local"
+  | "time"
+  | "week"
+  | "month";
+export type UploadStatus =
+  | "queued"
+  | "uploading"
+  | "success"
+  | "error"
+  | "canceled";
+export type DeepReadonly<T> = T extends (...args: any[]) => any
+  ? T
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepReadonly<U>>
+  : T extends Map<infer K, infer V>
+  ? ReadonlyMap<DeepReadonly<K>, DeepReadonly<V>>
+  : T extends Set<infer U>
+  ? ReadonlySet<DeepReadonly<U>>
+  : T extends object
+  ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
+  : T;
+export type FrozenStringRecord = DeepReadonly<Record<string, string>>;
+export type FrozenFlagRecord = DeepReadonly<Record<string, true>>;
+export type FrozenStringList = DeepReadonly<readonly string[]>;
+export type CoreLists =
+  | Map
+  | Set
+  | Array
+  | Uint16Array
+  | Uint8Array
+  | Uint8ClampedArray
+  | Int8Array
+  | Int16Array
+  | Int32Array
+  | Uint32Array
+  | Float32Array
+  | Float64Array
+  | BigInt64Array
+  | BigUint64Array;
+export type NonIterableArrayLike =
+  | DOMStringList
+  | DOMStringMap
+  | TouchList
+  | WeakMap
+  | WeakSet;
+export type HtmlCollectionLike =
+  | HTMLCollection
+  | HTMLAllCollection
+  | HTMLFormControlsCollection
+  | HTMLOptionsCollection;
+export type HtmlContentList =
+  | NodeList
+  | NamedNodeMap
+  | DOMTokenList
+  | Headers
+  | URLSearchParams
+  | RTCStatsReport;
+export type StyleContentList =
+  | StyleSheetList
+  | Highlight
+  | HighlightRegistry
+  | CSSUnparsedValue
+  | CSSTransformValue
+  | CustomStateSet
+  | FontFaceSet
+  | MediaKeyStatusMap
+  | StylePropertyMapReadOnly;
+export type BinaryLikeItemsList = FileList | DataTransferItemList;
+export type ArrayLike =
+  | NonIterableArrayLike
+  | HtmlCollectionLike
+  | HtmlContentList
+  | StyleContentList
+  | BinaryLikeItemsList;
+export type UploadUpdate =
+  | ProgressUploadUpdate
+  | SuccessUploadUpdate
+  | ErrorUploadUpdate
+  | CanceledUploadUpdate;
+export type WorkerIn = WorkerInConfigure | WorkerInChunk | WorkerInEnd;
+export type ProgressCounter =
+  | `${number}`
+  | `${number}${number}`
+  | `${number}.${number}`
+  | `${number}${number}.${number}`
+  | `${number}${number}.${number}${number}`
+  | "100";

@@ -15,6 +15,8 @@ import {
   Lip,
   LipTubercule,
   Head,
+  UpperLip,
+  CupidBow,
 } from "../../lib/declarations/interfaces/anatomy";
 import { Character } from "../../lib/declarations/interfaces/utils";
 import { EyebrowSlitNumber } from "../../lib/declarations/types/anatomy";
@@ -115,8 +117,17 @@ export const defaultLipTubercule: Readonly<LipTubercule> = Object.freeze({
   prominence: "mild",
   shape: "rounded",
 }) satisfies LipTubercule;
-export const defaultLip: Readonly<Lip> = Object.freeze({
+export const defaultLipCupidBow: Readonly<CupidBow> = Object.freeze({
+  width: "average",
+  height: "average",
+}) satisfies CupidBow;
+export const defaultUpperLip: Readonly<UpperLip> = Object.freeze({
+  volume: "average",
   tubercule: defaultLipTubercule as LipTubercule,
+  cupidBow: defaultLipCupidBow as CupidBow,
+}) satisfies UpperLip;
+export const defaultLip: Readonly<Lip> = Object.freeze({
+  upper: defaultUpperLip as UpperLip,
 }) satisfies Lip;
 export const defaultMouth: Readonly<Mouth> = Object.freeze({
   lip: defaultLip as Lip,

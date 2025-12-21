@@ -4,6 +4,8 @@ import {
   BasicLengthVariation,
   BasicMetricVariation,
   BasicSizeVariation,
+  BasicVolumeVariation,
+  BasicWidthVariation,
   NarrowedSizeVariation,
 } from "./utils";
 
@@ -166,6 +168,13 @@ export type ChinWidth =
   | "very-wide";
 export type ChinHeight = "very-short" | BasicLengthVariation | "very-long";
 export type ChinCleft = "absent" | "shallow" | "deep";
+export type UpperLipThickness =
+  | "very-flat"
+  | BasicVolumeVariation
+  | "very-full"
+  | "extremely-full";
+export type CupidBowHeight = BasicHeightVariation;
+export type CupidBowWidth = BasicWidthVariation;
 export type LipTuberculeProminence = "absent" | "traced" | "mild" | "prominent";
 export type LipTuberculeShape = "rounded" | "flat-top" | "peaked" | "angular";
 export type HairTexture =

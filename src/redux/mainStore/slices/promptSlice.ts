@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UpdateFields } from "../../../lib/declarations/types/redux";
 import { PromptState } from "../../../lib/declarations/interfaces/redux";
 import {
+  CupidBow,
   Eye,
   EyeBag,
   Eyebrow,
@@ -12,6 +13,7 @@ import {
   Lip,
   LipTubercule,
   Mouth,
+  UpperLip,
 } from "../../../lib/declarations/interfaces/anatomy";
 import {
   defaultBrow,
@@ -23,6 +25,10 @@ import {
   defaultEyeBag,
   defaultMouth,
   defaultCharacter,
+  defaultLipTubercule,
+  defaultLip,
+  defaultUpperLip,
+  defaultLipCupidBow,
 } from "../../data/defaults";
 import { DeepPartial } from "../../../lib/declarations/types/utils";
 import { CharacterBuilder } from "../../data/classes/facades/CharacterBuilder";
@@ -210,9 +216,47 @@ const promptSlice = createSlice({
       s.updatedAt = Date.now();
     },
     resetLip(s: PromptState): void {
-      s.character.head.mouth.lip = ObjectHelper.deepCopyObj(
-        defaultMouth.lip
-      ) as Lip;
+      s.character.head.mouth.lip = ObjectHelper.deepCopyObj(defaultLip) as Lip;
+      s.updatedAt = Date.now();
+    },
+    updateUpperLip(
+      s: PromptState,
+      a: PayloadAction<DeepPartial<UpperLip>>
+    ): void {
+      const upperLip = CharacterBuilder.merge(
+        defaultUpperLip,
+        CharacterValidator.ensureUpperLip(s),
+        a.payload
+      );
+      s.character.head.mouth.lip.upper = ObjectHelper.deepCopyObj(
+        upperLip
+      ) as UpperLip;
+      s.updatedAt = Date.now();
+    },
+    resetUpperLip(s: PromptState): void {
+      s.character.head.mouth.lip.upper = ObjectHelper.deepCopyObj(
+        defaultUpperLip
+      ) as UpperLip;
+      s.updatedAt = Date.now();
+    },
+    updateCupidBow(
+      s: PromptState,
+      a: PayloadAction<DeepPartial<CupidBow>>
+    ): void {
+      const cupidBow = CharacterBuilder.merge(
+        defaultLipCupidBow,
+        CharacterValidator.ensureCupidBow(s),
+        a.payload
+      );
+      s.character.head.mouth.lip.upper.cupidBow = ObjectHelper.deepCopyObj(
+        cupidBow
+      ) as CupidBow;
+      s.updatedAt = Date.now();
+    },
+    resetCupidBow(s: PromptState): void {
+      s.character.head.mouth.lip.upper.cupidBow = ObjectHelper.deepCopyObj(
+        defaultLipCupidBow
+      ) as CupidBow;
       s.updatedAt = Date.now();
     },
     updateLipTubercule(
@@ -223,12 +267,14 @@ const promptSlice = createSlice({
         CharacterValidator.ensureLipTubercule(s),
         a.payload
       );
-      s.character.head.mouth.lip.tubercule = lipTubercule;
+      s.character.head.mouth.lip.upper.tubercule = ObjectHelper.deepCopyObj(
+        lipTubercule
+      ) as LipTubercule;
       s.updatedAt = Date.now();
     },
     resetLipTubercule(s: PromptState): void {
-      s.character.head.mouth.lip.tubercule = ObjectHelper.deepCopyObj(
-        defaultMouth.lip.tubercule
+      s.character.head.mouth.lip.upper.tubercule = ObjectHelper.deepCopyObj(
+        defaultLipTubercule
       ) as LipTubercule;
       s.updatedAt = Date.now();
     },
@@ -258,6 +304,10 @@ export const {
   resetMouth,
   updateLip,
   resetLip,
+  updateUpperLip,
+  resetUpperLip,
+  updateCupidBow,
+  resetCupidBow,
   updateLipTubercule,
   resetLipTubercule,
 } = promptSlice.actions;
