@@ -168,11 +168,25 @@ export type ChinWidth =
   | "very-wide";
 export type ChinHeight = "very-short" | BasicLengthVariation | "very-long";
 export type ChinCleft = "absent" | "shallow" | "deep";
-export type UpperLipThickness =
+export type LipThickness =
   | "very-flat"
   | BasicVolumeVariation
   | "very-full"
   | "extremely-full";
+export type UpperLipThickness = LipThickness;
+export type LowerLipThickness = LipThickness;
+export type LowerLipShape =
+  | "centralized"
+  | "flat-abroad"
+  | "lateralized"
+  | "rounded-pillow"
+  | "pronounced"
+  | "pouty-everted";
+export type LipsVermillion = "blurred" | "noticeable" | "marked";
+export type MouthCommissureAngle = "downturned" | "neutral" | "upturned";
+export type MouthCommissureShape = "thin" | "average" | "large";
+export type MouthDimpleSize = "null" | NarrowedSizeVariation;
+export type MouthDimpleShape = "none" | "round" | "oval" | "elongated";
 export type CupidBowHeight = BasicHeightVariation;
 export type CupidBowWidth = BasicWidthVariation;
 export type LipTuberculeProminence = "absent" | "traced" | "mild" | "prominent";
@@ -193,8 +207,6 @@ export type HairBangLength =
   | "micro"
   | "short"
   | "eyebrow-skimming"
-  | "blunt-cut"
-  | "blunt-across"
   | "lash-length"
   | "cheekbone-length"
   | "lip-length";

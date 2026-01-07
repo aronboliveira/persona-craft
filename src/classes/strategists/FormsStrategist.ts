@@ -48,6 +48,19 @@ import EyeLashesDensityForm from "../../components/forms/head/eye/lash/EyeLashes
 import EyeLashesLengthForm from "../../components/forms/head/eye/lash/EyeLashesLengthForm";
 import EyeLashesCurlForm from "../../components/forms/head/eye/lash/EyeLashesCurlForm";
 import EyeHoodForm from "../../components/forms/head/eye/shape/EyeHoodForm";
+import UpperLipVolumeForm from "../../components/forms/head/mouth/lips/upper/UpperLipVolumeForm";
+import LipTuberculeProminenceForm from "../../components/forms/head/mouth/lips/upper/tubercule/LipTuberculeProminenceForm";
+import LipTuberculeShapeForm from "../../components/forms/head/mouth/lips/upper/tubercule/LipTuberculeShapeForm";
+import CupidBowWidthForm from "../../components/forms/head/mouth/lips/upper/bow/CupidBowWidthForm";
+import CupidBowHeightForm from "../../components/forms/head/mouth/lips/upper/bow/CupidBowHeightForm";
+import LowerLipVolumeForm from "../../components/forms/head/mouth/lips/lower/LowerLipVolumeForm";
+import LowerLipShapeForm from "../../components/forms/head/mouth/lips/lower/LowerLipShapeForm";
+import LipsVermillionForm from "../../components/forms/head/mouth/lips/LipsVermillionForm";
+import MouthCommissureAngleForm from "../../components/forms/head/mouth/MouthCommissureAngleForm";
+import MouthCommissureShapeForm from "../../components/forms/head/mouth/MouthCommissureShapeForm";
+import MouthDimpleSizeForm from "../../components/forms/head/mouth/MouthDimpleSizeForm";
+import MouthDimpleShapeForm from "../../components/forms/head/mouth/MouthDimpleShapeForm";
+import ForeheadHairlineShapeForm from "../../components/forms/head/forehead/ForeheadHairlineShapeForm";
 
 export default class FormsStrategist implements UIRenderingStrategy {
   render(context: Partial<PromptState & { order: number | string }>): string {
@@ -84,46 +97,48 @@ export default class FormsStrategist implements UIRenderingStrategy {
       case 11:
         return ForeheadHairlineHeightForm.name;
       case 12:
-        return ForeheadHairlineRecidingForm.name;
+        return ForeheadHairlineShapeForm.name;
       case 13:
-        return ForeheadHeightForm.name;
+        return ForeheadHairlineRecidingForm.name;
       case 14:
-        return EyebrowHeightForm.name;
+        return ForeheadHeightForm.name;
       case 15:
-        return EyebrowLengthForm.name;
+        return EyebrowHeightForm.name;
       case 16:
-        return EyebrowTextureForm.name;
+        return EyebrowLengthForm.name;
       case 17:
-        return EyebrowDensityForm.name;
+        return EyebrowTextureForm.name;
       case 18:
-        return EyebrowThicknessForm.name;
+        return EyebrowDensityForm.name;
       case 19:
-        return EyebrowGrowthDirectionForm.name;
+        return EyebrowThicknessForm.name;
       case 20:
-        return EyebrowGrowthPatternForm.name;
+        return EyebrowGrowthDirectionForm.name;
       case 21:
-        return EyebrowArchAngleForm.name;
+        return EyebrowGrowthPatternForm.name;
       case 22:
-        return EyebrowArchHeightForm.name;
+        return EyebrowArchAngleForm.name;
       case 23:
-        return EyebrowArchDistanceForm.name;
+        return EyebrowArchHeightForm.name;
       case 24:
-        return EyebrowUnibrowForm.name;
+        return EyebrowArchDistanceForm.name;
       case 25:
-        return EyebrowTrimmingForm.name;
+        return EyebrowUnibrowForm.name;
       case 26:
-        return EyebrowSlitNumberForm.name;
+        return EyebrowTrimmingForm.name;
       case 27:
+        return EyebrowSlitNumberForm.name;
+      case 28:
         return EyebrowSlitAngleForm.name;
-      case 29:
-        return EyeBallSizeForm.name;
       case 30:
-        return EyeColorForm.name;
+        return EyeBallSizeForm.name;
       case 31:
+        return EyeColorForm.name;
+      case 32:
         return IrisSizeForm.name;
-      case 33:
-        return PupilSizeForm.name;
       case 34:
+        return PupilSizeForm.name;
+      case 35:
         return PupilPatternForm.name;
       case 36:
         return EyeFissureForm.name;
@@ -147,19 +162,43 @@ export default class FormsStrategist implements UIRenderingStrategy {
         return EyeBagCountorForm.name;
       case 48:
         return EyeBagColorForm.name;
-      case 50:
+      case 49:
         return EyeLashesDensityForm.name;
       case 51:
         return EyeLashesLengthForm.name;
       case 52:
         return EyeLashesCurlForm.name;
-      case "eyebrow-symmetry": // 28
-      case "eyelid-symmetry": // 46
-      case "eyebag-symmetry": // 49
+      case 54:
+        return UpperLipVolumeForm.name;
+      case 55:
+        return LipTuberculeProminenceForm.name;
+      case 56:
+        return LipTuberculeShapeForm.name;
+      case 57:
+        return CupidBowWidthForm.name;
+      case 58:
+        return CupidBowHeightForm.name;
+      case 59:
+        return LowerLipVolumeForm.name;
+      case 60:
+        return LowerLipShapeForm.name;
+      case 61:
+        return LipsVermillionForm.name;
+      case 62:
+        return MouthCommissureAngleForm.name;
+      case 63:
+        return MouthCommissureShapeForm.name;
+      case 64:
+        return MouthDimpleSizeForm.name;
+      case 65:
+        return MouthDimpleShapeForm.name;
+      case "eyebrow-symmetry": // 29
+      case "eyelid-symmetry": // 47
+      case "eyebag-symmetry": // 50
       case "eyelash-symmetry": // 53
-      case "eyeshape-symmetry": // 40
-      case "pupil-symmetry": // 35
-      case "iris-symmetry": // 32
+      case "eyeshape-symmetry": // 41
+      case "pupil-symmetry": // 36
+      case "iris-symmetry": // 33
         // todo change this later
         return "symmetry";
       // case 11:
@@ -185,17 +224,17 @@ export default class FormsStrategist implements UIRenderingStrategy {
     if (typeof value === "string" && /^\d+$/.test(value))
       value = parseInt(value, 10);
     switch (value) {
-      case 28:
+      case 29:
         return "eyebrow-symmetry";
-      case 32:
+      case 33:
         return "iris-symmetry";
-      case 35:
+      case 36:
         return "pupil-symmetry";
       case 40:
         return "eyeshape-symmetry";
       case 46:
         return "eyelid-symmetry";
-      case 49:
+      case 50:
         return "eyebag-symmetry";
       case 53:
         return "eyelash-symmetry";

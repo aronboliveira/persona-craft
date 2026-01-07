@@ -4,6 +4,7 @@ import Chatbot from "../../components/providers/Chatbot";
 import { Link } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../../components/errors/GenericErrorComponent";
+import { Toaster } from "react-hot-toast";
 export default function Test(): JSX.Element {
   useOpacityTransition();
   return (
@@ -12,6 +13,7 @@ export default function Test(): JSX.Element {
         <GenericErrorComponent message="Oops! Seems like something went wrong." />
       )}
     >
+      <Toaster position="top-center" reverseOrder={false} />
       <p style={{ marginBottom: "2rem" }}>This is a test!</p>
       <h1> Where would like to start? </h1>
       <img

@@ -36,7 +36,7 @@ const OptionFigure = (props: OptionFigureProps): JSX.Element => {
           src={props.src}
           {...props.imgAddProps}
           style={{
-            objectFit: "cover",
+            objectFit: "contain",
             borderRadius: "8px",
             objectPosition: "center center",
           }}

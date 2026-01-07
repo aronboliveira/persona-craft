@@ -11,8 +11,9 @@ import {
   Forehead,
   Hair,
   Head,
-  Lip,
+  Lips,
   LipTubercule,
+  LowerLip,
   Mouth,
   UpperLip,
 } from "../../../../lib/declarations/interfaces/anatomy";
@@ -27,11 +28,12 @@ import {
   defaultForehead,
   defaultHair,
   defaultHead,
-  defaultLip,
+  defaultLips,
   defaultLipCupidBow,
   defaultLipTubercule,
   defaultMouth,
   defaultUpperLip,
+  defaultLowerLip,
 } from "../../defaults";
 import { StateWithCharacter } from "../../../../lib/declarations/types/utils";
 import ObjectHelper from "../../../../lib/utils/ObjectHelper";
@@ -60,7 +62,16 @@ export class CharacterValidator {
   );
 
   static #browValidator = ValidatorFactory.createValidator<Eyebrow>(
-    ["arch", "density", "growthDirection"],
+    [
+      "arch",
+      "density",
+      "growth",
+      "height",
+      "length",
+      "texture",
+      "thickness",
+      "unibrow",
+    ],
     ObjectHelper.deepCopyObj(defaultBrow)
   );
 
@@ -90,13 +101,13 @@ export class CharacterValidator {
   );
 
   static #mouthValidator = ValidatorFactory.createValidator<Mouth>(
-    ["lip"],
+    ["lips"],
     ObjectHelper.deepCopyObj(defaultMouth)
   );
 
-  static #lipValidator = ValidatorFactory.createValidator<Lip>(
-    ["upper", "lower"],
-    ObjectHelper.deepCopyObj(defaultLip)
+  static #lipValidator = ValidatorFactory.createValidator<Lips>(
+    ["upper", "lower", "vermillion"],
+    ObjectHelper.deepCopyObj(defaultLips)
   );
 
   static #lipTuberculeValidator =
@@ -116,8 +127,13 @@ export class CharacterValidator {
   );
 
   static #upperLipValidator = ValidatorFactory.createValidator<UpperLip>(
-    ["tubercule", "volume", "cupidBow"],
+    ["tubercule", "volume"],
     ObjectHelper.deepCopyObj(defaultUpperLip)
+  );
+
+  static #lowerLipValidator = ValidatorFactory.createValidator<LowerLip>(
+    ["volume", "shape"],
+    ObjectHelper.deepCopyObj(defaultLowerLip)
   );
 
   public static isHead = (obj: any): obj is Head =>
@@ -153,7 +169,7 @@ export class CharacterValidator {
   public static isMouth = (obj: any): obj is Mouth =>
     CharacterValidator.#mouthValidator.is(obj);
 
-  public static isLip = (obj: any): obj is Lip =>
+  public static isLips = (obj: any): obj is Lips =>
     CharacterValidator.#lipValidator.is(obj);
 
   public static isLipTubercule = (obj: any): obj is LipTubercule =>
@@ -161,6 +177,9 @@ export class CharacterValidator {
 
   public static isUpperLip = (obj: any): obj is UpperLip =>
     CharacterValidator.#upperLipValidator.is(obj);
+
+  public static isLowerLip = (obj: any): obj is LowerLip =>
+    CharacterValidator.#lowerLipValidator.is(obj);
 
   public static isLipCupidBow = (obj: any): obj is CupidBow =>
     CharacterValidator.#lipCupidBowValidator.is(obj);
@@ -260,11 +279,13 @@ export class CharacterValidator {
     return CharacterValidator.#mouthValidator.ensure(state, ["head", "mouth"]);
   }
 
-  public static ensureLip<T extends StateWithCharacter>(state: T): Draft<Lip> {
+  public static ensureLips<T extends StateWithCharacter>(
+    state: T
+  ): Draft<Lips> {
     return CharacterValidator.#lipValidator.ensure(state, [
       "head",
       "mouth",
-      "lip",
+      "lips",
     ]);
   }
 
@@ -276,6 +297,17 @@ export class CharacterValidator {
       "mouth",
       "lip",
       "upper",
+    ]);
+  }
+
+  public static ensureLowerLip<T extends StateWithCharacter>(
+    state: T
+  ): Draft<LowerLip> {
+    return CharacterValidator.#lowerLipValidator.ensure(state, [
+      "head",
+      "mouth",
+      "lip",
+      "lower",
     ]);
   }
 

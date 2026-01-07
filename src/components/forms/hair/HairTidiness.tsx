@@ -18,10 +18,12 @@ import Forms from "../../../pages/Forms";
 import { hrTd } from "../../../lib/data/opts";
 import { DeepOptional } from "../../../lib/declarations/types/utils";
 import { DeepAnatomicOption } from "../../../lib/declarations/interfaces/anatomy";
+import ErrorHandler from "../../../lib/utils/ErrorHandler";
 
 export default function HairTidinessForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
       layoutParams: ["hairTidinessForm"],
+      objectFit: "contain",
     }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
@@ -58,9 +60,11 @@ export default function HairTidinessForm(): JSX.Element {
   return (
     <ErrorBoundary
       onError={(error, errorInfo) => {
-        console.error("Error caught by boundary:", error);
-        console.error("Component stack:", errorInfo.componentStack);
-        alert(`An error occurred: ${error.message}`);
+        ErrorHandler.handleReactBoundaryError({
+          error,
+          info: errorInfo,
+          alertType: "hot",
+        });
       }}
       FallbackComponent={() => <GenericErrorComponent />}
     >

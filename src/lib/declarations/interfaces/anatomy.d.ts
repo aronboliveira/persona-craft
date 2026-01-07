@@ -48,6 +48,12 @@ import {
   CupidBowHeight,
   CupidBowWidth,
   UpperLipThickness,
+  LowerLipThickness,
+  LowerLipShape,
+  MouthCommissureAngle,
+  MouthCommissureShape,
+  MouthDimpleSize,
+  MouthDimpleShape,
 } from "../types/anatomy";
 import { Side } from "../types/helpers";
 import { DeepAnatomicKey, FriendlyNamed } from "../types/utils";
@@ -157,13 +163,27 @@ export interface UpperLip {
   volume: UpperLipThickness;
   cupidBow?: CupidBow;
 }
-// export interface LowerLip {}
-export interface Lip {
+export interface LowerLip {
+  volume: LowerLipThickness;
+  shape: LowerLipShape;
+}
+export interface MouthCommissure {
+  angle: MouthCommissureAngle;
+  shape: MouthCommissureShape;
+}
+export interface MouthDimple {
+  size: MouthDimpleSize;
+  shape: MouthDimpleShape;
+}
+export interface Lips {
   upper: UpperLip;
-  // lower: LowerLip;
+  lower: LowerLip;
+  vermillion: LipsVermillion;
 }
 export interface Mouth {
-  lip: Lip;
+  lips: Lips;
+  commissure: MouthCommissure;
+  dimple?: MouthDimple;
 }
 export interface ForeheadHairline {
   height: ForeheadHairlineHeight;

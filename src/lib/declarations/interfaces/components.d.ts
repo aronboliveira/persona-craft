@@ -81,3 +81,8 @@ export interface OptionFigureProps {
   figureAddClasses?: string[];
   imgAddClasses?: string[];
 }
+
+export interface LoadingSpinnerProps {
+  message?: string;
+  size?: number;
+}

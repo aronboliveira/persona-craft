@@ -82,7 +82,7 @@ export default function GenderForm() {
       >
         <Forms.Header containerId="gdLeg" id="gdLegStack">
           {/* * still using stl key as you have no dedicated gd label yet; fallback is "Gender" */}
-          {FORM_DICT[lang as keyof typeof FORM_DICT]?.stl ?? "Gender"}
+          {FORM_DICT[lang as keyof typeof FORM_DICT]?.gd ?? "Gender"}
         </Forms.Header>
         <OptionFieldset selector="gd">
           {genderOptions &&

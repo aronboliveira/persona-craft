@@ -107,4 +107,38 @@ export default class ObjectHelper {
     }
     return false;
   }
+  public static deepFreeze<T>(obj: T): Readonly<T> {
+    if (typeof obj !== "object" || obj === null) return Object.freeze(obj);
+    if (Array.isArray(obj)) {
+      for (const item of obj) this.deepFreeze(item);
+      return Object.freeze(obj);
+    }
+    if (obj instanceof Map) {
+      for (const [k, v] of obj) {
+        this.deepFreeze(k);
+        this.deepFreeze(v);
+      }
+      return Object.freeze(obj);
+    }
+    if (obj instanceof Set) {
+      for (const item of obj) this.deepFreeze(item);
+      return Object.freeze(obj);
+    }
+    if (obj instanceof Date)
+      return Object.freeze(new Date(obj.getTime())) as Readonly<T>;
+    if (obj instanceof RegExp)
+      return Object.freeze(new RegExp(obj.source, obj.flags)) as Readonly<T>;
+    if (obj instanceof WeakMap || obj instanceof WeakSet)
+      return Object.freeze(obj);
+    if (this.isStrictObject(obj)) {
+      for (const key in obj)
+        if (Object.prototype.hasOwnProperty.call(obj, key))
+          this.deepFreeze(obj[key]);
+      const symbols = Object.getOwnPropertySymbols(obj);
+      for (const symbol of symbols)
+        this.deepFreeze(obj[symbol as keyof typeof obj]);
+      return Object.freeze(obj);
+    }
+    return Object.freeze(obj);
+  }
 }

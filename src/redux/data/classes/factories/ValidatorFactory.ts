@@ -6,7 +6,9 @@ import { CharacterValidator } from "../facades/CharacterValidator";
 
 export class ValidatorFactory {
   public static createValidator<T>(
-    requiredFields: string[],
+    requiredFields: {
+      [K in keyof T]: {} extends Pick<T, K> ? never : K;
+    }[keyof T][],
     defaultValue: T
   ): AnatomyValidator {
     return {

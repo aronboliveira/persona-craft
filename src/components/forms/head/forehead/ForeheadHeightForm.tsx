@@ -21,14 +21,16 @@ import Forms from "../../../../pages/Forms";
 import { frHdHgt } from "../../../../lib/data/opts";
 import { DeepOptional } from "../../../../lib/declarations/types/utils";
 import { DeepAnatomicOption } from "../../../../lib/declarations/interfaces/anatomy";
+import ErrorHandler from "../../../../lib/utils/ErrorHandler";
 export default function ForeheadHeightForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
       layoutParams: ["foreheadHeightForm"],
+      objectFit: "contain",
     }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     heightOptions = useMemo<DeepAnatomicOption<ForeheadHeight>[]>(() => {
-      const basePath = "/imgs/head/forehead-height",
+      const basePath = "/imgs/head/forehead/height",
         labelMap: Record<ForeheadHeight, string> = {
           short: "Short forehead",
           average: "Average forehead",
@@ -81,9 +83,11 @@ export default function ForeheadHeightForm(): JSX.Element {
   return (
     <ErrorBoundary
       onError={(error, errorInfo) => {
-        console.error("Error caught by boundary:", error);
-        console.error("Component stack:", errorInfo.componentStack);
-        alert(`An error occurred: ${error.message}`);
+        ErrorHandler.handleReactBoundaryError({
+          error,
+          info: errorInfo,
+          alertType: "hot",
+        });
       }}
       FallbackComponent={() => <GenericErrorComponent />}
     >

@@ -8,6 +8,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { appTheme } from "./themes/appTheme.tsx";
 import LayoutWatcher from "./components/hidden/LayoutWatcher.tsx";
 import { ErrorBoundary } from "react-error-boundary";
+import ErrorHandler from "./lib/utils/ErrorHandler.ts";
 const root = document.getElementById("root");
 if (root) {
   createRoot(root).render(
@@ -26,13 +27,15 @@ if (root) {
           <p>
             <strong>Error:</strong> Something went wrong! Try reloading
           </p>
-          <button onClick={() => window.location.reload()}>Reload</button>
+          <button onClick={window.location.reload}>Reload</button>
         </div>
       }
       onError={(error, errorInfo) => {
-        console.error("Error caught by boundary:", error);
-        console.error("Component stack:", errorInfo.componentStack);
-        alert(`An error occurred: ${error.message}`);
+        ErrorHandler.handleReactBoundaryError({
+          error,
+          info: errorInfo,
+          alertType: "hot",
+        });
       }}
     >
       <ThemeProvider theme={appTheme}>

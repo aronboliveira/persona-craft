@@ -21,6 +21,7 @@ import Forms from "../../../../../pages/Forms";
 import { eyeBrwTipsDst } from "../../../../../lib/data/opts";
 import { DeepOptional } from "../../../../../lib/declarations/types/utils";
 import { DeepAnatomicOption } from "../../../../../lib/declarations/interfaces/anatomy";
+import ErrorHandler from "../../../../../lib/utils/ErrorHandler";
 export default function EyebrowArchDistanceForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
       layoutParams: ["eyebrowArchDistanceForm"],
@@ -65,9 +66,11 @@ export default function EyebrowArchDistanceForm(): JSX.Element {
   return (
     <ErrorBoundary
       onError={(error, errorInfo) => {
-        console.error("Error caught by boundary:", error);
-        console.error("Component stack:", errorInfo.componentStack);
-        alert(`An error occurred: ${error.message}`);
+        ErrorHandler.handleReactBoundaryError({
+          error,
+          info: errorInfo,
+          alertType: "hot",
+        });
       }}
       FallbackComponent={() => <GenericErrorComponent />}
     >

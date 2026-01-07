@@ -10,8 +10,9 @@ import {
   EyeLid,
   Forehead,
   Hair,
-  Lip,
+  Lips,
   LipTubercule,
+  LowerLip,
   Mouth,
   UpperLip,
 } from "../../../lib/declarations/interfaces/anatomy";
@@ -26,9 +27,10 @@ import {
   defaultMouth,
   defaultCharacter,
   defaultLipTubercule,
-  defaultLip,
+  defaultLips,
   defaultUpperLip,
   defaultLipCupidBow,
+  defaultLowerLip,
 } from "../../data/defaults";
 import { DeepPartial } from "../../../lib/declarations/types/utils";
 import { CharacterBuilder } from "../../data/classes/facades/CharacterBuilder";
@@ -207,16 +209,18 @@ const promptSlice = createSlice({
       s.character.head.mouth = ObjectHelper.deepCopyObj(defaultMouth) as Mouth;
       s.updatedAt = Date.now();
     },
-    updateLip(s: PromptState, a: PayloadAction<DeepPartial<Lip>>): void {
-      const lip = CharacterBuilder.mergeLip(
-        CharacterValidator.ensureLip(s),
+    updateLip(s: PromptState, a: PayloadAction<DeepPartial<Lips>>): void {
+      const lip = CharacterBuilder.mergeLips(
+        CharacterValidator.ensureLips(s),
         a.payload
       );
-      s.character.head.mouth.lip = lip;
+      s.character.head.mouth.lips = lip;
       s.updatedAt = Date.now();
     },
     resetLip(s: PromptState): void {
-      s.character.head.mouth.lip = ObjectHelper.deepCopyObj(defaultLip) as Lip;
+      s.character.head.mouth.lips = ObjectHelper.deepCopyObj(
+        defaultLips
+      ) as Lips;
       s.updatedAt = Date.now();
     },
     updateUpperLip(
@@ -228,15 +232,35 @@ const promptSlice = createSlice({
         CharacterValidator.ensureUpperLip(s),
         a.payload
       );
-      s.character.head.mouth.lip.upper = ObjectHelper.deepCopyObj(
+      s.character.head.mouth.lips.upper = ObjectHelper.deepCopyObj(
         upperLip
       ) as UpperLip;
       s.updatedAt = Date.now();
     },
     resetUpperLip(s: PromptState): void {
-      s.character.head.mouth.lip.upper = ObjectHelper.deepCopyObj(
+      s.character.head.mouth.lips.upper = ObjectHelper.deepCopyObj(
         defaultUpperLip
       ) as UpperLip;
+      s.updatedAt = Date.now();
+    },
+    updateLowerLip(
+      s: PromptState,
+      a: PayloadAction<DeepPartial<LowerLip>>
+    ): void {
+      const lowerLip = CharacterBuilder.merge(
+        defaultLips.lower,
+        CharacterValidator.ensureLowerLip(s),
+        a.payload
+      );
+      s.character.head.mouth.lips.lower = ObjectHelper.deepCopyObj(
+        lowerLip
+      ) as LowerLip;
+      s.updatedAt = Date.now();
+    },
+    resetLowerLip(s: PromptState): void {
+      s.character.head.mouth.lips.lower = ObjectHelper.deepCopyObj(
+        defaultLowerLip
+      ) as LowerLip;
       s.updatedAt = Date.now();
     },
     updateCupidBow(
@@ -248,13 +272,13 @@ const promptSlice = createSlice({
         CharacterValidator.ensureCupidBow(s),
         a.payload
       );
-      s.character.head.mouth.lip.upper.cupidBow = ObjectHelper.deepCopyObj(
+      s.character.head.mouth.lips.upper.cupidBow = ObjectHelper.deepCopyObj(
         cupidBow
       ) as CupidBow;
       s.updatedAt = Date.now();
     },
     resetCupidBow(s: PromptState): void {
-      s.character.head.mouth.lip.upper.cupidBow = ObjectHelper.deepCopyObj(
+      s.character.head.mouth.lips.upper.cupidBow = ObjectHelper.deepCopyObj(
         defaultLipCupidBow
       ) as CupidBow;
       s.updatedAt = Date.now();
@@ -267,13 +291,13 @@ const promptSlice = createSlice({
         CharacterValidator.ensureLipTubercule(s),
         a.payload
       );
-      s.character.head.mouth.lip.upper.tubercule = ObjectHelper.deepCopyObj(
+      s.character.head.mouth.lips.upper.tubercule = ObjectHelper.deepCopyObj(
         lipTubercule
       ) as LipTubercule;
       s.updatedAt = Date.now();
     },
     resetLipTubercule(s: PromptState): void {
-      s.character.head.mouth.lip.upper.tubercule = ObjectHelper.deepCopyObj(
+      s.character.head.mouth.lips.upper.tubercule = ObjectHelper.deepCopyObj(
         defaultLipTubercule
       ) as LipTubercule;
       s.updatedAt = Date.now();
@@ -306,6 +330,8 @@ export const {
   resetLip,
   updateUpperLip,
   resetUpperLip,
+  updateLowerLip,
+  resetLowerLip,
   updateCupidBow,
   resetCupidBow,
   updateLipTubercule,

@@ -25,14 +25,16 @@ import Forms from "../../../../pages/Forms";
 import { frHdLnShp } from "../../../../lib/data/opts";
 import { DeepAnatomicOption } from "../../../../lib/declarations/interfaces/anatomy";
 import { DeepOptional } from "../../../../lib/declarations/types/utils";
+import ErrorHandler from "../../../../lib/utils/ErrorHandler";
 export default function ForeheadHairlineShapeForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
       layoutParams: ["foreheadHairlineShapeForm"],
+      objectFit: "contain",
     }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     shapeOptions = useMemo<DeepAnatomicOption<ForeheadHairlineShape>[]>(() => {
-      const basePath = "/imgs/head/forehead-hairline-shape",
+      const basePath = "/imgs/head/forehead/hairline/shape",
         labelMap: Record<ForeheadHairlineShape, string> = {
           rounded: "Rounded",
           "m-shaped": "M-shaped",
@@ -92,9 +94,11 @@ export default function ForeheadHairlineShapeForm(): JSX.Element {
   return (
     <ErrorBoundary
       onError={(error, errorInfo) => {
-        console.error("Error caught by boundary:", error);
-        console.error("Component stack:", errorInfo.componentStack);
-        alert(`An error occurred: ${error.message}`);
+        ErrorHandler.handleReactBoundaryError({
+          error,
+          info: errorInfo,
+          alertType: "hot",
+        });
       }}
       FallbackComponent={() => <GenericErrorComponent />}
     >

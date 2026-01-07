@@ -43,8 +43,15 @@ import {
   HairTexture,
   HairTidiness,
   IrisSize,
+  LipsVermillion,
   LipTuberculeProminence,
   LipTuberculeShape,
+  LowerLipShape,
+  LowerLipThickness,
+  MouthCommissureAngle,
+  MouthCommissureShape,
+  MouthDimpleShape,
+  MouthDimpleSize,
   PupilPattern,
   PupilSize,
   RecidingLevel,
@@ -69,6 +76,13 @@ export const styleSets = Object.seal([
   "skt",
   "sr",
 ]) as StyleSets[];
+export enum StyleSetAbbr {
+  "anime" = "anm",
+  "cartoon" = "crt",
+  "photorealistic" = "ptr",
+  "pixel" = "px",
+  "semi-realistic" = "skt",
+}
 export const gds = [
   "female",
   "masculine",
@@ -80,6 +94,12 @@ export enum GdAbbr {
   masculine = "m",
   nonBinary = "nb",
 }
+export const isValidStyleAbbr = (abbr: string): abbr is StyleSets => {
+  return styleSets.includes(abbr as StyleSets);
+};
+export const isValidGender = (abbr: string): abbr is GenderAbbr => {
+  return gdAbbrs.includes(abbr as GenderAbbr);
+};
 export const mscLvls = [
   "average",
   "frail",
@@ -122,8 +142,6 @@ export const hrTd = [
 export const hrBgLg = [
   "micro",
   "short",
-  "blunt-across",
-  "blunt-cut",
   "cheekbone-length",
   "eyebrow-skimming",
   "lash-length",
@@ -151,20 +169,18 @@ export const frHdLnHg = [
 ] as const satisfies ForeheadHairlineHeight[];
 export const frHdLnRcvLv = [
   "straight",
-  "bitemporal",
-  "complete",
-  "diffuse",
-  "square",
   "square",
   "triangular",
+  "bitemporal",
+  "diffuse",
+  "complete",
 ] as const satisfies RecidingLevel[];
 export const frHdLnShp = [
   "rounded",
-  "asymmetrical",
-  "cowlick",
   "cowlick",
   "m-shaped",
   "u-shaped",
+  "asymmetrical",
   "widow-s-peak",
   "zigzag",
 ] as const satisfies ForeheadHairlineShape[];
@@ -403,6 +419,15 @@ export const mtUpLpVlm = [
   "very-full",
   "extremely-full",
 ] as const satisfies UpperLipThickness[];
+export const mtLwLpVlm = [...mtUpLpVlm] as const satisfies LowerLipThickness[];
+export const mtLwLpShp = [
+  "centralized",
+  "flat-abroad",
+  "lateralized",
+  "rounded-pillow",
+  "pronounced",
+  "pouty-everted",
+] as const satisfies LowerLipShape[];
 export const mtCpBwWd = [
   "narrow",
   "average",
@@ -425,6 +450,33 @@ export const mtLpTrbShp = [
   "angular",
   "flat-top",
 ] as const satisfies LipTuberculeShape[];
+export const mtLpVrm = [
+  "blurred",
+  "noticeable",
+  "marked",
+] as const satisfies LipsVermillion[];
+export const mthCmmAng = [
+  "downturned",
+  "neutral",
+  "upturned",
+] as const satisfies MouthCommissureAngle[];
+export const mthCmmShp = [
+  "thin",
+  "average",
+  "large",
+] as const satisfies MouthCommissureShape[];
+export const mthDmpSz = [
+  "null",
+  "small",
+  "average",
+  "large",
+] as const satisfies MouthDimpleSize[];
+export const mthDmpShp = [
+  "none",
+  "round",
+  "oval",
+  "elongated",
+] as const satisfies MouthDimpleShape[];
 export const bdHgt = [
   "dwarfic",
   "short",
@@ -454,7 +506,7 @@ export const muscleDetails = {
   athletic: { friendlyName: "Athletic" },
   herculean: { friendlyName: "Herculean" },
 } as const satisfies Record<BodyMuscleTypes, { friendlyName: string }>;
-const imgBasePath = "/imgs";
+export const imgBasePath = "/imgs";
 export const FORMS_OPTS: Record<
   QuestionId,
   object | ((...args: any[]) => object)
@@ -496,7 +548,7 @@ export const FORMS_OPTS: Record<
           ])
         ))(st),
     ])
-  ), // * "masculine" now matches the Gender union; previously "male" never matched
+  ),
   msc: (
     gnd: GenderAbbr | Gender = "fm",
     stl: StyleSets = "anm"
@@ -511,12 +563,17 @@ export const FORMS_OPTS: Record<
       : gds.includes(gnd as any)
       ? GdAbbr[gnd as Gender]
       : "fm";
-
     return mscLvls.reduce(
       (acc, mscLvl) => {
         acc[mscLvl] = {
           friendlyName: muscleDetails[mscLvl].friendlyName,
-          src: `${imgBasePath}/muscle/${stl}/${gnd}-${mscLvl}.png` as any,
+          src: `${imgBasePath}/muscle/${stl}/${
+            Object.values(GdAbbr).includes(gnd as GdAbbr)
+              ? gnd
+              : gnd in GdAbbr
+              ? GdAbbr[gnd as keyof typeof GdAbbr]
+              : "fm"
+          }/${mscLvl}.png` as any,
         };
         return acc;
       },

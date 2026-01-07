@@ -1,5 +1,3 @@
-// src/components/forms/HairTextureForm.tsx
-
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../../errors/GenericErrorComponent";
 import { useCallback, useMemo, RefObject, ChangeEvent, JSX } from "react";
@@ -18,18 +16,20 @@ import Forms from "../../../pages/Forms";
 import { hrTxt } from "../../../lib/data/opts";
 import { DeepOptional } from "../../../lib/declarations/types/utils";
 import { DeepAnatomicOption } from "../../../lib/declarations/interfaces/anatomy";
+import ErrorHandler from "../../../lib/utils/ErrorHandler";
 
 export default function HairTextureForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
       layoutParams: ["hairTextureForm"],
+      objectFit: "contain",
     }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     hairOptions = useMemo<DeepAnatomicOption<HairTexture>[]>(() => {
-      const basePath = "/imgs/hair",
+      const basePath = "/imgs/hair/texture",
         labelMap: Record<HairTexture, string> = {
           straight: "Straight",
-          "straight-wavy": "Straight/Wavy",
+          "straight-wavy": "Straight Wavy",
           "body-wavy": "Body Wavy",
           wavy: "Wavy",
           "deep-wavy": "Deep Wavy",
@@ -61,9 +61,11 @@ export default function HairTextureForm(): JSX.Element {
   return (
     <ErrorBoundary
       onError={(error, errorInfo) => {
-        console.error("Error caught by boundary:", error);
-        console.error("Component stack:", errorInfo.componentStack);
-        alert(`An error occurred: ${error.message}`);
+        ErrorHandler.handleReactBoundaryError({
+          error,
+          info: errorInfo,
+          alertType: "hot",
+        });
       }}
       FallbackComponent={() => <GenericErrorComponent />}
     >

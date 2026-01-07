@@ -7,11 +7,13 @@ export const FORM_DICT: Readonly<{ [K in AvailableLang]: LangDict }> =
       str: "Let's start!",
       stl: "What is the style of your creation?",
       mcl: "What is the muscle level of your character?",
+      gd: "What is the gender of your character?",
       null: "Oops! 🐛 Seems like something has gone wrong!",
     },
     pt: {
       str: "Vamos começar!",
       stl: "Qual é o estilo da sua criação?",
+      gd: "Qual é o gênero do seu personagem?",
       mcl: "Qual é o nível de musculatura do seu personagem?",
       null: "Ops! 🐛 Parece que algo deu errado!",
     },

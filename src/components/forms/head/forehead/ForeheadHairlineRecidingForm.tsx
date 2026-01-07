@@ -24,14 +24,16 @@ import Forms from "../../../../pages/Forms";
 import { frHdLnRcvLv } from "../../../../lib/data/opts";
 import { DeepAnatomicOption } from "../../../../lib/declarations/interfaces/anatomy";
 import { DeepOptional } from "../../../../lib/declarations/types/utils";
+import ErrorHandler from "../../../../lib/utils/ErrorHandler";
 export default function ForeheadHairlineRecidingForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
       layoutParams: ["foreheadHairlineRecidingForm"],
+      objectFit: "contain",
     }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     recidingOptions = useMemo<DeepAnatomicOption<RecidingLevel>[]>(() => {
-      const basePath = "/imgs/head/forehead-hairline-reciding",
+      const basePath = "/imgs/head/forehead/hairline/recession",
         labelMap: Record<RecidingLevel, string> = {
           straight: "Straight hairline",
           triangular: "Triangular hairline",
@@ -89,9 +91,11 @@ export default function ForeheadHairlineRecidingForm(): JSX.Element {
   return (
     <ErrorBoundary
       onError={(error, errorInfo) => {
-        console.error("Error caught by boundary:", error);
-        console.error("Component stack:", errorInfo.componentStack);
-        alert(`An error occurred: ${error.message}`);
+        ErrorHandler.handleReactBoundaryError({
+          error,
+          info: errorInfo,
+          alertType: "hot",
+        });
       }}
       FallbackComponent={() => <GenericErrorComponent />}
     >

@@ -123,7 +123,6 @@ UseOptImgListenersProps) {
   useEffect(() => {
     try {
       if (!enabled || !scope) return;
-      console.log("effect");
       installAll();
       const obs = new MutationObserver(mutations => {
         try {

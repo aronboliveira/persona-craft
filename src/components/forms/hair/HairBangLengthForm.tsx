@@ -1,8 +1,13 @@
-// src/components/forms/HairBangLengthForm.tsx
-
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../../errors/GenericErrorComponent";
-import { useCallback, useMemo, RefObject, ChangeEvent, JSX } from "react";
+import {
+  useCallback,
+  useMemo,
+  useRef,
+  RefObject,
+  ChangeEvent,
+  JSX,
+} from "react";
 import { FORM_DICT } from "../../../lib/states/lang/forms";
 import { GENERIC_DICT } from "../../../lib/states/lang/generic";
 import { HairBangLength } from "../../../lib/declarations/types/anatomy";
@@ -18,21 +23,22 @@ import Forms from "../../../pages/Forms";
 import { hrBgLg } from "../../../lib/data/opts";
 import { DeepOptional } from "../../../lib/declarations/types/utils";
 import { DeepAnatomicOption } from "../../../lib/declarations/interfaces/anatomy";
+import ErrorHandler from "../../../lib/utils/ErrorHandler";
 
 export default function HairBangLengthForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
       layoutParams: ["hairBangLengthForm"],
+      objectFit: "contain",
     }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
+    suffix = useRef<string>(Math.floor(Math.random() * 100) > 50 ? "" : "_2"),
     lengthOptions = useMemo<DeepAnatomicOption<HairBangLength>[]>(() => {
-      const basePath = "/imgs/hair/bang-length",
+      const basePath = "/imgs/hair/bang/length",
         labelMap: Record<HairBangLength, string> = {
           micro: "Micro",
           short: "Short",
           "eyebrow-skimming": "Eyebrow-skimming",
-          "blunt-cut": "Blunt cut",
-          "blunt-across": "Blunt across",
           "lash-length": "Lash-length",
           "cheekbone-length": "Cheekbone-length",
           "lip-length": "Lip-length",
@@ -40,7 +46,7 @@ export default function HairBangLengthForm(): JSX.Element {
       return hrBgLg.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${key}${suffix.current}.png`,
       }));
     }, []),
     handleBangLengthChange = useCallback<
@@ -64,9 +70,11 @@ export default function HairBangLengthForm(): JSX.Element {
   return (
     <ErrorBoundary
       onError={(error, errorInfo) => {
-        console.error("Error caught by boundary:", error);
-        console.error("Component stack:", errorInfo.componentStack);
-        alert(`An error occurred: ${error.message}`);
+        ErrorHandler.handleReactBoundaryError({
+          error,
+          info: errorInfo,
+          alertType: "hot",
+        });
       }}
       FallbackComponent={() => <GenericErrorComponent />}
     >

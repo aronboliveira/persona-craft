@@ -10,7 +10,7 @@ import {
   Forehead,
   Hair,
   HairBang,
-  Lip,
+  Lips,
   LipTubercule,
   Mouth,
 } from "../../../../lib/declarations/interfaces/anatomy";
@@ -26,7 +26,7 @@ import {
   defaultForehead,
   defaultHair,
   defaultHairBang,
-  defaultLip,
+  defaultLips,
   defaultMouth,
   defaultLipTubercule,
 } from "../../defaults";
@@ -196,15 +196,15 @@ export class CharacterBuilder {
     } as Draft<Mouth>;
   }
 
-  public static mergeLip(
-    target: Draft<Lip>,
-    patch: DeepPartial<Lip>
-  ): Draft<Lip> {
+  public static mergeLips(
+    target: Draft<Lips>,
+    patch: DeepPartial<Lips>
+  ): Draft<Lips> {
     return {
-      ...ObjectHelper.deepCopyObj(defaultLip),
+      ...ObjectHelper.deepCopyObj(defaultLips),
       ...target,
       ...patch,
-    } as Draft<Lip>;
+    } as Draft<Lips>;
   }
 
   public static mergeLipTubercule(

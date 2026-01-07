@@ -12,14 +12,18 @@ import {
   EyeLash,
   HairBang,
   Mouth,
-  Lip,
+  Lips,
   LipTubercule,
   Head,
   UpperLip,
   CupidBow,
+  LowerLip,
+  MouthCommissure,
+  MouthDimple,
 } from "../../lib/declarations/interfaces/anatomy";
 import { Character } from "../../lib/declarations/interfaces/utils";
 import { EyebrowSlitNumber } from "../../lib/declarations/types/anatomy";
+import ObjectHelper from "../../lib/utils/ObjectHelper";
 export const VALID_SLIT_NUMBERS: Readonly<EyebrowSlitNumber[]> = Object.freeze([
   "one",
   "two",
@@ -33,7 +37,7 @@ export const defaultForehead: Readonly<Forehead> = Object.freeze({
   } as Forehead["hairline"],
   height: "average" as Forehead["height"],
 }) satisfies Forehead;
-export const defaultBrow: Readonly<Eyebrow> = Object.freeze({
+export const defaultBrow: Readonly<Eyebrow> = ObjectHelper.deepFreeze({
   arch: {
     angle: "obtuse",
     distance: "even",
@@ -56,7 +60,7 @@ export const defaultBrow: Readonly<Eyebrow> = Object.freeze({
   } as Eyebrow["slit"],
   symmetric: true,
 }) satisfies Eyebrow;
-export const defaultEyeBall: Readonly<EyeBall> = Object.freeze({
+export const defaultEyeBall: Readonly<EyeBall> = ObjectHelper.deepFreeze({
   size: "average",
   iris: {
     color: "hazel",
@@ -126,11 +130,27 @@ export const defaultUpperLip: Readonly<UpperLip> = Object.freeze({
   tubercule: defaultLipTubercule as LipTubercule,
   cupidBow: defaultLipCupidBow as CupidBow,
 }) satisfies UpperLip;
-export const defaultLip: Readonly<Lip> = Object.freeze({
+export const defaultLowerLip: Readonly<LowerLip> = Object.freeze({
+  volume: "average",
+  shape: "flat-abroad",
+}) satisfies LowerLip;
+export const defaultMouthCommissure = Object.freeze({
+  angle: "neutral",
+  shape: "average",
+}) satisfies MouthCommissure;
+export const defaultMouthDimple = Object.freeze({
+  size: "small",
+  shape: "oval",
+}) satisfies MouthDimple;
+export const defaultLips: Readonly<Lips> = Object.freeze({
   upper: defaultUpperLip as UpperLip,
-}) satisfies Lip;
+  lower: defaultLowerLip as LowerLip,
+  vermillion: "blurred",
+}) satisfies Lips;
 export const defaultMouth: Readonly<Mouth> = Object.freeze({
-  lip: defaultLip as Lip,
+  lips: defaultLips as Lips,
+  commissure: defaultMouthCommissure as MouthCommissure,
+  dimple: defaultMouthDimple as MouthDimple,
 }) satisfies Mouth;
 export const defaultHead: Readonly<Head> = Object.freeze({
   forehead: defaultForehead as Forehead,

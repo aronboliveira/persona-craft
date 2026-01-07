@@ -1,8 +1,13 @@
-// src/components/forms/HairLengthForm.tsx
-
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../../errors/GenericErrorComponent";
-import { useCallback, useMemo, RefObject, ChangeEvent, JSX } from "react";
+import {
+  useCallback,
+  useState,
+  useEffect,
+  RefObject,
+  ChangeEvent,
+  JSX,
+} from "react";
 import { FORM_DICT } from "../../../lib/states/lang/forms";
 import { GENERIC_DICT } from "../../../lib/states/lang/generic";
 import { HairLength } from "../../../lib/declarations/types/anatomy";
@@ -15,18 +20,64 @@ import { useOptFormCtx } from "../../../lib/hooks/contexts/useOptFormCtx";
 import OptionFieldset from "../../bloc/OptionFieldset";
 import OptionFigure from "../../bloc/OptionFigure";
 import Forms from "../../../pages/Forms";
-import { hrLng } from "../../../lib/data/opts";
+import { GdAbbr, gdAbbrs, hrLng, hrTxt } from "../../../lib/data/opts";
 import { DeepOptional } from "../../../lib/declarations/types/utils";
 import { DeepAnatomicOption } from "../../../lib/declarations/interfaces/anatomy";
+import ErrorHandler from "../../../lib/utils/ErrorHandler";
+import {
+  genderAbbrSelector,
+  hairTextureSelector,
+} from "../../../redux/mainStore/selectors/characterSelectors";
+import { BlobValidator } from "../../../lib/utils/BlobValidator";
+import { defaultCharacter } from "../../../redux/data/defaults";
+import LoadingSpinner from "../../icons/animated/LoadingSpinner";
 
 export default function HairLengthForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
       layoutParams: ["hairLengthForm"],
+      objectFit: "contain",
     }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
-    lengthOptions = useMemo<DeepAnatomicOption<HairLength>[]>(() => {
-      const basePath = "/imgs/hair/length",
+    gender = genderAbbrSelector(state),
+    texture = hairTextureSelector(state),
+    [isLoading, setIsLoading] = useState<boolean>(true),
+    [lengthOptions, setLengthOptions] = useState<
+      DeepAnatomicOption<HairLength>[]
+    >([
+      {
+        key: defaultCharacter.hair.length,
+        friendlyName: "Default",
+        src: `/imgs/hair/length/${
+          GdAbbr[defaultCharacter.gender]
+        }/${defaultCharacter.hair.texture.slice(
+          0,
+          /[-_\s]+/.test(defaultCharacter.hair.texture)
+            ? defaultCharacter.hair.texture.indexOf(
+                defaultCharacter.hair.texture.match(/[-_\s]+/)![0]
+              )
+            : defaultCharacter.hair.texture.length
+        )}/${defaultCharacter.hair.length}.png`,
+      },
+    ]);
+  useEffect(() => {
+    const loadOptions = async () => {
+      setIsLoading(true);
+      const slicedTexture = texture.slice(
+          /[-_\s]+/.test(texture)
+            ? texture.indexOf(texture.match(/[-_\s]+/)![0]) + 1
+            : 0,
+          texture.length
+        ),
+        otherGenders = gdAbbrs.filter(g => g !== gender),
+        otherTextures = hrTxt
+          .filter(t => t !== texture)
+          .map(t =>
+            t.slice(
+              /[-_\s]+/.test(t) ? t.indexOf(t.match(/[-_\s]+/)![0]) + 1 : 0,
+              t.length
+            )
+          ),
         labelMap: Record<HairLength, string> = {
           bald: "Bald",
           "very-short": "Very short",
@@ -36,13 +87,71 @@ export default function HairLengthForm(): JSX.Element {
           "very-long": "Very long",
           "extremely-long": "Extremely long",
         };
-      return hrLng.map(key => ({
-        key,
-        friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
-      }));
-    }, []),
-    handleLengthChange = useCallback<
+
+      const options: DeepAnatomicOption<HairLength>[] = [];
+      for (const length of hrLng) {
+        try {
+          let foundPath: string | null = null;
+          foundPath = await BlobValidator.testImagePath(
+            `/imgs/hair/length/${gender}/${slicedTexture}/${length}`
+          );
+          console.log("FOUND PATH");
+          console.log(foundPath);
+          if (!foundPath) {
+            for (const otherTexture of otherTextures) {
+              foundPath = await BlobValidator.testImagePath(
+                `/imgs/hair/length/${gender}/${otherTexture}/${length}`
+              );
+              if (foundPath) break;
+            }
+          }
+          if (!foundPath) {
+            for (const otherGender of otherGenders) {
+              foundPath = await BlobValidator.testImagePath(
+                `/imgs/hair/length/${otherGender}/${slicedTexture}/${length}`
+              );
+              if (foundPath) break;
+            }
+          }
+          if (!foundPath) {
+            outerLoop: for (const otherGender of otherGenders) {
+              for (const otherTexture of otherTextures) {
+                foundPath = await BlobValidator.testImagePath(
+                  `/imgs/hair/length/${otherGender}/${otherTexture}/${length}`
+                );
+                if (foundPath) break outerLoop;
+              }
+            }
+          }
+          if (foundPath) {
+            options.push({
+              key: length,
+              friendlyName: labelMap[length],
+              src: foundPath,
+            });
+          } else {
+            console.warn(`No valid image found for length: ${length}`);
+            options.push({
+              key: length,
+              friendlyName: labelMap[length],
+              src: `/imgs/hair/length/${defaultCharacter.gender}/${defaultCharacter.hair.texture}/${defaultCharacter.hair.length}.png`,
+            });
+          }
+        } catch (err) {
+          console.error("Error while validating image for length:", err);
+          options.push({
+            key: length,
+            friendlyName: labelMap[length],
+            src: `/imgs/hair/length/${defaultCharacter.gender}/${defaultCharacter.hair.texture}/${defaultCharacter.hair.length}.png`,
+          });
+        }
+      }
+      setIsLoading(false);
+      setLengthOptions(options);
+    };
+    loadOptions();
+  }, [gender, texture]);
+  const handleLengthChange = useCallback<
       DeepOptional<(e: ChangeEvent<HTMLInputElement>) => void>
     >(
       (e: ChangeEvent<HTMLInputElement>): void => {
@@ -59,9 +168,11 @@ export default function HairLengthForm(): JSX.Element {
   return (
     <ErrorBoundary
       onError={(error, errorInfo) => {
-        console.error("Error caught by boundary:", error);
-        console.error("Component stack:", errorInfo.componentStack);
-        alert(`An error occurred: ${error.message}`);
+        ErrorHandler.handleReactBoundaryError({
+          error,
+          info: errorInfo,
+          alertType: "hot",
+        });
       }}
       FallbackComponent={() => <GenericErrorComponent />}
     >
@@ -94,11 +205,13 @@ export default function HairLengthForm(): JSX.Element {
                     "Image"
                   }`,
                 }}
-                imgStyle={{ objectFit: "contain" }}
               />
             );
           })}
         </OptionFieldset>
+        {isLoading && (
+          <LoadingSpinner message="Loading hair length options..." size={60} />
+        )}
       </fieldset>
       <Forms.Result variable={selectedLength ?? ""} />
     </ErrorBoundary>

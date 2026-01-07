@@ -84,6 +84,19 @@ import EyeLashesLengthForm from "../components/forms/head/eye/lash/EyeLashesLeng
 import EyeLashesCurlForm from "../components/forms/head/eye/lash/EyeLashesCurlForm";
 import EyeHoodForm from "../components/forms/head/eye/shape/EyeHoodForm";
 import AccessibilityHandler from "../lib/utils/AcessibilityHandler";
+import ErrorHandler from "../lib/utils/ErrorHandler";
+import LowerLipShapeForm from "../components/forms/head/mouth/lips/lower/LowerLipShapeForm";
+import UpperLipVolumeForm from "../components/forms/head/mouth/lips/upper/UpperLipVolumeForm";
+import LipTuberculeProminenceForm from "../components/forms/head/mouth/lips/upper/tubercule/LipTuberculeProminenceForm";
+import LipTuberculeShapeForm from "../components/forms/head/mouth/lips/upper/tubercule/LipTuberculeShapeForm";
+import CupidBowHeightForm from "../components/forms/head/mouth/lips/upper/bow/CupidBowHeightForm";
+import CupidBowWidthForm from "../components/forms/head/mouth/lips/upper/bow/CupidBowWidthForm";
+import LowerLipVolumeForm from "../components/forms/head/mouth/lips/lower/LowerLipVolumeForm";
+import LipsVermillionForm from "../components/forms/head/mouth/lips/LipsVermillionForm";
+import MouthCommissureAngleForm from "../components/forms/head/mouth/MouthCommissureAngleForm";
+import MouthCommissureShapeForm from "../components/forms/head/mouth/MouthCommissureShapeForm";
+import MouthDimpleSizeForm from "../components/forms/head/mouth/MouthDimpleSizeForm";
+import MouthDimpleShapeForm from "../components/forms/head/mouth/MouthDimpleShapeForm";
 
 export default function Forms(): JSX.Element {
   useOpacityTransition();
@@ -237,6 +250,31 @@ export default function Forms(): JSX.Element {
           return <EyeLashesLengthForm />;
         case EyeLashesCurlForm.name:
           return <EyeLashesCurlForm />;
+        // * mouth
+        case UpperLipVolumeForm.name:
+          return <UpperLipVolumeForm />;
+        case LipTuberculeProminenceForm.name:
+          return <LipTuberculeProminenceForm />;
+        case LipTuberculeShapeForm.name:
+          return <LipTuberculeShapeForm />;
+        case CupidBowWidthForm.name:
+          return <CupidBowWidthForm />;
+        case CupidBowHeightForm.name:
+          return <CupidBowHeightForm />;
+        case LowerLipVolumeForm.name:
+          return <LowerLipVolumeForm />;
+        case LowerLipShapeForm.name:
+          return <LowerLipShapeForm />;
+        case LipsVermillionForm.name:
+          return <LipsVermillionForm />;
+        case MouthCommissureAngleForm.name:
+          return <MouthCommissureAngleForm />;
+        case MouthCommissureShapeForm.name:
+          return <MouthCommissureShapeForm />;
+        case MouthDimpleSizeForm.name:
+          return <MouthDimpleSizeForm />;
+        case MouthDimpleShapeForm.name:
+          return <MouthDimpleShapeForm />;
         // * symmetry forms (placeholders)
         case "symmetry":
           return (
@@ -274,9 +312,11 @@ export default function Forms(): JSX.Element {
   return (
     <ErrorBoundary
       onError={(error, errorInfo) => {
-        console.error("Error caught by boundary:", error);
-        console.error("Component stack:", errorInfo.componentStack);
-        alert(`An error occurred: ${error.message}`);
+        ErrorHandler.handleReactBoundaryError({
+          error,
+          info: errorInfo,
+          alertType: "hot",
+        });
       }}
       FallbackComponent={() => <GenericErrorComponent />}
     >
