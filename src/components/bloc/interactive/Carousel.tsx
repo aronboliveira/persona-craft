@@ -19,9 +19,8 @@ import {
   CarouselProps,
   CarouselSlideProps,
 } from "../../../lib/declarations/interfaces/components";
-import CarouselCtxWrapper, {
-  CarouselCtx,
-} from "../../providers/CarouselCtxWrapper";
+import { CarouselCtx } from "../../../lib/states/contexts/CarouselCtx";
+import CarouselCtxWrapper from "../../providers/CarouselCtxWrapper";
 import { ICarouselCtx } from "../../../lib/declarations/interfaces/contexts";
 import { NRDispatch } from "../../../lib/declarations/types/foundations";
 export default function Carousel({
@@ -35,7 +34,7 @@ export default function Carousel({
   ride = "false",
 }: CarouselProps): JSX.Element {
   const isSlidesElement = (
-    child: React.ReactNode
+    child: React.ReactNode,
   ): child is ReactElement<
     ComponentProps<typeof Carousel.Slides>,
     typeof Carousel.Slides
@@ -43,11 +42,11 @@ export default function Carousel({
   const mainRef = useRef<HTMLDivElement>(null),
     slides = useMemo(
       () => Children.toArray(children).find(isSlidesElement),
-      [children]
+      [children],
     ),
     slideCount = useMemo(
       () => (slides ? Children.count(slides.props.children) : 0),
-      [slides]
+      [slides],
     ),
     [activeIndex, setActiveIndex] = useState<number>(0);
   useEffect(() => {
@@ -66,7 +65,7 @@ export default function Carousel({
         ([key, value]) =>
           mainRef.current &&
           mainRef.current.hasAttribute(key) &&
-          mainRef.current.setAttribute(key, value)
+          mainRef.current.setAttribute(key, value),
       );
     }
   }, [extra, mainRef]);
@@ -266,7 +265,7 @@ Carousel.PrevButton = function PrevButton({
     () =>
       setActiveIndex &&
       setActiveIndex((activeIndex - 1 + slideCount) % slideCount),
-    [setActiveIndex, slideCount]
+    [setActiveIndex, slideCount],
   );
   return (
     <button
@@ -303,7 +302,7 @@ Carousel.NextButton = function NextButton({
   }
   const goNext = useCallback(
     () => setActiveIndex && setActiveIndex((activeIndex + 1) % slideCount),
-    [activeIndex, setActiveIndex, slideCount]
+    [activeIndex, setActiveIndex, slideCount],
   );
   return (
     <button

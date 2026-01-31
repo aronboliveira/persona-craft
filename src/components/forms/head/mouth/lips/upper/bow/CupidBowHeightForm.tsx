@@ -19,6 +19,7 @@ import Forms from "../../../../../../../pages/Forms";
 import { mtCpBwHgt } from "../../../../../../../lib/data/opts";
 import { DeepOptional } from "../../../../../../../lib/declarations/types/utils";
 import { DeepAnatomicOption } from "../../../../../../../lib/declarations/interfaces/anatomy";
+import ErrorHandler from "../../../../../../../lib/utils/ErrorHandler";
 
 export default function CupidBowHeightForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
@@ -48,10 +49,10 @@ export default function CupidBowHeightForm(): JSX.Element {
         dispatch(
           updateUpperLip({
             cupidBow: { height: value },
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedHeight = state.character.head?.mouth?.lips?.upper?.cupidBow
       ?.height as CupidBowHeight | undefined;

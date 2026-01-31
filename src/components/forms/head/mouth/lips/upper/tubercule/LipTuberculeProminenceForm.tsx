@@ -21,6 +21,7 @@ import Forms from "../../../../../../../pages/Forms";
 import { mtLpTrbPrm } from "../../../../../../../lib/data/opts";
 import { DeepOptional } from "../../../../../../../lib/declarations/types/utils";
 import { DeepAnatomicOption } from "../../../../../../../lib/declarations/interfaces/anatomy";
+import ErrorHandler from "../../../../../../../lib/utils/ErrorHandler";
 
 export default function LipTuberculeProminenceForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
@@ -39,7 +40,7 @@ export default function LipTuberculeProminenceForm(): JSX.Element {
           prominent: "Prominent",
         },
         uniqueProminences = Array.from(
-          new Set(mtLpTrbPrm)
+          new Set(mtLpTrbPrm),
         ) as LipTuberculeProminence[];
       return uniqueProminences.map(key => ({
         key,
@@ -55,10 +56,10 @@ export default function LipTuberculeProminenceForm(): JSX.Element {
         dispatch(
           updateLipTubercule({
             prominence: value,
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedProminence = state.character.head?.mouth?.lips?.upper?.tubercule
       ?.prominence as LipTuberculeProminence | undefined;

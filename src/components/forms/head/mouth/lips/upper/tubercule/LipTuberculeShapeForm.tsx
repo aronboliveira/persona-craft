@@ -21,6 +21,7 @@ import Forms from "../../../../../../../pages/Forms";
 import { mtLpTrbShp } from "../../../../../../../lib/data/opts";
 import { DeepOptional } from "../../../../../../../lib/declarations/types/utils";
 import { DeepAnatomicOption } from "../../../../../../../lib/declarations/interfaces/anatomy";
+import ErrorHandler from "../../../../../../../lib/utils/ErrorHandler";
 
 export default function LipTuberculeShapeForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
@@ -51,10 +52,10 @@ export default function LipTuberculeShapeForm(): JSX.Element {
         dispatch(
           updateLipTubercule({
             shape: value,
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedShape = state.character.head?.mouth?.lips?.upper?.tubercule
       ?.shape as LipTuberculeShape | undefined;

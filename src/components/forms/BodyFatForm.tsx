@@ -17,6 +17,7 @@ import OptionFigure from "../bloc/OptionFigure";
 import Forms from "../../pages/Forms";
 import { bdTps } from "../../lib/data/opts";
 import { BodyFatOption } from "../../lib/declarations/interfaces/anatomy";
+import ErrorHandler from "../../lib/utils/ErrorHandler";
 export default function BodyFatForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
     layoutParams: ["bodyFatForm"],
@@ -58,10 +59,10 @@ export default function BodyFatForm(): JSX.Element {
             // store body-fat level here; align Character["weight"] to BodyFat in types
             weight: value,
           },
-        })
+        }),
       );
     },
-    [dispatch, state.character]
+    [dispatch, state.character],
   );
 
   return (

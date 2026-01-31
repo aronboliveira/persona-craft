@@ -21,6 +21,7 @@ import Forms from "../../../../../../../pages/Forms";
 import { mtCpBwWd } from "../../../../../../../lib/data/opts";
 import { DeepOptional } from "../../../../../../../lib/declarations/types/utils";
 import { DeepAnatomicOption } from "../../../../../../../lib/declarations/interfaces/anatomy";
+import ErrorHandler from "../../../../../../../lib/utils/ErrorHandler";
 
 export default function CupidBowWidthForm(): JSX.Element {
   const { lang, formRef } = useOptFormCtx({
@@ -50,10 +51,10 @@ export default function CupidBowWidthForm(): JSX.Element {
         dispatch(
           updateUpperLip({
             cupidBow: { width: value },
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedWidth = state.character.head?.mouth?.lips?.upper?.cupidBow
       ?.width as CupidBowWidth | undefined;

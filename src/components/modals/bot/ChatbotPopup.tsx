@@ -6,7 +6,9 @@ import { NRDispatch } from "../../../lib/declarations/types/foundations";
 import { ChatbotCtx } from "../../../lib/states/contexts/ChatbotCtx";
 import st from "../../../styles/Modules/chatbot-popup.module.css";
 import Spinner from "../../icons/animated/Spinner";
-const ChatbotIframe = lazy(() => import("@/components/iframes/ChatbotIframe")),
+const ChatbotIframe = lazy(
+    () => import("../../../components/iframes/ChatbotIframe"),
+  ),
   ChatbotPopup = memo((): JSX.Element => {
     const ctx = useContext<IChatbotCtx>(ChatbotCtx);
     // closeTitle = "Close the manifest dialog",
