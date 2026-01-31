@@ -30,7 +30,7 @@ export default function EyebrowLengthForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     lengthOptions = useMemo<DeepAnatomicOption<EyebrowHairLength>[]>(() => {
-      const basePath = "/imgs/head/eyebrow-length",
+      const basePath = "/imgs/head/eye/brow/length",
         labelMap: Record<EyebrowHairLength, string> = {
           minimal: "Minimal",
           short: "Short",
@@ -53,10 +53,10 @@ export default function EyebrowLengthForm(): JSX.Element {
         dispatch(
           updateBrow({
             length: value,
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedLength = state.character.head?.eye?.brow?.length as
       | EyebrowHairLength

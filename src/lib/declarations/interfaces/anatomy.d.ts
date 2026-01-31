@@ -54,6 +54,7 @@ import {
   MouthCommissureShape,
   MouthDimpleSize,
   MouthDimpleShape,
+  LipsVermillion,
 } from "../types/anatomy";
 import { Side } from "../types/helpers";
 import { DeepAnatomicKey, FriendlyNamed } from "../types/utils";

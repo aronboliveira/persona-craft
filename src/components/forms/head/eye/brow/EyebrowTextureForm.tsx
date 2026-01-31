@@ -29,7 +29,7 @@ export default function EyebrowTextureForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     textureOptions = useMemo<DeepAnatomicOption<EyebrowTexture>[]>(() => {
-      const basePath = "/imgs/head/eyebrow-texture",
+      const basePath = "/imgs/head/eye/brow/texture",
         labelMap: Record<EyebrowTexture, string> = {
           straight: "Straight",
           wavy: "Wavy",
@@ -50,10 +50,10 @@ export default function EyebrowTextureForm(): JSX.Element {
         dispatch(
           updateBrow({
             texture: value,
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedTexture = state.character.head?.eye?.brow?.texture as
       | EyebrowTexture
