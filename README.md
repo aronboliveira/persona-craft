@@ -1,3 +1,5 @@
+# THIS PROJECT WAS ARCHIVED. FEEL FREE TO TAKE A LOOK, BUT BE MINDFUL THAT IT IS INCOMPLETE.
+
 <details open>
 <summary>🇺🇸 English (en-US)</summary>
 
