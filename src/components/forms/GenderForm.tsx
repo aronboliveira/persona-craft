@@ -1,3 +1,4 @@
+import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../errors/GenericErrorComponent";
 import { FORM_DICT } from "../../lib/states/lang/forms";

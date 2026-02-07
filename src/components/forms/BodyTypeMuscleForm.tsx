@@ -1,3 +1,4 @@
+import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../errors/GenericErrorComponent";
 import { useCallback, useMemo, RefObject } from "react";
@@ -37,8 +38,9 @@ export default function BodyTypeMuscleForm() {
       objectFit: "contain",
     }),
     dispatch = useAppDispatch(),
-    state = useAppSelector((s: RootState) => s.prompt as PromptState),
-    gender = genderAbbrSelector(state),
+    rootState = useAppSelector((s: RootState) => s),
+    state = rootState.prompt as PromptState,
+    gender = genderAbbrSelector(rootState),
     stKey = useMemo(
       () =>
         ((): StyleSets => {

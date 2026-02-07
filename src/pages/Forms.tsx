@@ -1,4 +1,4 @@
-import {
+import React, {
   JSX,
   useMemo,
   useReducer,
@@ -43,7 +43,7 @@ import BodyFatForm from "../components/forms/BodyFatForm";
 import HairTextureForm from "../components/forms/hair/HairTextureForm";
 import HairBangDensityForm from "../components/forms/hair/HairBangDensityForm";
 import HairBangLengthForm from "../components/forms/hair/HairBangLengthForm";
-import HairTidinessForm from "../components/forms/hair/HairTidiness";
+import HairTidinessForm from "../components/forms/hair/HairTidinessForm";
 import HairBangShapeForm from "../components/forms/hair/HairBangShapeForm";
 import HairLengthForm from "../components/forms/hair/HairLengthForm";
 import ForeheadHairlineHeightForm from "../components/forms/head/forehead/ForeheadHairLineHeightForm";
@@ -61,7 +61,7 @@ import EyebrowHeightForm from "../components/forms/head/eye/brow/EyebrowHeightFo
 import EyebrowLengthForm from "../components/forms/head/eye/brow/EyebrowLengthForm";
 import EyebrowThicknessForm from "../components/forms/head/eye/brow/EyebrowThicknessForm";
 import EyebrowUnibrowForm from "../components/forms/head/eye/brow/EyebrowUnibrowForm";
-import EyebrowTrimmingForm from "../components/forms/head/eye/brow/EyebroTrimmingForm";
+import EyebrowTrimmingForm from "../components/forms/head/eye/brow/EyebrowTrimmingForm";
 import EyebrowSlitAngleForm from "../components/forms/head/eye/brow/EyebrowSlitAngleForm";
 import EyebrowSlitNumberForm from "../components/forms/head/eye/brow/EyebrowSlitNumberForm";
 import EyeBallSizeForm from "../components/forms/head/eye/ball/EyeBallSizeForm";
