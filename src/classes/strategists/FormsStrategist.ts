@@ -3,14 +3,13 @@ import { UIRenderingStrategy } from "../../lib/declarations/interfaces/classes";
 import MainStyleForm from "../../components/forms/MainStyleForm";
 import GenderForm from "../../components/forms/GenderForm";
 import BodyTypeMuscleForm from "../../components/forms/BodyTypeMuscleForm";
-// import NarrativeForm from "../../components/forms/NarrativeForm";
 import HeightForm from "../../components/forms/HeightForm";
 import BodyFatForm from "../../components/forms/BodyFatForm";
 import HairTextureForm from "../../components/forms/hair/HairTextureForm";
 import HairBangDensityForm from "../../components/forms/hair/HairBangDensityForm";
 import HairBangLengthForm from "../../components/forms/hair/HairBangLengthForm";
 import HairBangShapeForm from "../../components/forms/hair/HairBangShapeForm";
-import HairTidinessForm from "../../components/forms/hair/HairTidiness";
+import HairTidinessForm from "../../components/forms/hair/HairTidinessForm";
 import HairLengthForm from "../../components/forms/hair/HairLengthForm";
 import ForeheadHairlineHeightForm from "../../components/forms/head/forehead/ForeheadHairLineHeightForm";
 import ForeheadHairlineRecidingForm from "../../components/forms/head/forehead/ForeheadHairlineRecidingForm";
@@ -26,7 +25,7 @@ import EyebrowLengthForm from "../../components/forms/head/eye/brow/EyebrowLengt
 import EyebrowTextureForm from "../../components/forms/head/eye/brow/EyebrowTextureForm";
 import EyebrowThicknessForm from "../../components/forms/head/eye/brow/EyebrowThicknessForm";
 import EyebrowUnibrowForm from "../../components/forms/head/eye/brow/EyebrowUnibrowForm";
-import EyebrowTrimmingForm from "../../components/forms/head/eye/brow/EyebroTrimmingForm";
+import EyebrowTrimmingForm from "../../components/forms/head/eye/brow/EyebrowTrimmingForm";
 import EyebrowSlitAngleForm from "../../components/forms/head/eye/brow/EyebrowSlitAngleForm";
 import EyebrowSlitNumberForm from "../../components/forms/head/eye/brow/EyebrowSlitNumberForm";
 import EyeBallSizeForm from "../../components/forms/head/eye/ball/EyeBallSizeForm";
@@ -61,6 +60,33 @@ import MouthCommissureShapeForm from "../../components/forms/head/mouth/MouthCom
 import MouthDimpleSizeForm from "../../components/forms/head/mouth/MouthDimpleSizeForm";
 import MouthDimpleShapeForm from "../../components/forms/head/mouth/MouthDimpleShapeForm";
 import ForeheadHairlineShapeForm from "../../components/forms/head/forehead/ForeheadHairlineShapeForm";
+import EthnicityForm from "../../components/forms/skin/EthnicityForm";
+import SkinToneForm from "../../components/forms/skin/SkinToneForm";
+import SkinUndertoneForm from "../../components/forms/skin/SkinUndertoneForm";
+import NoseShapeForm from "../../components/forms/head/nose/NoseShapeForm";
+import NoseBridgeWidthForm from "../../components/forms/head/nose/NoseBridgeWidthForm";
+import NoseBridgeHeightForm from "../../components/forms/head/nose/NoseBridgeHeightForm";
+import NoseNostrilSizeForm from "../../components/forms/head/nose/NoseNostrilSizeForm";
+import NoseNostrilFlareForm from "../../components/forms/head/nose/NoseNostrilFlareForm";
+import NoseLengthForm from "../../components/forms/head/nose/NoseLengthForm";
+import NoseTipAngleForm from "../../components/forms/head/nose/NoseTipAngleForm";
+import EarSizeForm from "../../components/forms/head/ear/EarSizeForm";
+import EarShapeForm from "../../components/forms/head/ear/EarShapeForm";
+import EarLobeForm from "../../components/forms/head/ear/EarLobeForm";
+import EarAngleForm from "../../components/forms/head/ear/EarAngleForm";
+import EarWidthForm from "../../components/forms/head/ear/EarWidthForm";
+import ChinProjectionForm from "../../components/forms/head/chin/ChinProjectionForm";
+import ChinPrognathismForm from "../../components/forms/head/chin/ChinPrognathismForm";
+import ChinWidthForm from "../../components/forms/head/chin/ChinWidthForm";
+import ChinHeightForm from "../../components/forms/head/chin/ChinHeightForm";
+import ChinCleftForm from "../../components/forms/head/chin/ChinCleftForm";
+import TattooStyleForm from "../../components/forms/body/modifications/TattooStyleForm";
+import TattooPlacementForm from "../../components/forms/body/modifications/TattooPlacementForm";
+import TattooCoverageForm from "../../components/forms/body/modifications/TattooCoverageForm";
+import PiercingTypeForm from "../../components/forms/body/modifications/PiercingTypeForm";
+import ScarTypeForm from "../../components/forms/body/modifications/ScarTypeForm";
+import ScarPlacementForm from "../../components/forms/body/modifications/ScarPlacementForm";
+import ScarProminenceForm from "../../components/forms/body/modifications/ScarProminenceForm";
 
 export default class FormsStrategist implements UIRenderingStrategy {
   render(context: Partial<PromptState & { order: number | string }>): string {
@@ -192,6 +218,60 @@ export default class FormsStrategist implements UIRenderingStrategy {
         return MouthDimpleSizeForm.name;
       case 65:
         return MouthDimpleShapeForm.name;
+      case 66:
+        return EthnicityForm.name;
+      case 67:
+        return SkinToneForm.name;
+      case 68:
+        return SkinUndertoneForm.name;
+      case 69:
+        return NoseShapeForm.name;
+      case 70:
+        return NoseBridgeWidthForm.name;
+      case 71:
+        return NoseBridgeHeightForm.name;
+      case 72:
+        return NoseNostrilSizeForm.name;
+      case 73:
+        return NoseNostrilFlareForm.name;
+      case 74:
+        return NoseLengthForm.name;
+      case 75:
+        return NoseTipAngleForm.name;
+      case 76:
+        return EarSizeForm.name;
+      case 77:
+        return EarShapeForm.name;
+      case 78:
+        return EarLobeForm.name;
+      case 79:
+        return EarAngleForm.name;
+      case 81:
+        return EarWidthForm.name;
+      case 82:
+        return ChinProjectionForm.name;
+      case 83:
+        return ChinPrognathismForm.name;
+      case 84:
+        return ChinWidthForm.name;
+      case 85:
+        return ChinHeightForm.name;
+      case 86:
+        return ChinCleftForm.name;
+      case 87:
+        return TattooStyleForm.name;
+      case 88:
+        return TattooPlacementForm.name;
+      case 89:
+        return TattooCoverageForm.name;
+      case 90:
+        return PiercingTypeForm.name;
+      case 91:
+        return ScarTypeForm.name;
+      case 92:
+        return ScarPlacementForm.name;
+      case 93:
+        return ScarProminenceForm.name;
       case "eyebrow-symmetry": // 29
       case "eyelid-symmetry": // 47
       case "eyebag-symmetry": // 50
@@ -199,16 +279,14 @@ export default class FormsStrategist implements UIRenderingStrategy {
       case "eyeshape-symmetry": // 41
       case "pupil-symmetry": // 36
       case "iris-symmetry": // 33
-        // todo change this later
+      case "ear-symmetry": // 80
         return "symmetry";
-      // case 11:
-      //   return NarrativeForm.name;
       default:
         return "";
     }
   }
   map(
-    value: string | number | bigint | symbol
+    value: string | number | bigint | symbol,
   ): string | number | bigint | symbol {
     if (
       typeof value === "object" ||
@@ -238,6 +316,8 @@ export default class FormsStrategist implements UIRenderingStrategy {
         return "eyebag-symmetry";
       case 53:
         return "eyelash-symmetry";
+      case 80:
+        return "ear-symmetry";
       default:
         return value;
     }

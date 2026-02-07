@@ -97,6 +97,33 @@ import MouthCommissureAngleForm from "../components/forms/head/mouth/MouthCommis
 import MouthCommissureShapeForm from "../components/forms/head/mouth/MouthCommissureShapeForm";
 import MouthDimpleSizeForm from "../components/forms/head/mouth/MouthDimpleSizeForm";
 import MouthDimpleShapeForm from "../components/forms/head/mouth/MouthDimpleShapeForm";
+import EthnicityForm from "../components/forms/skin/EthnicityForm";
+import SkinToneForm from "../components/forms/skin/SkinToneForm";
+import SkinUndertoneForm from "../components/forms/skin/SkinUndertoneForm";
+import NoseShapeForm from "../components/forms/head/nose/NoseShapeForm";
+import NoseBridgeWidthForm from "../components/forms/head/nose/NoseBridgeWidthForm";
+import NoseBridgeHeightForm from "../components/forms/head/nose/NoseBridgeHeightForm";
+import NoseNostrilSizeForm from "../components/forms/head/nose/NoseNostrilSizeForm";
+import NoseNostrilFlareForm from "../components/forms/head/nose/NoseNostrilFlareForm";
+import NoseLengthForm from "../components/forms/head/nose/NoseLengthForm";
+import NoseTipAngleForm from "../components/forms/head/nose/NoseTipAngleForm";
+import EarSizeForm from "../components/forms/head/ear/EarSizeForm";
+import EarShapeForm from "../components/forms/head/ear/EarShapeForm";
+import EarLobeForm from "../components/forms/head/ear/EarLobeForm";
+import EarAngleForm from "../components/forms/head/ear/EarAngleForm";
+import EarWidthForm from "../components/forms/head/ear/EarWidthForm";
+import ChinProjectionForm from "../components/forms/head/chin/ChinProjectionForm";
+import ChinPrognathismForm from "../components/forms/head/chin/ChinPrognathismForm";
+import ChinWidthForm from "../components/forms/head/chin/ChinWidthForm";
+import ChinHeightForm from "../components/forms/head/chin/ChinHeightForm";
+import ChinCleftForm from "../components/forms/head/chin/ChinCleftForm";
+import TattooStyleForm from "../components/forms/body/modifications/TattooStyleForm";
+import TattooPlacementForm from "../components/forms/body/modifications/TattooPlacementForm";
+import TattooCoverageForm from "../components/forms/body/modifications/TattooCoverageForm";
+import PiercingTypeForm from "../components/forms/body/modifications/PiercingTypeForm";
+import ScarTypeForm from "../components/forms/body/modifications/ScarTypeForm";
+import ScarPlacementForm from "../components/forms/body/modifications/ScarPlacementForm";
+import ScarProminenceForm from "../components/forms/body/modifications/ScarProminenceForm";
 
 export default function Forms(): JSX.Element {
   useOpacityTransition();
@@ -105,7 +132,7 @@ export default function Forms(): JSX.Element {
     mainId = "main-forms-stack-section",
     dispatch = useDispatch<AppDispatch>(),
     stateOrder = useSelector(
-      (s: RootState) => (s.formStrategy as unknown as FormState).order
+      (s: RootState) => (s.formStrategy as unknown as FormState).order,
     ),
     [, setColumnRepeat] = useState<number>(2),
     [tipsState, dispatchTips] = useReducer<TipsState, [action: TipsAction]>(
@@ -120,21 +147,21 @@ export default function Forms(): JSX.Element {
             return {
               ...s,
               ...Object.fromEntries(
-                Object.entries(payload).map(([k]) => [k, true])
+                Object.entries(payload).map(([k]) => [k, true]),
               ),
             };
           case "CLOSE_ALL":
             return {
               ...s,
               ...Object.fromEntries(
-                Object.entries(payload).map(([k]) => [k, false])
+                Object.entries(payload).map(([k]) => [k, false]),
               ),
             };
           default:
             return s;
         }
       },
-      { startFormTip: false }
+      { startFormTip: false },
     ),
     strategist = useFormsStrategist(),
     strategistRef = useRef<FormsStrategist | null>(strategist),
@@ -275,6 +302,65 @@ export default function Forms(): JSX.Element {
           return <MouthDimpleSizeForm />;
         case MouthDimpleShapeForm.name:
           return <MouthDimpleShapeForm />;
+        // * skin & ethnicity
+        case EthnicityForm.name:
+          return <EthnicityForm />;
+        case SkinToneForm.name:
+          return <SkinToneForm />;
+        case SkinUndertoneForm.name:
+          return <SkinUndertoneForm />;
+        // * nose
+        case NoseShapeForm.name:
+          return <NoseShapeForm />;
+        case NoseBridgeWidthForm.name:
+          return <NoseBridgeWidthForm />;
+        case NoseBridgeHeightForm.name:
+          return <NoseBridgeHeightForm />;
+        case NoseNostrilSizeForm.name:
+          return <NoseNostrilSizeForm />;
+        case NoseNostrilFlareForm.name:
+          return <NoseNostrilFlareForm />;
+        case NoseLengthForm.name:
+          return <NoseLengthForm />;
+        case NoseTipAngleForm.name:
+          return <NoseTipAngleForm />;
+        // * ear
+        case EarSizeForm.name:
+          return <EarSizeForm />;
+        case EarShapeForm.name:
+          return <EarShapeForm />;
+        case EarLobeForm.name:
+          return <EarLobeForm />;
+        case EarAngleForm.name:
+          return <EarAngleForm />;
+        case EarWidthForm.name:
+          return <EarWidthForm />;
+        // * chin
+        case ChinProjectionForm.name:
+          return <ChinProjectionForm />;
+        case ChinPrognathismForm.name:
+          return <ChinPrognathismForm />;
+        case ChinWidthForm.name:
+          return <ChinWidthForm />;
+        case ChinHeightForm.name:
+          return <ChinHeightForm />;
+        case ChinCleftForm.name:
+          return <ChinCleftForm />;
+        // * body modifications
+        case TattooStyleForm.name:
+          return <TattooStyleForm />;
+        case TattooPlacementForm.name:
+          return <TattooPlacementForm />;
+        case TattooCoverageForm.name:
+          return <TattooCoverageForm />;
+        case PiercingTypeForm.name:
+          return <PiercingTypeForm />;
+        case ScarTypeForm.name:
+          return <ScarTypeForm />;
+        case ScarPlacementForm.name:
+          return <ScarPlacementForm />;
+        case ScarProminenceForm.name:
+          return <ScarProminenceForm />;
         // * symmetry forms (placeholders)
         case "symmetry":
           return (
