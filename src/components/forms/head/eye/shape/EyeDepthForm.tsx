@@ -30,17 +30,22 @@ export default function EyeDepthForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     depthOptions = useMemo<DeepAnatomicOption<EyeDepth>[]>(() => {
-      const basePath = "/imgs/head/eye-depth",
+      const basePath = "/imgs/head/eye/ball/depth",
         labelMap: Record<EyeDepth, string> = {
           "deep-set": "Deep-set",
           "neutral-set": "Neutral-set",
           protruding: "Protruding",
         },
+        fileMap: Record<EyeDepth, string> = {
+          "deep-set": "skt_eye_depth_0_dp.png",
+          "neutral-set": "skt_eye_depth_1_avg.png",
+          protruding: "skt_eye_depth_2_prt.png",
+        },
         uniqueDepths = Array.from(new Set(eyeDpt)) as EyeDepth[];
       return uniqueDepths.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handleDepthChange = useCallback<
@@ -51,10 +56,10 @@ export default function EyeDepthForm(): JSX.Element {
         dispatch(
           updateEyeShape({
             depth: value,
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedDepth = state.character.head?.eye?.shape?.depth as
       | EyeDepth

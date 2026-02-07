@@ -29,17 +29,22 @@ export default function EyebrowTextureForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     textureOptions = useMemo<DeepAnatomicOption<EyebrowTexture>[]>(() => {
-      const basePath = "/imgs/head/eye/brow/texture",
+      const basePath = "/imgs/head/brow/texture",
         labelMap: Record<EyebrowTexture, string> = {
           straight: "Straight",
           wavy: "Wavy",
           curly: "Curly",
         },
+        fileMap: Record<EyebrowTexture, string> = {
+          straight: "skt_eye_brw_stg.png",
+          wavy: "skt_eye_brw_wv.png",
+          curly: "skt_eye_brw_crl.png",
+        },
         uniqueTextures = Array.from(new Set(eyeBrwTxt)) as EyebrowTexture[];
       return uniqueTextures.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handleTextureChange = useCallback<

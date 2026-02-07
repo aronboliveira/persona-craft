@@ -1,4 +1,4 @@
-import React, {
+import {
   JSX,
   useMemo,
   useReducer,
@@ -124,9 +124,14 @@ import PiercingTypeForm from "../components/forms/body/modifications/PiercingTyp
 import ScarTypeForm from "../components/forms/body/modifications/ScarTypeForm";
 import ScarPlacementForm from "../components/forms/body/modifications/ScarPlacementForm";
 import ScarProminenceForm from "../components/forms/body/modifications/ScarProminenceForm";
+import useUrlFormSync from "../lib/hooks/sync/useUrlFormSync";
+import SymmetryForm from "../components/forms/SymmetryForm";
+import toast from "react-hot-toast";
 
 export default function Forms(): JSX.Element {
   useOpacityTransition();
+  // Sync form state with URL query params (storage/cache takes precedence)
+  useUrlFormSync();
   const { lang } = useLanguage(),
     mainRef = useRef<NHtEl>(null),
     mainId = "main-forms-stack-section",
@@ -362,12 +367,21 @@ export default function Forms(): JSX.Element {
         case ScarProminenceForm.name:
           return <ScarProminenceForm />;
         // * symmetry forms (placeholders)
-        case "symmetry":
-          return (
-            <div className="text-mute">
-              <b>This should have been a form for symmetry. Skip for now!</b>
-            </div>
-          );
+        case "symmetry": {
+          // Determine feature name based on order
+          const symmetryFeatures: Record<number, string> = {
+            29: "Eyebrow",
+            33: "Iris",
+            36: "Pupil",
+            40: "Eye Shape",
+            46: "Eyelid",
+            50: "Eye Bag",
+            53: "Eyelash",
+            80: "Ear",
+          };
+          const featureName = symmetryFeatures[stateOrder] || "Feature";
+          return <SymmetryForm featureName={featureName} />;
+        }
         default:
           return (
             <div className="text-error">
@@ -377,8 +391,21 @@ export default function Forms(): JSX.Element {
       }
     }, [stateOrder, lang]),
     handleNext = useCallback((): void => {
+      // Check if we're at the last form (93 is the max)
+      if (stateOrder >= 93) {
+        toast("🎉 You've completed all character creation forms!", {
+          duration: 5000,
+          position: "top-center",
+          icon: "✅",
+          style: {
+            background: "#10b981",
+            color: "#fff",
+          },
+        });
+        return; // Don't increment further
+      }
       dispatch(nextForm());
-    }, [dispatch]),
+    }, [dispatch, stateOrder]),
     handlePrevious = useCallback((): void => {
       dispatch(previousForm());
     }, [dispatch]),

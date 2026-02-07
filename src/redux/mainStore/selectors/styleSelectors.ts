@@ -1,15 +1,15 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { PromptState } from "../../../lib/declarations/interfaces/redux";
-import { ImageStyle } from "../../../lib/declarations/types/helpers";
+import { RootState } from "..";
+import { ImageStyle, StyleSets } from "../../../lib/declarations/types/helpers";
 import { DEFAULT_OPTS } from "../../../lib/data/opts";
 
 export const styleSelector = createSelector(
-  [(s: PromptState) => s.style],
-  (style: ImageStyle) => style
+  [(s: RootState) => s.prompt.style],
+  (style: ImageStyle) => style,
 );
 export const styleAbbrSelector = createSelector(
-  [(s: PromptState) => s.style],
-  (style: ImageStyle): string => {
+  [(s: RootState) => s.prompt.style],
+  (style: ImageStyle): StyleSets => {
     switch (style) {
       case "anime":
         return "anm";
@@ -22,7 +22,7 @@ export const styleAbbrSelector = createSelector(
       case "semi-realistic":
         return "skt";
       default:
-        return DEFAULT_OPTS.stl;
+        return DEFAULT_OPTS.stl as StyleSets;
     }
-  }
+  },
 );

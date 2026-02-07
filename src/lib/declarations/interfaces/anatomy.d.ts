@@ -55,6 +55,33 @@ import {
   MouthDimpleSize,
   MouthDimpleShape,
   LipsVermillion,
+  ChinProjection,
+  ChinPrognathism,
+  ChinWidth,
+  ChinHeight,
+  ChinCleft,
+  NoseShape,
+  NoseBridgeWidth,
+  NoseBridgeHeight,
+  NoseNostrilSize,
+  NoseNostrilFlare,
+  NoseLength,
+  NoseTipAngle,
+  EarSize,
+  EarShape,
+  EarLobe,
+  EarAngle,
+  EarWidth,
+  Ethnicity,
+  SkinTone,
+  SkinUndertone,
+  TattooStyle,
+  TattooPlacement,
+  TattooCoverage,
+  PiercingType,
+  ScarType,
+  ScarPlacement,
+  ScarProminence,
 } from "../types/anatomy";
 import { Side } from "../types/helpers";
 import { DeepAnatomicKey, FriendlyNamed } from "../types/utils";
@@ -199,6 +226,67 @@ export interface Head {
   forehead: Forehead;
   eye: Eye;
   mouth: Mouth;
+  nose?: Nose;
+  ear?: Ear;
+  chin?: Chin;
+}
+// ─── Nose ───────────────────────────────────────────────
+export interface NoseBridge {
+  width: NoseBridgeWidth;
+  height: NoseBridgeHeight;
+}
+export interface NoseNostril {
+  size: NoseNostrilSize;
+  flare: NoseNostrilFlare;
+}
+export interface Nose {
+  shape: NoseShape;
+  bridge: NoseBridge;
+  nostril: NoseNostril;
+  length: NoseLength;
+  tipAngle: NoseTipAngle;
+}
+// ─── Ear ────────────────────────────────────────────────
+export interface Ear {
+  size: EarSize;
+  shape: EarShape;
+  lobe: EarLobe;
+  angle: EarAngle;
+  width: EarWidth;
+  symmetric?: boolean;
+}
+// ─── Chin ───────────────────────────────────────────────
+export interface Chin {
+  projection: ChinProjection;
+  prognathism: ChinPrognathism;
+  width: ChinWidth;
+  height: ChinHeight;
+  cleft: ChinCleft;
+}
+// ─── Skin ───────────────────────────────────────────────
+export interface Skin {
+  ethnicity: Ethnicity;
+  tone: SkinTone;
+  undertone: SkinUndertone;
+}
+// ─── Body Modifications ────────────────────────────────
+export interface Tattoo {
+  style: TattooStyle;
+  placement: TattooPlacement;
+  coverage: TattooCoverage;
+}
+export interface Piercing {
+  type: PiercingType;
+}
+export interface Scar {
+  type: ScarType;
+  placement: ScarPlacement;
+  prominence: ScarProminence;
+}
+export interface BodyModifications {
+  tattoo: Tattoo;
+  piercing: Piercing;
+  scar: Scar;
 }
 export interface DeepAnatomicOption<T, O = Character> extends FriendlyNamed {
   key: DeepAnatomicKey<T, O>;

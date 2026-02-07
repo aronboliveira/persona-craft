@@ -1,6 +1,4 @@
-/// <reference types="@testing-library/jest-dom" />
-
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 
 declare global {
   namespace jest {
@@ -15,13 +13,4 @@ declare global {
       toHaveAttribute(attr: string, value?: string): R;
     }
   }
-  
-  const import: {
-    meta: {
-      env: {
-        DEV: boolean;
-        [key: string]: any;
-      };
-    };
-  };
 }

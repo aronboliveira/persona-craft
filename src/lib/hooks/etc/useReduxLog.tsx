@@ -7,18 +7,18 @@ export default function useReduxLog(): void {
   useEffect(() => {
     console.groupCollapsed(
       "---- NEW FORM CONTEXT ----",
-      new Date().getMinutes()
+      new Date().getMinutes(),
     );
     // these are the reducers
     // console.log("DISPATCH");
     // console.log(dispatch);
     // this is the context value
     console.log("STYLE");
-    console.log(selector.style);
+    console.log(selector.prompt.style);
     console.log("CHARACTER");
-    console.log(selector.character);
+    console.log(selector.prompt.character);
     console.log("ENVIRONMENT");
-    console.log(selector.environment);
+    console.log(selector.prompt.environment);
     console.groupEnd();
   }, [dispatch, selector]);
 }

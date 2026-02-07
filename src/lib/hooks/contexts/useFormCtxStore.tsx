@@ -14,7 +14,7 @@ export function useFormCtxStore(): {
   lang: AvailableLang;
   ctx: IMainFormCtx | null;
 } {
-  let lang: AvailableLang = DEFAULTS.lang;
+  let lang: AvailableLang = DEFAULTS.LANG;
   const ctx = useContext<IMainFormCtx>(MainFormCtx),
     dispatch = useDispatch<FormsAppDispatch>();
   if (ctx && ValidateLang(ctx.lang)) lang = ctx.lang;

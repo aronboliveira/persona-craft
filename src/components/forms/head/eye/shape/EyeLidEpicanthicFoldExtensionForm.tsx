@@ -32,19 +32,24 @@ export default function EyeLidEpicanthicFoldExtensionForm(): JSX.Element {
     foldOptions = useMemo<
       DeepAnatomicOption<EyeEpicanthicFoldExtension>[]
     >(() => {
-      const basePath = "/imgs/head/eyelid-epicanthic-fold-extension",
+      const basePath = "/imgs/head/eye/lid/epicanthic/ext",
         labelMap: Record<EyeEpicanthicFoldExtension, string> = {
           none: "No epicanthic fold",
           partial: "Partial epicanthic fold",
           full: "Full epicanthic fold",
         },
+        fileMap: Record<EyeEpicanthicFoldExtension, string> = {
+          none: "skt_eye_ecf_null.png",
+          partial: "skt_eye_ecf_prt.png",
+          full: "skt_eye_ecf_full.png",
+        },
         uniqueFolds = Array.from(
-          new Set(eyeLidEpcExt)
+          new Set(eyeLidEpcExt),
         ) as EyeEpicanthicFoldExtension[];
       return uniqueFolds.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handleFoldChange = useCallback<
@@ -55,10 +60,10 @@ export default function EyeLidEpicanthicFoldExtensionForm(): JSX.Element {
         dispatch(
           updateEyeLid({
             epicanthicFold: value,
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedFold = state.character.head?.eye?.shape?.lid?.epicanthicFold as
       | EyeEpicanthicFoldExtension

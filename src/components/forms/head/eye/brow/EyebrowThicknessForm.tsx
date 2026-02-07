@@ -30,20 +30,26 @@ export default function EyebrowThicknessForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     thicknessOptions = useMemo<DeepAnatomicOption<EyebrowThickness>[]>(() => {
-      const basePath = "/imgs/head/eyebrow-thickness",
+      const basePath = "/imgs/head/brow/thickness",
         labelMap: Record<EyebrowThickness, string> = {
           vellus: "Vellus",
           fine: "Fine",
           medium: "Medium",
           coarse: "Coarse",
         },
+        fileMap: Record<EyebrowThickness, string> = {
+          vellus: "skt_eye_brw_vl.png",
+          fine: "skt_eye_brw_fn.png",
+          medium: "skt_eye_brw_vl_b.png",
+          coarse: "skt_eye_brw_cr.png",
+        },
         uniqueThicknesses = Array.from(
-          new Set(eyeBrwThk)
+          new Set(eyeBrwThk),
         ) as EyebrowThickness[];
       return uniqueThicknesses.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handleThicknessChange = useCallback<
@@ -54,10 +60,10 @@ export default function EyebrowThicknessForm(): JSX.Element {
         dispatch(
           updateBrow({
             thickness: value,
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedThickness = state.character.head?.eye?.brow?.thickness as
       | EyebrowThickness

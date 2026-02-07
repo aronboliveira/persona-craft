@@ -1,7 +1,6 @@
 import { JSX, memo } from "react"; // * removed useEffect/useState; component is now fully controlled via props
 import { CLASSES } from "../../lib/data/classes";
 import { OptionFigureProps } from "../../lib/declarations/interfaces/components";
-import React from "react";
 import { Card, CardMedia, Radio } from "@mui/material";
 
 const OptionFigure = (props: OptionFigureProps): JSX.Element => {

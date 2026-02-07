@@ -30,7 +30,7 @@ export default function EyeColorForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     colorOptions = useMemo<DeepAnatomicOption<EyeColor>[]>(() => {
-      const basePath = "/imgs/head/eye-color",
+      const basePath = "/imgs/head/eye/ball/color",
         labelMap: Record<EyeColor, string> = {
           hazel: "Hazel",
           black: "Black",
@@ -42,11 +42,22 @@ export default function EyeColorForm(): JSX.Element {
           blind: "Blind",
           scar: "Scar",
         },
+        fileMap: Record<EyeColor, string> = {
+          hazel: "srm_fm_closeup-01b.png",
+          black: "srm_fm_closeup-01-black.png",
+          blue: "srm_fm_closeup-01-blue.png",
+          green: "srm_fm_closeup-01-green.png",
+          fire: "srm_fm_closeup-01-flame.png",
+          light: "srm_fm_closeup-01-light.png",
+          demon: "srm_fm_closeup-01-demon.png",
+          blind: "srm_fm_closeup-01-blind.png",
+          scar: "srm_fm_closeup-01-scar.png",
+        },
         uniqueColors = Array.from(new Set(eyeClr)) as EyeColor[];
       return uniqueColors.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handleColorChange = useCallback<
@@ -61,10 +72,10 @@ export default function EyeColorForm(): JSX.Element {
                 color: value,
               },
             },
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedColor = state.character.head?.eye?.ball?.iris?.color as
       | EyeColor

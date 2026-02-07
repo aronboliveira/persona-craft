@@ -30,7 +30,7 @@ export default function EyebrowHeightForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     heightOptions = useMemo<DeepAnatomicOption<EyebrowHeight>[]>(() => {
-      const basePath = "/imgs/head/eye/brow/height",
+      const basePath = "/imgs/head/brow/height",
         labelMap: Record<EyebrowHeight, string> = {
           "very-close": "Very close",
           close: "Close",
@@ -38,11 +38,18 @@ export default function EyebrowHeightForm(): JSX.Element {
           distant: "Distant",
           "very-distant": "Very distant",
         },
+        fileMap: Record<EyebrowHeight, string> = {
+          "very-close": "skt_eyebrw_hgt_0_vcls.png",
+          close: "skt_eyebrw_hgt_1_cls.png",
+          median: "skt_eyebrw_hgt_2_mdn.png",
+          distant: "skt_eyebrw_hgt_3_dt.png",
+          "very-distant": "skt_eyebrw_hgt_4_vdt.png",
+        },
         uniqueHeights = Array.from(new Set(eyeBrwHght)) as EyebrowHeight[];
       return uniqueHeights.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handleHeightChange = useCallback<
@@ -53,10 +60,10 @@ export default function EyebrowHeightForm(): JSX.Element {
         dispatch(
           updateBrow({
             height: value,
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedHeight = state.character.head?.eye?.brow?.height as
       | EyebrowHeight

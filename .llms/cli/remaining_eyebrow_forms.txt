@@ -1,0 +1,25 @@
+Remaining Eyebrow Forms to Update:
+
+1. EyebrowGrowthDirectionForm - /imgs/head/eyebrow-growth-direction
+   → NO DIRECTORY FOUND (default needed)
+
+2. EyebrowGrowthPatternForm - /imgs/head/eyebrow-growth-pattern
+   → .drive/closeup/eyes/sketch/brow/growth/pattern/
+   Values: even, front-heavy, tail-heavy, center-heavy
+
+3. EyebrowSlitAngleForm - /imgs/head/eyebrow-slit-angle
+   → .drive/closeup/eyes/sketch/brow/slit/both/
+   Values: none, diagonal, vertical
+
+4. EyebrowSlitNumberForm - /imgs/head/eyebrow-slit-number
+   → .drive/closeup/eyes/sketch/brow/slit/both/
+   Values: numbers
+
+5. EyebrowTextureForm - /imgs/head/eye/brow/texture
+   → .drive/closeup/eyes/sketch/brow/texture/both/
+
+6. EyebrowTrimmingForm - /imgs/head/eyebrow-trimming
+   → .drive/closeup/eyes/sketch/brow/trimming/
+
+7. EyebrowUnibrowForm - /imgs/head/eyebrow-unibrow
+   → .drive/closeup/eyes/sketch/brow/uni/

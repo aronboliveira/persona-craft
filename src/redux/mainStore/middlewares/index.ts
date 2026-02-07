@@ -1,21 +1,26 @@
-import { Middleware } from "@reduxjs/toolkit";
+import { Middleware, UnknownAction } from "@reduxjs/toolkit";
 import {
   EyebrowSlitAngle,
   EyebrowSlitNumber,
 } from "../../../lib/declarations/types/anatomy";
 import { VALID_SLIT_NUMBERS } from "../../data/defaults";
 import { updateBrow } from "../slices/promptSlice";
+import { RootState } from "../index";
+import { Eyebrow } from "../../../lib/declarations/interfaces/anatomy";
+import { DeepPartial } from "../../../lib/declarations/types/utils";
+
+type SlitPayload = DeepPartial<Eyebrow>;
 
 export const slitConsistencyMiddleware: Middleware =
   store => next => action => {
     const result = next(action);
+    const typedAction = action as UnknownAction;
     if (
-      // todo this will be used and typed latter
-      (action as any).type === "prompt/updatePrompt" ||
-      (action as any).type === "prompt/updateEye" ||
-      (action as any).type === "prompt/updateBrow"
+      typedAction.type === "prompt/updatePrompt" ||
+      typedAction.type === "prompt/updateEye" ||
+      typedAction.type === "prompt/updateBrow"
     ) {
-      const state = store.getState() as any;
+      const state = store.getState() as RootState;
       const brow = state?.prompt?.character?.head?.eye?.brow;
       const slit = brow?.slit as
         | { number?: EyebrowSlitNumber; angle?: EyebrowSlitAngle }
@@ -26,15 +31,15 @@ export const slitConsistencyMiddleware: Middleware =
         slit.number &&
         !VALID_SLIT_NUMBERS.includes(slit.number) &&
         slit.angle !== "none"
-      )
-        store.dispatch(
-          updateBrow({
-            slit: {
-              ...slit,
-              angle: "none",
-            },
-          } as any)
-        );
+      ) {
+        const payload: SlitPayload = {
+          slit: {
+            ...slit,
+            angle: "none",
+          },
+        };
+        store.dispatch(updateBrow(payload));
+      }
     }
 
     return result;

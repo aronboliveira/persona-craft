@@ -1,4 +1,3 @@
-import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../errors/GenericErrorComponent";
 import { useCallback, useMemo, RefObject } from "react";
@@ -6,7 +5,6 @@ import { BodyMuscleTypes } from "../../lib/declarations/types/anatomy";
 import { FORM_DICT } from "../../lib/states/lang/forms";
 import { updatePrompt } from "../../redux/mainStore/slices/promptSlice";
 import { CLASSES } from "../../lib/data/classes";
-import { RootState } from "../../redux/mainStore";
 import {
   GdAbbr,
   gdAbbrs,
@@ -15,7 +13,6 @@ import {
   mscLvls,
   muscleDetails,
 } from "../../lib/data/opts";
-import { PromptState } from "../../lib/declarations/interfaces/redux";
 import { OptDict } from "../../lib/declarations/interfaces/utils";
 import { GENERIC_DICT } from "../../lib/states/lang/generic";
 import OptionFigure from "../bloc/OptionFigure";
@@ -30,7 +27,12 @@ import { useOptFormCtx } from "../../lib/hooks/contexts/useOptFormCtx";
 import OptionFieldset from "../bloc/OptionFieldset";
 import Forms from "../../pages/Forms";
 import ErrorHandler from "../../lib/utils/ErrorHandler";
-import { genderAbbrSelector } from "../../redux/mainStore/selectors/characterSelectors";
+import {
+  genderAbbrSelector,
+  characterSelector,
+  muscleSelector,
+} from "../../redux/mainStore/selectors/characterSelectors";
+import { styleAbbrSelector } from "../../redux/mainStore/selectors/styleSelectors";
 
 export default function BodyTypeMuscleForm() {
   const { lang, formRef } = useOptFormCtx({
@@ -38,33 +40,14 @@ export default function BodyTypeMuscleForm() {
       objectFit: "contain",
     }),
     dispatch = useAppDispatch(),
-    rootState = useAppSelector((s: RootState) => s),
-    state = rootState.prompt as PromptState,
-    gender = genderAbbrSelector(rootState),
-    stKey = useMemo(
-      () =>
-        ((): StyleSets => {
-          switch (state.style) {
-            case "anime":
-              return "anm";
-            case "cartoon":
-              return "crt";
-            case "photorealistic":
-              return "ptr";
-            case "pixel":
-              return "px";
-            case "semi-realistic":
-              return "sr";
-            default:
-              return "sr";
-          }
-        })(),
-      [state.style]
-    ),
+    character = useAppSelector(characterSelector),
+    muscle = useAppSelector(muscleSelector),
+    gender = useAppSelector(genderAbbrSelector),
+    stKey = useAppSelector(styleAbbrSelector),
     muscleOptions = useMemo(() => {
       return ((
         gnd: GenderAbbr | Gender = "fm",
-        stl: StyleSets = "anm"
+        stl: StyleSets = "anm",
       ): {
         [K in BodyMuscleTypes]: {
           friendlyName: string;
@@ -74,8 +57,8 @@ export default function BodyTypeMuscleForm() {
         gnd = gdAbbrs.includes(gnd as any)
           ? gnd
           : gds.includes(gnd as any)
-          ? GdAbbr[gnd as Gender]
-          : "fm";
+            ? GdAbbr[gnd as Gender]
+            : "fm";
         return mscLvls.reduce(
           (acc, mscLvl) => {
             acc[mscLvl] = {
@@ -84,8 +67,8 @@ export default function BodyTypeMuscleForm() {
                 Object.values(GdAbbr).includes(gnd as GdAbbr)
                   ? gnd
                   : gnd in GdAbbr
-                  ? GdAbbr[gnd as keyof typeof GdAbbr]
-                  : "fm"
+                    ? GdAbbr[gnd as keyof typeof GdAbbr]
+                    : "fm"
               }/${mscLvl}.png` as any,
             };
             return acc;
@@ -95,7 +78,7 @@ export default function BodyTypeMuscleForm() {
               friendlyName: string;
               src: `${typeof imgBasePath}/muscle/${string}.${ImageFormat}`;
             };
-          }
+          },
         );
       })(gender, stKey);
     }, [gender, stKey]),
@@ -105,13 +88,13 @@ export default function BodyTypeMuscleForm() {
         dispatch(
           updatePrompt({
             character: {
-              ...state.character,
+              ...character,
               muscle: value,
             },
-          })
+          }),
         );
       },
-      [dispatch, state.character]
+      [dispatch, character],
     );
   return (
     <ErrorBoundary
@@ -136,7 +119,7 @@ export default function BodyTypeMuscleForm() {
           {muscleOptions &&
             Object.entries(muscleOptions).map(([k, v], i) => {
               const opt = v as OptDict;
-              const isChecked = state.character.muscle === k;
+              const isChecked = muscle === k;
               return (
                 <OptionFigure
                   key={k}
@@ -160,7 +143,7 @@ export default function BodyTypeMuscleForm() {
             })}
         </OptionFieldset>
       </fieldset>
-      <Forms.Result variable={state.character.muscle} />
+      <Forms.Result variable={muscle} />
       {/* * shared result component, consistent with other forms */}
     </ErrorBoundary>
   );

@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FormState } from "../../../lib/declarations/types/redux";
+export const MAX_FORM_ORDER = 93;
 const initialState: FormState = { order: 0 },
   formStrategySlice = createSlice({
     name: "formStrategy",
     initialState,
     reducers: {
       nextForm: (state: FormState): void => {
-        console.log("next form...");
-        state.order += 1;
+        if (state.order < MAX_FORM_ORDER) state.order += 1;
       },
       previousForm: (state: FormState): void => {
         state.order =
@@ -17,7 +17,8 @@ const initialState: FormState = { order: 0 },
         state.order = 0;
       },
       setOrder: (state: FormState, action: PayloadAction<number>): void => {
-        state.order = action?.payload || 0;
+        const v = action?.payload || 0;
+        state.order = Math.max(0, Math.min(v, MAX_FORM_ORDER));
       },
     },
   });

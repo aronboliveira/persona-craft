@@ -1,4 +1,3 @@
-import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../errors/GenericErrorComponent";
 import { FORM_DICT } from "../../lib/states/lang/forms";
@@ -47,7 +46,7 @@ export default function GenderForm() {
             return "sr";
         }
       })(),
-    [state.style]
+    [state.style],
   );
 
   const handleGenderChange = useCallback(
@@ -62,10 +61,10 @@ export default function GenderForm() {
             ...state.character,
             gender: newValue,
           },
-        })
+        }),
       );
     },
-    [dispatch, state.character]
+    [dispatch, state.character],
   );
 
   const genderOptions = useMemo(() => {

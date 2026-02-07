@@ -20,18 +20,16 @@ export class BlobValidator {
         img.style.width = "1px";
         img.style.height = "1px";
         document.body.appendChild(img);
-        /* eslint-disable */
-      } catch (_) {
-        console.log("Exception occurred while loading image:", src);
+      } catch (error) {
+        console.warn("Exception occurred while loading image:", src, error);
         resolve(false);
-        /* eslint-enable */
       }
     });
   }
 
   public static async testImagePath(
     basePath: string,
-    extensions: string[] = ["png", "webp", "jpeg", "jpg"]
+    extensions: string[] = ["png", "webp", "jpeg", "jpg"],
   ): Promise<string | null> {
     for (const ext of extensions) {
       const fullPath = `${basePath}.${ext}`;

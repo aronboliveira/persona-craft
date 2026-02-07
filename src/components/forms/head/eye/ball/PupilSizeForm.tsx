@@ -30,7 +30,7 @@ export default function PupilSizeForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     sizeOptions = useMemo<DeepAnatomicOption<PupilSize>[]>(() => {
-      const basePath = "/imgs/head/pupil-size",
+      const basePath = "/imgs/head/eye/pupil/size",
         labelMap: Record<PupilSize, string> = {
           "very-small": "Very small",
           small: "Small",
@@ -38,11 +38,18 @@ export default function PupilSizeForm(): JSX.Element {
           large: "Large",
           "very-large": "Very large",
         },
+        fileMap: Record<PupilSize, string> = {
+          "very-small": "skt_eyeppl_0_vsm.png",
+          small: "skt_eyeppl_1_sm.png",
+          average: "skt_eyeppl_2_avg.png",
+          large: "skt_eyeppl_3_lg.png",
+          "very-large": "skt_eyeppl_4_vlg.png",
+        },
         uniqueSizes = Array.from(new Set(eyePplSz)) as PupilSize[];
       return uniqueSizes.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handleSizeChange = useCallback<
@@ -57,10 +64,10 @@ export default function PupilSizeForm(): JSX.Element {
                 size: value,
               },
             },
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedSize = state.character.head?.eye?.ball?.pupil?.size as
       | PupilSize

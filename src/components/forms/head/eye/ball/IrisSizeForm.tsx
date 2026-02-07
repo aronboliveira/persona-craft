@@ -30,17 +30,22 @@ export default function IrisSizeForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     sizeOptions = useMemo<DeepAnatomicOption<IrisSize>[]>(() => {
-      const basePath = "/imgs/head/iris-size",
+      const basePath = "/imgs/head/eye/iris",
         labelMap: Record<IrisSize, string> = {
           small: "Small",
           average: "Average",
           large: "Large",
         },
+        fileMap: Record<IrisSize, string> = {
+          small: "skt_eyeir_0_sm.png",
+          average: "skt_eyeir_1_avg.png",
+          large: "skt_eyeir_2_lg.png",
+        },
         uniqueSizes = Array.from(new Set(eyeIrisSz)) as IrisSize[];
       return uniqueSizes.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handleSizeChange = useCallback<
@@ -55,10 +60,10 @@ export default function IrisSizeForm(): JSX.Element {
                 size: value,
               },
             },
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedSize = state.character.head?.eye?.ball?.iris?.size as
       | IrisSize

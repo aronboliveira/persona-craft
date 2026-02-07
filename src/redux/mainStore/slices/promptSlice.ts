@@ -15,6 +15,11 @@ import {
   LowerLip,
   Mouth,
   UpperLip,
+  Nose,
+  Ear,
+  Chin,
+  Skin,
+  BodyModifications,
 } from "../../../lib/declarations/interfaces/anatomy";
 import {
   defaultBrow,
@@ -31,6 +36,11 @@ import {
   defaultUpperLip,
   defaultLipCupidBow,
   defaultLowerLip,
+  defaultNose,
+  defaultEar,
+  defaultChin,
+  defaultSkin,
+  defaultBodyModifications,
 } from "../../data/defaults";
 import { DeepPartial } from "../../../lib/declarations/types/utils";
 import { CharacterBuilder } from "../../data/classes/facades/CharacterBuilder";
@@ -54,7 +64,7 @@ const promptSlice = createSlice({
   name: "prompt",
   initialState,
   reducers: {
-    updatePrompt: (s: any, a: PayloadAction<UpdateFields>): void => {
+    updatePrompt: (s: PromptState, a: PayloadAction<UpdateFields>): void => {
       Object.assign(s, a.payload);
       s.updatedAt = Date.now();
     },
@@ -65,7 +75,7 @@ const promptSlice = createSlice({
     updateHair(s: PromptState, a: PayloadAction<DeepPartial<Hair>>): void {
       const hair = CharacterBuilder.mergeHair(
         CharacterValidator.ensureHair(s),
-        a.payload
+        a.payload,
       );
       s.character.hair = hair;
       s.updatedAt = Date.now();
@@ -77,7 +87,7 @@ const promptSlice = createSlice({
     updateEye(s: PromptState, a: PayloadAction<DeepPartial<Eye>>): void {
       const eye = CharacterBuilder.mergeEye(
         CharacterValidator.ensureEye(s) as Eye,
-        a.payload
+        a.payload,
       );
       if (
         eye.brow?.slit &&
@@ -98,7 +108,7 @@ const promptSlice = createSlice({
       const brow =
         CharacterBuilder.mergeBrow(
           CharacterValidator.ensureBrow(s),
-          a.payload
+          a.payload,
         ) || ObjectHelper.deepCopyObj(defaultBrow);
       if (
         brow.slit &&
@@ -111,17 +121,17 @@ const promptSlice = createSlice({
     },
     resetBrow(s: PromptState): void {
       s.character.head.eye.brow = ObjectHelper.deepCopyObj(
-        defaultBrow
+        defaultBrow,
       ) as Eyebrow;
       s.updatedAt = Date.now();
     },
     updateEyeShape(
       s: PromptState,
-      a: PayloadAction<DeepPartial<EyeShape>>
+      a: PayloadAction<DeepPartial<EyeShape>>,
     ): void {
       const shape = CharacterBuilder.mergeEyeShape(
         CharacterValidator.ensureEyeShape(s),
-        a.payload
+        a.payload,
       );
       if (shape.lid?.epicanthicFold === "none")
         shape.lid.epicanthicFoldVariation = "none";
@@ -130,14 +140,14 @@ const promptSlice = createSlice({
     },
     resetEyeShape(s: PromptState): void {
       s.character.head.eye.shape = ObjectHelper.deepCopyObj(
-        defaultEye.shape
+        defaultEye.shape,
       ) as EyeShape;
       s.updatedAt = Date.now();
     },
     updateEyeLid(s: PromptState, a: PayloadAction<DeepPartial<EyeLid>>): void {
       const lid = CharacterBuilder.mergeEyeLid(
         CharacterValidator.ensureEyeLid(s),
-        a.payload
+        a.payload,
       );
       if (lid.epicanthicFold === "none") lid.epicanthicFoldVariation = "none";
       if (s.character.head.eye.shape) s.character.head.eye.shape.lid = lid;
@@ -146,33 +156,33 @@ const promptSlice = createSlice({
     resetEyeLid(s: PromptState): void {
       if (!s?.character?.head?.eye?.shape)
         s.character.head.eye.shape = ObjectHelper.deepCopyObj(
-          defaultEye.shape
+          defaultEye.shape,
         ) as EyeShape;
       s.character.head.eye.shape.lid = ObjectHelper.deepCopyObj(
-        defaultEyeLid
+        defaultEyeLid,
       ) as EyeLid;
       s.updatedAt = Date.now();
     },
     updateEyeBag(s: PromptState, a: PayloadAction<DeepPartial<EyeBag>>): void {
       s.character.head.eye.bag = CharacterBuilder.mergeEyeBag(
         CharacterValidator.ensureEyeBag(s),
-        a.payload
+        a.payload,
       );
       s.updatedAt = Date.now();
     },
     resetEyeBag(s: PromptState): void {
       s.character.head.eye.bag = ObjectHelper.deepCopyObj(
-        defaultEyeBag
+        defaultEyeBag,
       ) as EyeBag;
       s.updatedAt = Date.now();
     },
     updateEyelash(
       s: PromptState,
-      a: PayloadAction<DeepPartial<EyeLash>>
+      a: PayloadAction<DeepPartial<EyeLash>>,
     ): void {
       s.character.head.eye.lashes = CharacterBuilder.mergeEyeLash(
         CharacterValidator.ensureEyeLash(s),
-        a.payload
+        a.payload,
       );
       s.updatedAt = Date.now();
     },
@@ -182,25 +192,25 @@ const promptSlice = createSlice({
     },
     updateForehead(
       s: PromptState,
-      a: PayloadAction<DeepPartial<Forehead>>
+      a: PayloadAction<DeepPartial<Forehead>>,
     ): void {
       const forehead = CharacterBuilder.mergeForehead(
         CharacterValidator.ensureForehead(s),
-        a.payload
+        a.payload,
       );
       s.character.head.forehead = forehead;
       s.updatedAt = Date.now();
     },
     resetForehead(s: PromptState): void {
       s.character.head.forehead = ObjectHelper.deepCopyObj(
-        defaultForehead
+        defaultForehead,
       ) as Forehead;
       s.updatedAt = Date.now();
     },
     updateMouth(s: PromptState, a: PayloadAction<DeepPartial<Mouth>>): void {
       const mouth = CharacterBuilder.mergeMouth(
         CharacterValidator.ensureMouth(s),
-        a.payload
+        a.payload,
       );
       s.character.head.mouth = mouth;
       s.updatedAt = Date.now();
@@ -212,94 +222,164 @@ const promptSlice = createSlice({
     updateLip(s: PromptState, a: PayloadAction<DeepPartial<Lips>>): void {
       const lip = CharacterBuilder.mergeLips(
         CharacterValidator.ensureLips(s),
-        a.payload
+        a.payload,
       );
       s.character.head.mouth.lips = lip;
       s.updatedAt = Date.now();
     },
     resetLip(s: PromptState): void {
       s.character.head.mouth.lips = ObjectHelper.deepCopyObj(
-        defaultLips
+        defaultLips,
       ) as Lips;
       s.updatedAt = Date.now();
     },
     updateUpperLip(
       s: PromptState,
-      a: PayloadAction<DeepPartial<UpperLip>>
+      a: PayloadAction<DeepPartial<UpperLip>>,
     ): void {
       const upperLip = CharacterBuilder.merge(
         defaultUpperLip,
         CharacterValidator.ensureUpperLip(s),
-        a.payload
+        a.payload,
       );
       s.character.head.mouth.lips.upper = ObjectHelper.deepCopyObj(
-        upperLip
+        upperLip,
       ) as UpperLip;
       s.updatedAt = Date.now();
     },
     resetUpperLip(s: PromptState): void {
       s.character.head.mouth.lips.upper = ObjectHelper.deepCopyObj(
-        defaultUpperLip
+        defaultUpperLip,
       ) as UpperLip;
       s.updatedAt = Date.now();
     },
     updateLowerLip(
       s: PromptState,
-      a: PayloadAction<DeepPartial<LowerLip>>
+      a: PayloadAction<DeepPartial<LowerLip>>,
     ): void {
       const lowerLip = CharacterBuilder.merge(
         defaultLips.lower,
         CharacterValidator.ensureLowerLip(s),
-        a.payload
+        a.payload,
       );
       s.character.head.mouth.lips.lower = ObjectHelper.deepCopyObj(
-        lowerLip
+        lowerLip,
       ) as LowerLip;
       s.updatedAt = Date.now();
     },
     resetLowerLip(s: PromptState): void {
       s.character.head.mouth.lips.lower = ObjectHelper.deepCopyObj(
-        defaultLowerLip
+        defaultLowerLip,
       ) as LowerLip;
       s.updatedAt = Date.now();
     },
     updateCupidBow(
       s: PromptState,
-      a: PayloadAction<DeepPartial<CupidBow>>
+      a: PayloadAction<DeepPartial<CupidBow>>,
     ): void {
       const cupidBow = CharacterBuilder.merge(
         defaultLipCupidBow,
         CharacterValidator.ensureCupidBow(s),
-        a.payload
+        a.payload,
       );
       s.character.head.mouth.lips.upper.cupidBow = ObjectHelper.deepCopyObj(
-        cupidBow
+        cupidBow,
       ) as CupidBow;
       s.updatedAt = Date.now();
     },
     resetCupidBow(s: PromptState): void {
       s.character.head.mouth.lips.upper.cupidBow = ObjectHelper.deepCopyObj(
-        defaultLipCupidBow
+        defaultLipCupidBow,
       ) as CupidBow;
       s.updatedAt = Date.now();
     },
     updateLipTubercule(
       s: PromptState,
-      a: PayloadAction<DeepPartial<LipTubercule>>
+      a: PayloadAction<DeepPartial<LipTubercule>>,
     ): void {
       const lipTubercule = CharacterBuilder.mergeLipTubercule(
         CharacterValidator.ensureLipTubercule(s),
-        a.payload
+        a.payload,
       );
       s.character.head.mouth.lips.upper.tubercule = ObjectHelper.deepCopyObj(
-        lipTubercule
+        lipTubercule,
       ) as LipTubercule;
       s.updatedAt = Date.now();
     },
     resetLipTubercule(s: PromptState): void {
       s.character.head.mouth.lips.upper.tubercule = ObjectHelper.deepCopyObj(
-        defaultLipTubercule
+        defaultLipTubercule,
       ) as LipTubercule;
+      s.updatedAt = Date.now();
+    },
+    // ─── Nose ───────────────────────────────────────────
+    updateNose(s: PromptState, a: PayloadAction<DeepPartial<Nose>>): void {
+      const nose = CharacterBuilder.mergeNose(
+        CharacterValidator.ensureNose(s),
+        a.payload,
+      );
+      s.character.head.nose = nose;
+      s.updatedAt = Date.now();
+    },
+    resetNose(s: PromptState): void {
+      s.character.head.nose = ObjectHelper.deepCopyObj(defaultNose) as Nose;
+      s.updatedAt = Date.now();
+    },
+    // ─── Ear ────────────────────────────────────────────
+    updateEar(s: PromptState, a: PayloadAction<DeepPartial<Ear>>): void {
+      const ear = CharacterBuilder.mergeEar(
+        CharacterValidator.ensureEar(s),
+        a.payload,
+      );
+      s.character.head.ear = ear;
+      s.updatedAt = Date.now();
+    },
+    resetEar(s: PromptState): void {
+      s.character.head.ear = ObjectHelper.deepCopyObj(defaultEar) as Ear;
+      s.updatedAt = Date.now();
+    },
+    // ─── Chin ───────────────────────────────────────────
+    updateChin(s: PromptState, a: PayloadAction<DeepPartial<Chin>>): void {
+      const chin = CharacterBuilder.mergeChin(
+        CharacterValidator.ensureChin(s),
+        a.payload,
+      );
+      s.character.head.chin = chin;
+      s.updatedAt = Date.now();
+    },
+    resetChin(s: PromptState): void {
+      s.character.head.chin = ObjectHelper.deepCopyObj(defaultChin) as Chin;
+      s.updatedAt = Date.now();
+    },
+    // ─── Skin / Ethnicity ──────────────────────────────
+    updateSkin(s: PromptState, a: PayloadAction<DeepPartial<Skin>>): void {
+      const skin = CharacterBuilder.mergeSkin(
+        CharacterValidator.ensureSkin(s),
+        a.payload,
+      );
+      s.character.skin = skin;
+      s.updatedAt = Date.now();
+    },
+    resetSkin(s: PromptState): void {
+      s.character.skin = ObjectHelper.deepCopyObj(defaultSkin) as Skin;
+      s.updatedAt = Date.now();
+    },
+    // ─── Body Modifications ────────────────────────────
+    updateBodyModifications(
+      s: PromptState,
+      a: PayloadAction<DeepPartial<BodyModifications>>,
+    ): void {
+      const mods = CharacterBuilder.mergeBodyModifications(
+        CharacterValidator.ensureBodyModifications(s),
+        a.payload,
+      );
+      s.character.bodyModifications = mods;
+      s.updatedAt = Date.now();
+    },
+    resetBodyModifications(s: PromptState): void {
+      s.character.bodyModifications = ObjectHelper.deepCopyObj(
+        defaultBodyModifications,
+      ) as BodyModifications;
       s.updatedAt = Date.now();
     },
   },
@@ -336,5 +416,15 @@ export const {
   resetCupidBow,
   updateLipTubercule,
   resetLipTubercule,
+  updateNose,
+  resetNose,
+  updateEar,
+  resetEar,
+  updateChin,
+  resetChin,
+  updateSkin,
+  resetSkin,
+  updateBodyModifications,
+  resetBodyModifications,
 } = promptSlice.actions;
 export default promptSlice.reducer;

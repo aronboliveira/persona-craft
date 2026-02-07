@@ -92,7 +92,7 @@ export default function SideSwipe({
         setIsTracking,
         deviceInfo.isMobile,
         deviceInfo.isTablet,
-      ]
+      ],
     ),
     onTouchMove = useCallback<(e: RTouchEvent<NHtEl>) => void>(
       (e: RTouchEvent<NHtEl>) => {
@@ -129,7 +129,7 @@ export default function SideSwipe({
         coords.y,
         isTracking,
         setIsTracking,
-      ]
+      ],
     ),
     onTouchEnd = useCallback<() => void>(() => {
       activeSwipe.current = false;
@@ -163,7 +163,7 @@ export default function SideSwipe({
         },
         "& .MuiSvgIcon-root": { fontSize: 28 },
       }),
-      []
+      [],
     ),
     leftBtn = useMemo<
       Record<
@@ -211,19 +211,18 @@ export default function SideSwipe({
         parsed.swpTipLocalKey = "1";
         localStorage.setItem(
           tipLocalKeys.swpTipLocalKey,
-          JSON.stringify(parsed)
+          JSON.stringify(parsed),
         );
       } catch (e) {
         console.error("Error updating localStorage item:", e);
       }
     },
-    handleCloseTip = useCallback<(_?: any, reason?: string) => void>(
-      (_?: any, reason?: string): void => {
-        if (reason === "clickaway") return;
-        setTipOpen(false);
-      },
-      []
-    );
+    handleCloseTip = useCallback<
+      (_?: React.SyntheticEvent | Event, reason?: string) => void
+    >((_?: React.SyntheticEvent | Event, reason?: string): void => {
+      if (reason === "clickaway") return;
+      setTipOpen(false);
+    }, []);
   useEffect(() => {
     if (
       !enabled ||
@@ -231,10 +230,10 @@ export default function SideSwipe({
       typeof window === "undefined"
     )
       return;
-    const eventRecord: Record<string, (...args: any[]) => any> = {
-      touchstart: onTouchStart,
-      touchmove: onTouchMove,
-      touchend: onTouchEnd,
+    const eventRecord: Record<string, EventListener> = {
+      touchstart: onTouchStart as EventListener,
+      touchmove: onTouchMove as EventListener,
+      touchend: onTouchEnd as EventListener,
     };
     if (
       !["1", "true"].includes(document.body?.getAttribute(dataSwipeBind) || "")
@@ -245,7 +244,7 @@ export default function SideSwipe({
           cb as EventListener,
           {
             passive: true,
-          }
+          },
         );
       document.body?.setAttribute(dataSwipeBind, "1");
     }
@@ -253,7 +252,7 @@ export default function SideSwipe({
       for (const [ev, cb] of Object.entries(eventRecord))
         window.document?.documentElement?.removeEventListener(
           ev,
-          cb as EventListener
+          cb as EventListener,
         );
     };
   }, [
@@ -273,7 +272,7 @@ export default function SideSwipe({
         parsed.swpTipSessionKey === "1" && setBlocked(true);
         sessionStorage.setItem(
           tipSessionKeys.swpTipSessionKey,
-          JSON.stringify(parsed)
+          JSON.stringify(parsed),
         );
       }
     } catch (e) {
@@ -357,7 +356,7 @@ export default function SideSwipe({
                   Prev).
                 </Alert>
               </Snackbar>,
-              portals.tip || document.body
+              portals.tip || document.body,
             )
           )}
           {createPortal(
@@ -376,7 +375,7 @@ export default function SideSwipe({
             >
               {leftButton}
             </ErrorBoundary>,
-            portals.prev || document.body
+            portals.prev || document.body,
           )}
           {createPortal(
             <ErrorBoundary
@@ -394,7 +393,7 @@ export default function SideSwipe({
             >
               {rightButton}
             </ErrorBoundary>,
-            portals.next || document.body
+            portals.next || document.body,
           )}
         </>
       )}

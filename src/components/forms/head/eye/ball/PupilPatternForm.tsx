@@ -30,7 +30,7 @@ export default function PupilPatternForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     patternOptions = useMemo<DeepAnatomicOption<PupilPattern>[]>(() => {
-      const basePath = "/imgs/head/pupil-pattern",
+      const basePath = "/imgs/head/eye/pupil/shape",
         labelMap: Record<PupilPattern, string> = {
           round: "Round",
           "vertical-slit": "Vertical slit",
@@ -41,11 +41,21 @@ export default function PupilPatternForm(): JSX.Element {
           star: "Star",
           cross: "Cross",
         },
+        fileMap: Record<PupilPattern, string> = {
+          round: "skt_eyeball_ppl_shp_0_rd.png",
+          "vertical-slit": "skt_eyeball_ppl_shp_1_fln.png",
+          "horizontal-slit": "skt_eyeball_ppl_shp_3_hrz.png",
+          heart: "skt_eyeball_ppl_shp_2_rpt.png",
+          square: "skt_eyeball_ppl_shp_4_hrzslt.png",
+          diamond: "skt_eyeball_ppl_shp_5_ccv.png",
+          star: "skt_eyeball_ppl_shp_6_cvx.png",
+          cross: "skt_eyeball_ppl_shp_7_w.png",
+        },
         uniquePatterns = Array.from(new Set(eyePplPtn)) as PupilPattern[];
       return uniquePatterns.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handlePatternChange = useCallback<
@@ -60,10 +70,10 @@ export default function PupilPatternForm(): JSX.Element {
                 pattern: value,
               },
             },
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedPattern = state.character.head?.eye?.ball?.pupil?.pattern as
       | PupilPattern

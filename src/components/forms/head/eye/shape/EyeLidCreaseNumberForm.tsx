@@ -30,18 +30,24 @@ export default function EyeLidCreaseNumberForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     creaseOptions = useMemo<DeepAnatomicOption<EyeLidCreaseNumber>[]>(() => {
-      const basePath = "/imgs/head/eyelid-crease-number",
+      const basePath = "/imgs/head/eye/lid/number",
         labelMap: Record<EyeLidCreaseNumber, string> = {
           monolid: "Monolid",
           doublelid: "Double lid",
           triplelid: "Triple lid",
           quadruplelid: "Quadruple lid",
         },
+        fileMap: Record<EyeLidCreaseNumber, string> = {
+          monolid: "skt_eye_lid_1.png",
+          doublelid: "skt_eye_lid_2.png",
+          triplelid: "skt_eye_lid_3.png",
+          quadruplelid: "skt_eye_lid_4.png",
+        },
         uniqueCreases = Array.from(new Set(eyeLidCrsN)) as EyeLidCreaseNumber[];
       return uniqueCreases.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handleCreaseChange = useCallback<
@@ -52,10 +58,10 @@ export default function EyeLidCreaseNumberForm(): JSX.Element {
         dispatch(
           updateEyeLid({
             creaseNumber: value,
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedCrease = state.character.head?.eye?.shape?.lid?.creaseNumber as
       | EyeLidCreaseNumber

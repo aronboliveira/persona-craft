@@ -32,7 +32,8 @@ export default function EyebrowGrowthDirectionForm(): JSX.Element {
     directionOptions = useMemo<
       DeepAnatomicOption<EyebrowGrowthDirection>[]
     >(() => {
-      const basePath = "/imgs/head/eyebrow-growth-direction",
+      // ! MISSING IMAGE - using default placeholder
+      const basePath = "public/imgs/dall-e-cuca.jpeg",
         labelMap: Record<EyebrowGrowthDirection, string> = {
           upward: "Upward",
           "upward-lateral": "Upward-lateral",
@@ -42,12 +43,12 @@ export default function EyebrowGrowthDirectionForm(): JSX.Element {
           radial: "Radial",
         },
         uniqueDirections = Array.from(
-          new Set(eyeBrwGrwtDir)
+          new Set(eyeBrwGrwtDir),
         ) as EyebrowGrowthDirection[];
       return uniqueDirections.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: basePath,
       }));
     }, []),
     handleDirectionChange = useCallback<
@@ -60,10 +61,10 @@ export default function EyebrowGrowthDirectionForm(): JSX.Element {
             growth: {
               direction: value,
             },
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedDirection = state.character.head?.eye?.brow?.growth?.direction as
       | EyebrowGrowthDirection

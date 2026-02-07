@@ -1,12 +1,12 @@
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 
 // Mock import.meta for Vite
-Object.defineProperty(globalThis, 'import', {
+Object.defineProperty(globalThis, "import", {
   value: {
     meta: {
       env: {
         DEV: true,
-        VITE_API_URL: 'http://localhost:8000',
+        VITE_API_URL: "http://localhost:8000",
       },
     },
   },
@@ -14,7 +14,7 @@ Object.defineProperty(globalThis, 'import', {
 });
 
 // Mock window.matchMedia
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: jest.fn().mockImplementation(query => ({
     matches: false,

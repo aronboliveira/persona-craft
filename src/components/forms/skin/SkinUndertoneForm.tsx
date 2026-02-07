@@ -1,4 +1,3 @@
-import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../../errors/GenericErrorComponent";
 import { useCallback, useMemo, RefObject, ChangeEvent, JSX } from "react";
@@ -7,7 +6,6 @@ import { SkinUndertone } from "../../../lib/declarations/types/anatomy";
 import { updateSkin } from "../../../redux/mainStore/slices/promptSlice";
 import { CLASSES } from "../../../lib/data/classes";
 import { useAppDispatch, useAppSelector } from "../../../redux/mainStore/hooks";
-import { RootState } from "../../../redux/mainStore";
 import { useOptFormCtx } from "../../../lib/hooks/contexts/useOptFormCtx";
 import OptionFieldset from "../../bloc/OptionFieldset";
 import OptionFigure from "../../bloc/OptionFigure";
@@ -20,8 +18,7 @@ export default function SkinUndertoneForm(): JSX.Element {
     objectFit: "contain",
   });
   const dispatch = useAppDispatch();
-  const rootState = useAppSelector((s: RootState) => s);
-  const skin = skinSelector(rootState);
+  const skin = useAppSelector(skinSelector);
 
   const options = useMemo(
     () =>

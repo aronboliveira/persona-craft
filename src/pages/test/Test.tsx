@@ -25,16 +25,20 @@ export default function Test(): JSX.Element {
         height={200}
         style={{ borderRadius: "50%" }}
       ></img>
-      <canvas>
+      <svg
+        width="100"
+        height="100"
+        style={{ display: "block", margin: "1rem auto" }}
+      >
         <circle
           cx="50"
           cy="50"
           r="40"
           stroke="red"
-          strokeWidth="3"
+          strokeWidth={3}
           fill="red"
         />
-      </canvas>
+      </svg>
       <Link
         to={"/main"}
         style={{

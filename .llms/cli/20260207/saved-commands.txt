@@ -1,0 +1,25 @@
+# Quick Reference - Analysis Commands
+# Session: PROMPT-CREATOR-APP-1
+# Date: 2026-02-07
+
+# View all created documentation
+find .llms -type f -name "*.md" -o -name "*.json" -o -name "*.sh" | sort
+
+# Count issues
+grep -c "any" src/**/*.ts src/**/*.tsx
+grep -c "TODO" src/**/*.ts src/**/*.tsx
+grep -c "eslint-disable" src/**/*.ts src/**/*.tsx
+
+# View forms
+find src/components/forms -name "*Form*.tsx" | wc -l
+
+# Open main documentation
+cat .llms/notes/non-structured/20260207/EXECUTIVE-SUMMARY.md
+cat .llms/notes/non-structured/20260207/README.md
+
+# View structured data
+cat .llms/notes/structured/20260207/project-inventory.json | jq '.'
+cat .llms/notes/structured/20260207/issues-and-refactoring.json | jq '.'
+
+# Run full analysis
+bash .llms/cli/20260207/analysis-commands.sh

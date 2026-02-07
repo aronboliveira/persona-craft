@@ -47,7 +47,39 @@ export type StorySettingStyleAbbr =
   | "spod";
 export type Gender = "female" | "masculine" | "nonBinary";
 export type GenderAbbr = "fm" | "m" | "nb";
-export type QuestionId = "stl" | "gd" | "msc" | "bft" | "hgt";
+export type QuestionId =
+  | "stl"
+  | "gd"
+  | "msc"
+  | "bft"
+  | "hgt"
+  | "eth"
+  | "skt"
+  | "sku"
+  | "nsShp"
+  | "nsBrW"
+  | "nsBrH"
+  | "nsNtSz"
+  | "nsNtFl"
+  | "nsLng"
+  | "nsTpAng"
+  | "erSz"
+  | "erShp"
+  | "erLb"
+  | "erAng"
+  | "erWd"
+  | "cnPrj"
+  | "cnPrg"
+  | "cnWd"
+  | "cnHgt"
+  | "cnClf"
+  | "ttStl"
+  | "ttPlc"
+  | "ttCov"
+  | "prcTp"
+  | "scrTp"
+  | "scrPlc"
+  | "scrPrm";
 export type Symmetry = "asymmetrical" | "symmetrical";
 export type Side = "left" | "right" | "both";
 export type StringStyleKeys = {

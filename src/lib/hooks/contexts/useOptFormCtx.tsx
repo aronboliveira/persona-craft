@@ -14,29 +14,34 @@ export const useOptFormCtx = ({
   imgParams?: UseOptImgListenersProps;
   formParams?: Parameters<typeof useFormCtxStore>;
   objectFit?: "cover" | "contain" | "scale-down";
-}): ReturnType<typeof useLayoutCtx> &
-  ReturnType<typeof useFormCtxStore> &
-  ReturnType<typeof useOptImgsListeners> => {
-  const { layoutCtx, formRef } = useLayoutCtx(...layoutParams),
-    validFormParams: any[] = !Array.isArray(formParams) ? [] : formParams,
-    formCtx = useFormCtxStore(...(validFormParams as [])),
-    optImgs = useOptImgsListeners(imgParams ?? { globalNumbersAlso: true });
+}) => {
+  const layoutHook = useLayoutCtx(...layoutParams),
+    { layoutCtx, formRef } = layoutHook,
+    validFormParams: Parameters<typeof useFormCtxStore> = !Array.isArray(
+      formParams,
+    )
+      ? []
+      : formParams,
+    formCtx = useFormCtxStore(...(validFormParams as []));
+  // Side effect hook for keyboard listeners
+  useOptImgsListeners(imgParams ?? { globalNumbersAlso: true });
   useEffect(() => {
     if (!window?.document) return;
     formRef.current ??= document.querySelector(
-      '[id$="Form"]:has(.option-fieldset)'
+      '[id$="Form"]:has(.option-fieldset)',
     );
     if (!(formRef.current instanceof HTMLElement)) return;
     formRef.current
       .querySelectorAll(".option-figure-img")
-      .forEach((img: HTMLImageElement) => {
-        (img as HTMLImageElement).style.objectFit = objectFit;
+      .forEach((img: Element) => {
+        if (img instanceof HTMLImageElement) {
+          img.style.objectFit = objectFit;
+        }
       });
   }, [formRef, objectFit]);
   return {
-    ...layoutCtx,
+    layoutCtx,
     formRef,
-    ...(formCtx ?? ({} as any)),
-    ...(optImgs ?? ({} as any)),
+    ...formCtx,
   };
 };

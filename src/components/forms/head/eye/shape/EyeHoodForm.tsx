@@ -30,17 +30,22 @@ export default function EyeHoodForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     hoodOptions = useMemo<DeepAnatomicOption<EyeHood>[]>(() => {
-      const basePath = "/imgs/head/eye-hood",
+      const basePath = "/imgs/head/eye/ball/hood",
         labelMap: Record<EyeHood, string> = {
           hooded: "Hooded",
           "partially-hooded": "Partially hooded",
           unhooded: "Unhooded",
         },
+        fileMap: Record<EyeHood, string> = {
+          hooded: "skt_eye_hood_f.png",
+          "partially-hooded": "skt_eye_hood_p.png",
+          unhooded: "skt_eye_hood_n.png",
+        },
         uniqueHoods = Array.from(new Set(eyeHd)) as EyeHood[];
       return uniqueHoods.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handleHoodChange = useCallback<
@@ -51,10 +56,10 @@ export default function EyeHoodForm(): JSX.Element {
         dispatch(
           updateEyeShape({
             hood: value,
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedHood = state.character.head?.eye?.shape?.hood as
       | EyeHood

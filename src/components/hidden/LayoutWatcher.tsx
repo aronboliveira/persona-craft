@@ -4,8 +4,8 @@ export default function LayoutWatcher({
   argsToTrack = [],
   cb = () => {},
 }: {
-  argsToTrack?: any[];
-  cb?: (...args: any[]) => any;
+  argsToTrack?: unknown[];
+  cb?: () => void;
 }) {
   const dataLayoutTracking = useRef<string>("data-layout_tracking"),
     intervRef = useRef<number | NodeJS.Timeout | null>(null);
@@ -42,7 +42,7 @@ export default function LayoutWatcher({
             Return to Home
           </button>
         </fieldset>
-      </div>
+      </div>,
     );
   };
   useLayoutEffect(() => {

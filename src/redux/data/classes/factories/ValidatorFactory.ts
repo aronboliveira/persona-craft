@@ -7,12 +7,12 @@ import { CharacterValidator } from "../facades/CharacterValidator";
 export class ValidatorFactory {
   public static createValidator<T>(
     requiredFields: {
-      [K in keyof T]: {} extends Pick<T, K> ? never : K;
+      [K in keyof T]: object extends Pick<T, K> ? never : K;
     }[keyof T][],
-    defaultValue: T
+    defaultValue: T,
   ): AnatomyValidator {
     return {
-      is(obj: any): obj is T {
+      is(obj: unknown): obj is T {
         return (
           typeof obj === "object" &&
           obj !== null &&
@@ -20,16 +20,20 @@ export class ValidatorFactory {
         );
       },
       ensure<S extends StateWithCharacter>(s: S, path: string[]): Draft<T> {
-        let current: any = s.character;
+        let current = s.character as unknown as Record<string, unknown>;
         for (let i = 0; i < path.length - 1; i++) {
           const segment = path[i];
           const ensureMethod = `ensure${segment
             .charAt(0)
             .toUpperCase()}${segment.slice(1)}`;
-          if (typeof (CharacterValidator as any)[ensureMethod] === "function")
-            (CharacterValidator as any)[ensureMethod](s);
+          const validator = CharacterValidator as unknown as Record<
+            string,
+            unknown
+          >;
+          if (typeof validator[ensureMethod] === "function")
+            (validator[ensureMethod] as (s: S) => void)(s);
           else if (!current?.[segment]) current[segment] = {};
-          current = current[segment];
+          current = current[segment] as Record<string, unknown>;
         }
         const lastKey = path[path.length - 1];
         if (!this.is(current?.[lastKey]))

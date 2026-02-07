@@ -30,17 +30,22 @@ export default function EyeSpacingForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     spacingOptions = useMemo<DeepAnatomicOption<EyeSpacing>[]>(() => {
-      const basePath = "/imgs/head/eye-spacing",
+      const basePath = "/imgs/head/eye/ball/spacing",
         labelMap: Record<EyeSpacing, string> = {
           "close-set": "Close-set",
           "average-distanced": "Average-distanced",
           "wide-set": "Wide-set",
         },
+        fileMap: Record<EyeSpacing, string> = {
+          "close-set": "skt_eye_spacing_0_close.png",
+          "average-distanced": "skt_eye_spacing_1_avg.png",
+          "wide-set": "skt_eye_spacing_2_wide.png",
+        },
         uniqueSpacings = Array.from(new Set(eyeSpc)) as EyeSpacing[];
       return uniqueSpacings.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handleSpacingChange = useCallback<
@@ -51,10 +56,10 @@ export default function EyeSpacingForm(): JSX.Element {
         dispatch(
           updateEyeShape({
             spacing: value,
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedSpacing = state.character.head?.eye?.shape?.spacing as
       | EyeSpacing

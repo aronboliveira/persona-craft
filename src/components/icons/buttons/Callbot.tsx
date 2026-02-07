@@ -43,7 +43,6 @@ export default function Callbot({
       type="button"
       className={`icon-guidance${className ? ` ${className}` : ""}`}
       onClick={() => {
-        console.log("calling the callback... " + callback.name, callbackArgs);
         callback(...callbackArgs);
       }}
     >

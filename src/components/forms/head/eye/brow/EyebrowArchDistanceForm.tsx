@@ -29,20 +29,26 @@ export default function EyebrowArchDistanceForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     distanceOptions = useMemo<DeepAnatomicOption<EyebrowArchDistance>[]>(() => {
-      const basePath = "/imgs/head/eyebrow-arch-distance",
+      const basePath = "/imgs/head/brow/arc/dist",
         labelMap: Record<EyebrowArchDistance, string> = {
           even: "Even",
           "almost-even": "Almost-even",
           uneven: "Uneven",
           "extremely-uneven": "Extremely uneven",
         },
+        fileMap: Record<EyebrowArchDistance, string> = {
+          even: "skt_eyebrw_arcdt_0_ev.png",
+          "almost-even": "skt_eyebrw_arcdt_1_0_aev.png",
+          uneven: "skt_eyebrw_arcdt_2_0_uev.png",
+          "extremely-uneven": "skt_eyebrw_arcdt_3_xuev.png",
+        },
         uniqueDistances = Array.from(
-          new Set(eyeBrwTipsDst)
+          new Set(eyeBrwTipsDst),
         ) as EyebrowArchDistance[];
       return uniqueDistances.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handleDistanceChange = useCallback<
@@ -55,10 +61,10 @@ export default function EyebrowArchDistanceForm(): JSX.Element {
             arch: {
               distance: value,
             },
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedDistance = state.character.head?.eye?.brow?.arch?.distance as
       | EyebrowArchDistance

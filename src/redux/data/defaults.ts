@@ -20,6 +20,16 @@ import {
   LowerLip,
   MouthCommissure,
   MouthDimple,
+  Nose,
+  NoseBridge,
+  NoseNostril,
+  Ear,
+  Chin,
+  Skin,
+  Tattoo,
+  Piercing,
+  Scar,
+  BodyModifications,
 } from "../../lib/declarations/interfaces/anatomy";
 import { Character } from "../../lib/declarations/interfaces/utils";
 import { EyebrowSlitNumber } from "../../lib/declarations/types/anatomy";
@@ -152,10 +162,72 @@ export const defaultMouth: Readonly<Mouth> = Object.freeze({
   commissure: defaultMouthCommissure as MouthCommissure,
   dimple: defaultMouthDimple as MouthDimple,
 }) satisfies Mouth;
+// ─── Nose defaults ──────────────────────────────────────
+export const defaultNoseBridge: Readonly<NoseBridge> = Object.freeze({
+  width: "average",
+  height: "average",
+}) satisfies NoseBridge;
+export const defaultNoseNostril: Readonly<NoseNostril> = Object.freeze({
+  size: "average",
+  flare: "moderate",
+}) satisfies NoseNostril;
+export const defaultNose: Readonly<Nose> = Object.freeze({
+  shape: "button",
+  bridge: defaultNoseBridge as NoseBridge,
+  nostril: defaultNoseNostril as NoseNostril,
+  length: "average",
+  tipAngle: "neutral",
+}) satisfies Nose;
+// ─── Ear defaults ───────────────────────────────────────
+export const defaultEar: Readonly<Ear> = Object.freeze({
+  size: "average",
+  shape: "oval",
+  lobe: "free",
+  angle: "flat",
+  width: "average",
+  symmetric: true,
+}) satisfies Ear;
+// ─── Chin defaults ──────────────────────────────────────
+export const defaultChin: Readonly<Chin> = Object.freeze({
+  projection: "normal",
+  prognathism: "absent",
+  width: "medium",
+  height: "average",
+  cleft: "absent",
+}) satisfies Chin;
+// ─── Skin defaults ──────────────────────────────────────
+export const defaultSkin: Readonly<Skin> = Object.freeze({
+  ethnicity: "european",
+  tone: "medium",
+  undertone: "neutral",
+}) satisfies Skin;
+// ─── Body modification defaults ─────────────────────────
+export const defaultTattoo: Readonly<Tattoo> = Object.freeze({
+  style: "none",
+  placement: "none",
+  coverage: "none",
+}) satisfies Tattoo;
+export const defaultPiercing: Readonly<Piercing> = Object.freeze({
+  type: "none",
+}) satisfies Piercing;
+export const defaultScar: Readonly<Scar> = Object.freeze({
+  type: "none",
+  placement: "none",
+  prominence: "none",
+}) satisfies Scar;
+export const defaultBodyModifications: Readonly<BodyModifications> =
+  Object.freeze({
+    tattoo: defaultTattoo as Tattoo,
+    piercing: defaultPiercing as Piercing,
+    scar: defaultScar as Scar,
+  }) satisfies BodyModifications;
 export const defaultHead: Readonly<Head> = Object.freeze({
   forehead: defaultForehead as Forehead,
   eye: defaultEye as Eye,
   mouth: defaultMouth as Mouth,
+  nose: defaultNose as Nose,
+  ear: defaultEar as Ear,
+  chin: defaultChin as Chin,
 }) satisfies Head;
 export const defaultCharacter: Readonly<Character> = Object.freeze({
   gender: "female",
@@ -165,4 +237,6 @@ export const defaultCharacter: Readonly<Character> = Object.freeze({
   muscle: "average",
   hair: defaultHair as Hair,
   head: defaultHead as Head,
+  skin: defaultSkin as Skin,
+  bodyModifications: defaultBodyModifications as BodyModifications,
 }) satisfies Character;

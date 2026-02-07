@@ -1,4 +1,3 @@
-import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../errors/GenericErrorComponent";
 import { FORM_DICT } from "../../lib/states/lang/forms";
@@ -24,7 +23,7 @@ export default function MainStyleForm() {
   }); // * no longer reading dispatch from this context; it only provides layout-related items
   const dispatch = useAppDispatch(); // * use Redux dispatch explicitly
   const selectedStl = useAppSelector(
-    (s: RootState) => (s.prompt as PromptState).style
+    (s: RootState) => (s.prompt as PromptState).style,
   ); // * style is taken directly from Redux, no local mirror state
 
   const handleStlChange = useCallback(
@@ -34,7 +33,7 @@ export default function MainStyleForm() {
         dispatch(updatePrompt({ style: newValue })); // * update Redux only; component becomes fully controlled
       }
     },
-    [dispatch] // * dependencies simplified (removed local state)
+    [dispatch], // * dependencies simplified (removed local state)
   );
 
   return (

@@ -30,17 +30,22 @@ export default function EyeLidCreaseHeightForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     heightOptions = useMemo<DeepAnatomicOption<EyelidCreaseHeight>[]>(() => {
-      const basePath = "/imgs/head/eyelid-crease-height",
+      const basePath = "/imgs/head/eye/lid/number",
         labelMap: Record<EyelidCreaseHeight, string> = {
           low: "Low crease",
           medium: "Medium crease",
           high: "High crease",
         },
+        fileMap: Record<EyelidCreaseHeight, string> = {
+          low: "skt_eye_lid_lw.png",
+          medium: "skt_eye_lid_md.png",
+          high: "skt_eye_lid_hg.png",
+        },
         uniqueHeights = Array.from(new Set(eyeLidCrsH)) as EyelidCreaseHeight[];
       return uniqueHeights.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handleHeightChange = useCallback<
@@ -51,10 +56,10 @@ export default function EyeLidCreaseHeightForm(): JSX.Element {
         dispatch(
           updateEyeLid({
             creaseHeight: value,
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedHeight = state.character.head?.eye?.shape?.lid?.creaseHeight as
       | EyelidCreaseHeight

@@ -18,7 +18,10 @@ const StartFormTip = ({ state, dispatch }: StartFormTipProps) => {
     tipStorageKey = "__tips_blocked",
     tipSessionKey = "__tips_shown",
     [blocked, setBlocked] = useState<boolean>(),
-    handleClose = (_?: any, reason: SnackbarCloseReason = "timeout") => {
+    handleClose = (
+      _?: React.SyntheticEvent | Event,
+      reason: SnackbarCloseReason = "timeout",
+    ) => {
       if (
         reason === "clickaway" ||
         !localStorage.getItem(tipStorageKey) ||
@@ -140,7 +143,7 @@ const StartFormTip = ({ state, dispatch }: StartFormTipProps) => {
         </Alert>
       </Snackbar>
     ),
-    document.getElementById(idf) || document.body
+    document.getElementById(idf) || document.body,
   );
 };
 export default memo(StartFormTip);

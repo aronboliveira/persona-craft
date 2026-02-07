@@ -30,7 +30,7 @@ export default function EyeLashesLengthForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     lengthOptions = useMemo<DeepAnatomicOption<EyeLashesLength>[]>(() => {
-      const basePath = "/imgs/head/eyelashes-length",
+      const basePath = "/imgs/head/eye/lashes/length",
         labelMap: Record<EyeLashesLength, string> = {
           absent: "Absent",
           "very-short": "Very short",
@@ -54,10 +54,10 @@ export default function EyeLashesLengthForm(): JSX.Element {
         dispatch(
           updateEyelash({
             length: value,
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedLength = state.character.head?.eye?.lashes?.length as
       | EyeLashesLength

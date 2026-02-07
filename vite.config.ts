@@ -11,7 +11,13 @@ export default defineConfig({
   },
   server: {
     watch: {
-      ignored: ["**/env/**", "**/node_modules/**"],
+      ignored: [
+        "**/env/**",
+        "**/__pycache__/**",
+        "**/node_modules/**",
+        "***/___env/**",
+        "**/dist/**",
+      ],
     },
   },
 });

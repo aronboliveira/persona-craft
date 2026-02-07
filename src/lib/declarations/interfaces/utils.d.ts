@@ -1,6 +1,6 @@
 import { Age, BodyFat, BodyMuscleTypes } from "../types/anatomy";
 import { Gender } from "../types/helpers";
-import { Hair, Head } from "./anatomy";
+import { Hair, Head, Skin, BodyModifications } from "./anatomy";
 import {
   ProgressCounter,
   StateWithCharacter,
@@ -15,6 +15,8 @@ export interface Character {
   muscle: BodyMuscleTypes;
   hair: Hair;
   head: Head;
+  skin?: Skin;
+  bodyModifications?: BodyModifications;
 }
 export interface Environment {
   type: "indoor" | "outdoor";
@@ -175,6 +177,6 @@ export interface QuizSpec extends Readonly<{}> {
 }
 /* eslint-enable @typescript-eslint/no-empty-object-type */
 export interface AnatomyValidator {
-  is(obj: any): boolean;
+  is(obj: unknown): boolean;
   ensure<T extends StateWithCharacter>(state: T, path: string[]): Draft<T>;
 }

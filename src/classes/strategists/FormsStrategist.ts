@@ -89,14 +89,19 @@ import ScarPlacementForm from "../../components/forms/body/modifications/ScarPla
 import ScarProminenceForm from "../../components/forms/body/modifications/ScarProminenceForm";
 
 export default class FormsStrategist implements UIRenderingStrategy {
+  static readonly SYMMETRY_ORDERS: ReadonlySet<number> = new Set([
+    29, 33, 36, 40, 46, 50, 53, 80,
+  ]);
+  static readonly MAX_ORDER = 93;
   render(context: Partial<PromptState & { order: number | string }>): string {
     if (!context?.order) return MainStyleForm.name;
     if (typeof context.order === "number") {
       if (!Number.isInteger(context.order))
         context.order = this.map(context.order) as number;
       if (context.order < 0) context.order = Math.abs(context.order);
+      if (FormsStrategist.SYMMETRY_ORDERS.has(context.order))
+        context.order = this.map(context.order) as string;
     }
-    if (context.order === 41) context.order = this.map(context.order) as string;
     switch (context.order) {
       case 0:
         return MainStyleForm.name;

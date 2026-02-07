@@ -14,7 +14,7 @@ import { useFormCtxStore } from "../../lib/hooks/contexts/useFormCtxStore";
 
 export default function NarrativeForm() {
   const { lang, dispatch } = useFormCtxStore(),
-    selectedStl = useAppSelector(s => s.style),
+    selectedStl = useAppSelector(s => s.prompt.style),
     [stlSelected, setStl] = useState<ImageStyle>(selectedStl),
     handleStlChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
       const newValue = e.target.value;

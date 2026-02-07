@@ -30,17 +30,22 @@ export default function EyeTiltForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     tiltOptions = useMemo<DeepAnatomicOption<EyeTilt>[]>(() => {
-      const basePath = "/imgs/head/eye-tilt",
+      const basePath = "/imgs/head/eye/ball/tilt",
         labelMap: Record<EyeTilt, string> = {
           upturned: "Upturned",
           downturned: "Downturned",
           "neutral-turned": "Neutral-turned",
         },
+        fileMap: Record<EyeTilt, string> = {
+          downturned: "skt_eye_tilt_dturned.png",
+          "neutral-turned": "skt_eye_tilt_nturned.png",
+          upturned: "skt_eye_tilt_uturned.png",
+        },
         uniqueTilts = Array.from(new Set(eyeTlt)) as EyeTilt[];
       return uniqueTilts.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handleTiltChange = useCallback<
@@ -51,10 +56,10 @@ export default function EyeTiltForm(): JSX.Element {
         dispatch(
           updateEyeShape({
             tilt: value,
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedTilt = state.character.head?.eye?.shape?.tilt as
       | EyeTilt

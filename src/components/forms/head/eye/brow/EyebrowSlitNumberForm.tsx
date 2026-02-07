@@ -33,20 +33,26 @@ export default function EyebrowSlitNumberForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     numberOptions = useMemo<DeepAnatomicOption<EyebrowSlitNumber>[]>(() => {
-      const basePath = "/imgs/head/eyebrow-slit-number",
+      const basePath = "/imgs/head/eye/brow/slit",
         labelMap: Record<EyebrowSlitNumber, string> = {
           none: "No slit",
           one: "One slit",
           two: "Two slits",
           three: "Three slits",
         },
+        fileMap: Record<EyebrowSlitNumber, string> = {
+          none: "skt_eye_brw_sslt.png",
+          one: "skt_eye_brw_sslt.png",
+          two: "skt_eye_brw_dslt.png",
+          three: "skt_eye_brw_tslt.png",
+        },
         uniqueNumbers = Array.from(
-          new Set(eyeBrwSltNum)
+          new Set(eyeBrwSltNum),
         ) as EyebrowSlitNumber[];
       return uniqueNumbers.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handleNumberChange = useCallback<
@@ -58,7 +64,7 @@ export default function EyebrowSlitNumberForm(): JSX.Element {
             | EyebrowSlitAngle
             | undefined,
           normalizedAngle: EyebrowSlitAngle = VALID_SLIT_NUMBERS.includes(value)
-            ? currentAngle ?? "diagonal"
+            ? (currentAngle ?? "diagonal")
             : "none";
         dispatch(
           updateBrow({
@@ -66,10 +72,10 @@ export default function EyebrowSlitNumberForm(): JSX.Element {
               number: value,
               angle: normalizedAngle,
             },
-          })
+          }),
         );
       },
-      [dispatch, state.character]
+      [dispatch, state.character],
     ),
     selectedNumber = state.character.head?.eye?.brow?.slit?.number as
       | EyebrowSlitNumber

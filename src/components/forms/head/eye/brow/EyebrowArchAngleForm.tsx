@@ -29,7 +29,7 @@ export default function EyebrowArchAngleForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     angleOptions = useMemo<DeepAnatomicOption<EyebrowArchAngle>[]>(() => {
-      const basePath = "/imgs/head/eyebrow-arch-angle",
+      const basePath = "/imgs/head/brow/arc/angle",
         labelMap: Record<EyebrowArchAngle, string> = {
           radial: "Radial",
           obtuse: "Obtuse",
@@ -38,13 +38,21 @@ export default function EyebrowArchAngleForm(): JSX.Element {
           "extremely-acute": "Extremely acute",
           "s-shaped": "S-shaped",
         },
+        fileMap: Record<EyebrowArchAngle, string> = {
+          radial: "skt_eyebrw_arcag_0_rd.png",
+          obtuse: "skt_eyebrw_arcag_1_obt.png",
+          acute: "skt_eyebrw_arcag_2_act.png",
+          "very-acute": "skt_eyebrw_arcag_3_0_vact.png",
+          "extremely-acute": "skt_eyebrw_arcag_4_xact.png",
+          "s-shaped": "skt_eyebrw_arcag_5_sact.png",
+        },
         uniqueAngles = Array.from(
-          new Set(eyeBrwGrwArcAng)
+          new Set(eyeBrwGrwArcAng),
         ) as EyebrowArchAngle[];
       return uniqueAngles.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handleAngleChange = useCallback<
@@ -55,10 +63,10 @@ export default function EyebrowArchAngleForm(): JSX.Element {
         dispatch(
           updateBrow({
             arch: { angle: value },
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedAngle = state.character.head?.eye?.brow?.arch?.angle as
       | EyebrowArchAngle

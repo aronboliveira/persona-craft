@@ -30,7 +30,7 @@ export default function EyeLashesDensityForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     densityOptions = useMemo<DeepAnatomicOption<EyeLashesDensity>[]>(() => {
-      const basePath = "/imgs/head/eyelashes-density",
+      const basePath = "/imgs/head/eye/lashes/density",
         labelMap: Record<EyeLashesDensity, string> = {
           sparse: "Sparse",
           average: "Average",
@@ -52,10 +52,10 @@ export default function EyeLashesDensityForm(): JSX.Element {
         dispatch(
           updateEyelash({
             density: value,
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedDensity = state.character.head?.eye?.lashes?.density as
       | EyeLashesDensity

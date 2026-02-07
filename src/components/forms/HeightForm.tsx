@@ -1,5 +1,3 @@
-// src/components/forms/HeightForm.tsx
-
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../errors/GenericErrorComponent";
 import { useCallback, useMemo, RefObject, ChangeEvent, JSX } from "react";
@@ -16,8 +14,6 @@ import { BodyHeight } from "../../lib/declarations/types/anatomy";
 import { updatePrompt } from "../../redux/mainStore/slices/promptSlice";
 import { CLASSES } from "../../lib/data/classes";
 import { useAppDispatch, useAppSelector } from "../../redux/mainStore/hooks";
-import { RootState } from "../../redux/mainStore";
-import { PromptState } from "../../lib/declarations/interfaces/redux";
 import { OptDict } from "../../lib/declarations/interfaces/utils";
 import { useOptFormCtx } from "../../lib/hooks/contexts/useOptFormCtx";
 import OptionFieldset from "../bloc/OptionFieldset";
@@ -25,7 +21,11 @@ import OptionFigure from "../bloc/OptionFigure";
 import Forms from "../../pages/Forms";
 import ErrorHandler from "../../lib/utils/ErrorHandler";
 import { ImageFormat } from "../../lib/declarations/types/helpers";
-import { genderAbbrSelector } from "../../redux/mainStore/selectors/characterSelectors";
+import {
+  genderAbbrSelector,
+  characterSelector,
+  heightSelector,
+} from "../../redux/mainStore/selectors/characterSelectors";
 import { styleAbbrSelector } from "../../redux/mainStore/selectors/styleSelectors";
 
 export default function HeightForm(): JSX.Element {
@@ -34,10 +34,10 @@ export default function HeightForm(): JSX.Element {
       objectFit: "contain",
     }),
     dispatch = useAppDispatch(),
-    state = useAppSelector((s: RootState) => s.prompt as PromptState),
-    gender = genderAbbrSelector(state),
-    style = styleAbbrSelector(state),
-    //todo
+    character = useAppSelector(characterSelector),
+    height = useAppSelector(heightSelector),
+    gender = useAppSelector(genderAbbrSelector),
+    style = useAppSelector(styleAbbrSelector),
     heightOptions = useMemo(
       () =>
         (() => {
@@ -78,7 +78,7 @@ export default function HeightForm(): JSX.Element {
           }
           return entries;
         })(),
-      [gender, style]
+      [gender, style],
     ),
     handleHeightChange = useCallback(
       (e: ChangeEvent<HTMLInputElement>): void => {
@@ -86,13 +86,13 @@ export default function HeightForm(): JSX.Element {
         dispatch(
           updatePrompt({
             character: {
-              ...state.character,
+              ...character,
               height: value,
             },
-          })
+          }),
         );
       },
-      [dispatch, state.character]
+      [dispatch, character],
     );
   return (
     <ErrorBoundary
@@ -118,7 +118,7 @@ export default function HeightForm(): JSX.Element {
           {heightOptions &&
             Object.entries(heightOptions).map(([k, v], i) => {
               const opt = v as OptDict;
-              const isChecked = state.character.height === k;
+              const isChecked = height === k;
 
               return (
                 <OptionFigure
@@ -144,7 +144,7 @@ export default function HeightForm(): JSX.Element {
         </OptionFieldset>
       </fieldset>
 
-      <Forms.Result variable={state.character.height} />
+      <Forms.Result variable={height} />
     </ErrorBoundary>
   );
 }

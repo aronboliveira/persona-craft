@@ -30,7 +30,7 @@ export default function EyebrowDensityForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     densityOptions = useMemo<DeepAnatomicOption<EyebrowDensity>[]>(() => {
-      const basePath = "/imgs/head/eyebrow-density",
+      const basePath = "/imgs/head/brow/density",
         labelMap: Record<EyebrowDensity, string> = {
           absent: "Absent",
           bare: "Bare",
@@ -40,11 +40,20 @@ export default function EyebrowDensityForm(): JSX.Element {
           dense: "Dense",
           bushy: "Bushy",
         },
+        fileMap: Record<EyebrowDensity, string> = {
+          absent: "skt_eye_brw_0_null.png",
+          bare: "skt_eye_brw_1_br.png",
+          sparse: "skt_eye_brw_2_spr.png",
+          light: "skt_eye_brw_3_lg.png",
+          medium: "skt_eye_brw_4_0_md.png",
+          dense: "skt_eye_brw_5_dns.png",
+          bushy: "skt_eye_brw_6_bs.png",
+        },
         uniqueDensities = Array.from(new Set(eyeBrwDst)) as EyebrowDensity[];
       return uniqueDensities.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handleDensityChange = useCallback<
@@ -55,10 +64,10 @@ export default function EyebrowDensityForm(): JSX.Element {
         dispatch(
           updateBrow({
             density: value,
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedDensity = state.character.head?.eye?.brow?.density as
       | EyebrowDensity

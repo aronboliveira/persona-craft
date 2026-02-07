@@ -2,3 +2,5 @@ node_modules/**
 **/node_modules/**
 .env
 ___env
+.llms/notes/
+.llms/notes/**

@@ -1,0 +1,30 @@
+# EYEBROW FILE MAPPINGS FOR FORMS
+
+## arc/angle (EyebrowArchAngleForm - /imgs/head/eyebrow-arch-angle)
+Path: .drive/closeup/eyes/sketch/brow/arc/angle/
+Files:
+- radial → skt_eyebrw_arcag_0_rd.png
+- obtuse → skt_eyebrw_arcag_1_obt.png
+- acute → skt_eyebrw_arcag_2_act.png
+- very-acute → skt_eyebrw_arcag_3_0_vact.png
+- extremely-acute → skt_eyebrw_arcag_4_xact.png  
+- s-shaped → skt_eyebrw_arcag_5_sact.png
+
+## arc/dist (EyebrowArchDistanceForm - /imgs/head/eyebrow-arch-distance)
+Path: .drive/closeup/eyes/sketch/brow/arc/dist/
+Files:
+- even → skt_eyebrw_arcdt_0_ev.png
+- almost-even → skt_eyebrw_arcdt_1_0_aev.png
+- uneven → skt_eyebrw_arcdt_2_0_uev.png
+- extremely-uneven → skt_eyebrw_arcdt_3_xuev.png
+
+## arc/height (EyebrowArchHeightForm - /imgs/head/eyebrow-arch-height)
+Path: .drive/closeup/eyes/sketch/brow/arc/height/
+skt_eyebrw_archg_0_0_vlw.png
+skt_eyebrw_archg_0_1_lw.png
+skt_eyebrw_archg_1_0_vlw.png
+skt_eyebrw_archg_1_1_vlw.png
+skt_eyebrw_archg_2_avg.png
+skt_eyebrw_archg_3_hg.png
+skt_eyebrw_archg_4_vhg.png
+

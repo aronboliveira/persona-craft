@@ -50,9 +50,7 @@ export default function Carousel({
     ),
     [activeIndex, setActiveIndex] = useState<number>(0);
   useEffect(() => {
-    /* eslint-disable */
-    callback && callback(...callbackArgs);
-    /* eslint-enable */
+    if (callback) callback(...callbackArgs);
   }, [callback, callbackArgs]);
   useEffect(() => {
     if (
@@ -191,8 +189,7 @@ Carousel.Indicators = function Indicators({
     >
       {Children.map(children, (child, i: number) => {
         if (!isValidElement(child)) return null;
-        return cloneElement(child, {
-          // @ts-ignore
+        return cloneElement(child as ReactElement<CarouselIndicatorProps>, {
           i,
           isActive: i === activeIndex,
           onClick: () => setActiveIndex && setActiveIndex(i),
@@ -251,21 +248,15 @@ Carousel.PrevButton = function PrevButton({
   className = "",
 }: CarouselChildStandardProps) {
   const ctx = useContext<ICarouselCtx>(CarouselCtx);
-  let id = "",
-    activeIndex = 0,
-    setActiveIndex: NRDispatch<number> = () => {},
-    slideCount = 0;
-  if (ctx) {
-    id = ctx.id;
-    activeIndex = ctx.activeIndex;
-    setActiveIndex = ctx.setActiveIndex;
-    slideCount = ctx.slideCount;
-  }
+  const id = ctx?.id ?? "";
+  const activeIndex = ctx?.activeIndex ?? 0;
+  const setActiveIndex = ctx?.setActiveIndex;
+  const slideCount = ctx?.slideCount ?? 0;
   const goPrev = useCallback(
     () =>
       setActiveIndex &&
       setActiveIndex((activeIndex - 1 + slideCount) % slideCount),
-    [setActiveIndex, slideCount],
+    [activeIndex, setActiveIndex, slideCount],
   );
   return (
     <button
@@ -290,16 +281,10 @@ Carousel.NextButton = function NextButton({
   className = "",
 }: CarouselChildStandardProps) {
   const ctx = useContext<ICarouselCtx>(CarouselCtx);
-  let id = "",
-    activeIndex = 0,
-    setActiveIndex: NRDispatch<number> = () => {},
-    slideCount = 0;
-  if (ctx) {
-    id = ctx.id;
-    activeIndex = ctx.activeIndex;
-    setActiveIndex = ctx.setActiveIndex;
-    slideCount = ctx.slideCount;
-  }
+  const id = ctx?.id ?? "";
+  const activeIndex = ctx?.activeIndex ?? 0;
+  const setActiveIndex = ctx?.setActiveIndex;
+  const slideCount = ctx?.slideCount ?? 0;
   const goNext = useCallback(
     () => setActiveIndex && setActiveIndex((activeIndex + 1) % slideCount),
     [activeIndex, setActiveIndex, slideCount],

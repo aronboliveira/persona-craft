@@ -30,20 +30,26 @@ export default function EyebrowGrowthPatternForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     patternOptions = useMemo<DeepAnatomicOption<EyebrowGrowthPattern>[]>(() => {
-      const basePath = "/imgs/head/eyebrow-growth-pattern",
+      const basePath = "/imgs/head/brow/growth/pattern",
         labelMap: Record<EyebrowGrowthPattern, string> = {
           even: "Even",
           "front-heavy": "Front-heavy",
           "tail-heavy": "Tail-heavy",
           "center-heavy": "Center-heavy",
         },
+        fileMap: Record<EyebrowGrowthPattern, string> = {
+          even: "skt_eye_brw_ev.png",
+          "front-heavy": "skt_eye_brw_fhv.png",
+          "tail-heavy": "skt_eye_brw_thv.png",
+          "center-heavy": "skt_eye_brw_chv.png",
+        },
         uniquePatterns = Array.from(
-          new Set(eyeBrwGrwtPtn)
+          new Set(eyeBrwGrwtPtn),
         ) as EyebrowGrowthPattern[];
       return uniquePatterns.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handlePatternChange = useCallback<
@@ -56,10 +62,10 @@ export default function EyebrowGrowthPatternForm(): JSX.Element {
             growth: {
               pattern: value,
             },
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedPattern = state.character.head?.eye?.brow?.growth?.pattern as
       | EyebrowGrowthPattern

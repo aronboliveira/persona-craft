@@ -10,6 +10,7 @@ import { appTheme } from "./themes/appTheme.tsx";
 import LayoutWatcher from "./components/hidden/LayoutWatcher.tsx";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorHandler from "./lib/utils/ErrorHandler.ts";
+import QueryProvider from "./components/providers/QueryProvider.tsx";
 const root = document.getElementById("root");
 if (root) {
   createRoot(root).render(
@@ -41,9 +42,11 @@ if (root) {
     >
       <ThemeProvider theme={appTheme}>
         <CssBaseline />
-        <Provider store={formsStore}>
-          <App />
-        </Provider>
+        <QueryProvider>
+          <Provider store={formsStore}>
+            <App />
+          </Provider>
+        </QueryProvider>
         {createPortal(
           <div
             style={{
@@ -62,6 +65,7 @@ if (root) {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              minHeight: "fit-content",
             }}
             onMouseEnter={e => {
               if (e.currentTarget instanceof HTMLElement)
@@ -82,8 +86,23 @@ if (root) {
           >
             <div style={{ marginInline: "auto" }}>
               The development of this project has been stopped. Feel free to
-              fork it on GitHub. You can find a complete version with simpler UI
-              on: https://prompt-shape-creator.netlify.app/
+              fork it on{" "}
+              <a
+                style={{ color: "red" }}
+                href="https://github.com/aronboliveira/persona-craft/tree/main"
+                target="_blank"
+                rel="noopener nofollow"
+              >
+                Github
+              </a>
+              . You can find a complete version with simpler UI
+              <a
+                style={{ color: "red" }}
+                href="https://prompt-shape-creator.netlify.app/"
+              >
+                {" "}
+                Here
+              </a>
             </div>
           </div>,
           document.body,

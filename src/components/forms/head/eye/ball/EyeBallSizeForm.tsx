@@ -29,7 +29,7 @@ export default function EyeBallSizeForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     sizeOptions = useMemo<DeepAnatomicOption<EyeBallSize>[]>(() => {
-      const basePath = "/imgs/head/eyeball-size",
+      const basePath = "/imgs/head/eye/ball/size",
         labelMap: Record<EyeBallSize, string> = {
           "extremely-small": "Extremely small",
           "very-small": "Very small",
@@ -40,11 +40,21 @@ export default function EyeBallSizeForm(): JSX.Element {
           "extremely-large": "Extremely large",
           "absurdly-large": "Absurdly large",
         },
+        fileMap: Record<EyeBallSize, string> = {
+          "extremely-small": "skt_eyesz_0_xsm.png",
+          "very-small": "skt_eyesz_1_vsm.png",
+          small: "skt_eyesz_2_sm.png",
+          average: "skt_eyesz_3_avg.png",
+          large: "skt_eyesz_4_lg.png",
+          "very-large": "skt_eyesz_5_vlg.png",
+          "extremely-large": "skt_eyesz_6_xlg.png",
+          "absurdly-large": "skt_eyesz_7_ablg.png",
+        },
         uniqueSizes = Array.from(new Set(eyeBlSz)) as EyeBallSize[];
       return uniqueSizes.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handleSizeChange = useCallback<
@@ -57,10 +67,10 @@ export default function EyeBallSizeForm(): JSX.Element {
             ball: {
               size: value,
             },
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedSize = state.character.head?.eye?.ball?.size as
       | EyeBallSize

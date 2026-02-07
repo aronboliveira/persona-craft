@@ -30,20 +30,26 @@ export default function EyeLidEpicanthicFoldClassForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     classOptions = useMemo<DeepAnatomicOption<EyeEpicanthicFoldClass>[]>(() => {
-      const basePath = "/imgs/head/eyelid-epicanthic-fold-class",
+      const basePath = "/imgs/head/eye/lid/epicanthic/class",
         labelMap: Record<EyeEpicanthicFoldClass, string> = {
           none: "None",
           tarsal: "Tarsal fold",
           palpebral: "Palpebral fold",
           inverted: "Inverted fold",
         },
+        fileMap: Record<EyeEpicanthicFoldClass, string> = {
+          none: "skt_eye_ecf_tarsal.png",
+          tarsal: "skt_eye_ecf_tarsal.png",
+          palpebral: "skt_eye_ecf_palpebral.png",
+          inverted: "skt_eye_ecf_invers.png",
+        },
         uniqueClasses = Array.from(
-          new Set(eyeLidEpcCls)
+          new Set(eyeLidEpcCls),
         ) as EyeEpicanthicFoldClass[];
       return uniqueClasses.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handleClassChange = useCallback<
@@ -54,10 +60,10 @@ export default function EyeLidEpicanthicFoldClassForm(): JSX.Element {
         dispatch(
           updateEyeLid({
             epicanthicFoldVariation: value,
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedClass = state.character.head?.eye?.shape?.lid
       ?.epicanthicFoldVariation as EyeEpicanthicFoldClass | undefined;

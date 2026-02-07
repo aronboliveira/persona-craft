@@ -33,17 +33,22 @@ export default function EyebrowSlitAngleForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     angleOptions = useMemo<DeepAnatomicOption<EyebrowSlitAngle>[]>(() => {
-      const basePath = "/imgs/head/eyebrow-slit-angle",
+      const basePath = "/imgs/head/eye/brow/slit",
         labelMap: Record<EyebrowSlitAngle, string> = {
           none: "No slit",
           diagonal: "Diagonal slit",
           vertical: "Vertical slit",
         },
+        fileMap: Record<EyebrowSlitAngle, string> = {
+          none: "skt_eye_brw_sslt.png",
+          diagonal: "skt_eye_brw_dgslt.png",
+          vertical: "skt_eye_brw_bslt.png",
+        },
         uniqueAngles = Array.from(new Set(eyeBrwSltAng)) as EyebrowSlitAngle[];
       return uniqueAngles.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handleAngleChange = useCallback<
@@ -63,10 +68,10 @@ export default function EyebrowSlitAngleForm(): JSX.Element {
             slit: {
               angle: normalizedAngle,
             },
-          })
+          }),
         );
       },
-      [dispatch, state.character]
+      [dispatch, state.character],
     ),
     selectedAngle = state.character.head?.eye?.brow?.slit?.angle as
       | EyebrowSlitAngle

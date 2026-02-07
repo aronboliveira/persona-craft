@@ -57,13 +57,39 @@ import {
   RecidingLevel,
   Unibrow,
   UpperLipThickness,
+  NoseShape,
+  NoseBridgeWidth,
+  NoseBridgeHeight,
+  NoseNostrilSize,
+  NoseNostrilFlare,
+  NoseLength,
+  NoseTipAngle,
+  EarSize,
+  EarShape,
+  EarLobe,
+  EarAngle,
+  EarWidth,
+  ChinProjection,
+  ChinPrognathism,
+  ChinWidth,
+  ChinHeight,
+  ChinCleft,
+  Ethnicity,
+  SkinTone,
+  SkinUndertone,
+  TattooStyle,
+  TattooPlacement,
+  TattooCoverage,
+  PiercingType,
+  ScarType,
+  ScarPlacement,
+  ScarProminence,
 } from "../declarations/types/anatomy";
 import {
   Gender,
   GenderAbbr,
   ImageFormat,
   // ImageStyle,
-  QuestionId,
   StyleSets,
 } from "../declarations/types/helpers";
 import { OptsMap } from "../declarations/types/utils";
@@ -484,16 +510,227 @@ export const bdHgt = [
   "tall",
   "colossal",
 ] as const satisfies BodyHeight[];
-export const DEFAULT_OPTS: OptsMap<Exclude<QuestionId, "bft">> = Object.freeze(
-  (() => {
-    return {
-      stl: styleSets.includes("anm") ? "anm" : styleSets[0],
-      gd: gds.includes("female") ? "female" : gds[0],
-      msc: mscLvls.includes("average") ? "average" : mscLvls[0],
-      hgt: bdHgt.includes("average") ? "average" : bdHgt[0], // * default height
-    };
-  })()
-);
+// ─── Nose options ───────────────────────────────────────
+export const nsShp = [
+  "button",
+  "celestial",
+  "snub",
+  "greek",
+  "roman",
+  "aquiline",
+  "hawk",
+  "nubian",
+  "bulbous",
+  "flat",
+  "fleshy",
+] as const satisfies NoseShape[];
+export const nsBrW = [
+  "narrow",
+  "average",
+  "wide",
+] as const satisfies NoseBridgeWidth[];
+export const nsBrH = [
+  "short",
+  "average",
+  "tall",
+] as const satisfies NoseBridgeHeight[];
+export const nsNtSz = [
+  "small",
+  "average",
+  "large",
+] as const satisfies NoseNostrilSize[];
+export const nsNtFl = [
+  "minimal",
+  "moderate",
+  "wide",
+] as const satisfies NoseNostrilFlare[];
+export const nsLng = [
+  "short",
+  "average",
+  "long",
+] as const satisfies NoseLength[];
+export const nsTpAng = [
+  "upturned",
+  "neutral",
+  "downturned",
+] as const satisfies NoseTipAngle[];
+// ─── Ear options ────────────────────────────────────────
+export const erSz = ["small", "average", "large"] as const satisfies EarSize[];
+export const erShp = [
+  "round",
+  "pointed",
+  "square",
+  "oval",
+  "triangular",
+] as const satisfies EarShape[];
+export const erLb = [
+  "attached",
+  "partially-attached",
+  "free",
+] as const satisfies EarLobe[];
+export const erAng = [
+  "flat",
+  "slightly-protruding",
+  "protruding",
+] as const satisfies EarAngle[];
+export const erWd = ["narrow", "average", "wide"] as const satisfies EarWidth[];
+// ─── Chin options ───────────────────────────────────────
+export const cnPrj = [
+  "very-retrusive",
+  "retrusive",
+  "slightly-retrusive",
+  "normal",
+  "slightly-prominent",
+  "prominent",
+  "very-prominent",
+] as const satisfies ChinProjection[];
+export const cnPrg = [
+  "absent",
+  "maxillary",
+  "mandibular",
+] as const satisfies ChinPrognathism[];
+export const cnWd = [
+  "triangular",
+  "extremely-narrow",
+  "narrow",
+  "medium",
+  "wide",
+  "very-wide",
+] as const satisfies ChinWidth[];
+export const cnHgt = [
+  "very-short",
+  "short",
+  "average",
+  "long",
+  "very-long",
+] as const satisfies ChinHeight[];
+export const cnClf = [
+  "absent",
+  "shallow",
+  "deep",
+] as const satisfies ChinCleft[];
+// ─── Ethnicity & Skin options ──────────────────────────
+export const ethnicities = [
+  "east-asian",
+  "south-asian",
+  "southeast-asian",
+  "west-african",
+  "east-african",
+  "north-african",
+  "european",
+  "middle-eastern",
+  "latin-american",
+  "indigenous-american",
+  "pacific-islander",
+  "mixed",
+] as const satisfies Ethnicity[];
+export const skinTones = [
+  "porcelain",
+  "ivory",
+  "fair",
+  "light",
+  "light-medium",
+  "medium",
+  "olive",
+  "tan",
+  "caramel",
+  "brown",
+  "dark-brown",
+  "deep-brown",
+  "ebony",
+] as const satisfies SkinTone[];
+export const skinUndertones = [
+  "warm",
+  "neutral",
+  "cool",
+] as const satisfies SkinUndertone[];
+// ─── Body modification options ─────────────────────────
+export const ttStls = [
+  "none",
+  "traditional",
+  "neo-traditional",
+  "tribal",
+  "japanese",
+  "blackwork",
+  "dotwork",
+  "watercolor",
+  "geometric",
+  "realism",
+  "minimalist",
+  "lettering",
+] as const satisfies TattooStyle[];
+export const ttPlcs = [
+  "none",
+  "face",
+  "neck",
+  "chest",
+  "back",
+  "upper-arm",
+  "forearm",
+  "hand",
+  "thigh",
+  "calf",
+  "ankle",
+  "full-sleeve",
+  "half-sleeve",
+] as const satisfies TattooPlacement[];
+export const ttCovs = [
+  "none",
+  "minimal",
+  "moderate",
+  "heavy",
+  "full-body",
+] as const satisfies TattooCoverage[];
+export const prcTps = [
+  "none",
+  "ear-lobe",
+  "ear-helix",
+  "ear-tragus",
+  "ear-industrial",
+  "nostril",
+  "septum",
+  "lip",
+  "labret",
+  "eyebrow",
+  "tongue",
+  "navel",
+  "bridge",
+] as const satisfies PiercingType[];
+export const scrTps = [
+  "none",
+  "linear",
+  "burn",
+  "keloid",
+  "pitted",
+  "surgical",
+] as const satisfies ScarType[];
+export const scrPlcs = [
+  "none",
+  "face",
+  "neck",
+  "chest",
+  "back",
+  "arms",
+  "legs",
+  "hands",
+] as const satisfies ScarPlacement[];
+export const scrPrms = [
+  "none",
+  "faded",
+  "visible",
+  "prominent",
+] as const satisfies ScarProminence[];
+export const DEFAULT_OPTS: OptsMap<"stl" | "gd" | "msc" | "hgt"> =
+  Object.freeze(
+    (() => {
+      return {
+        stl: styleSets.includes("anm") ? "anm" : styleSets[0],
+        gd: gds.includes("female") ? "female" : gds[0],
+        msc: mscLvls.includes("average") ? "average" : mscLvls[0],
+        hgt: bdHgt.includes("average") ? "average" : bdHgt[0],
+      };
+    })(),
+  );
 export const genderDetails = {
   female: { friendlyName: "Feminine" },
   masculine: { friendlyName: "Masculine" },
@@ -507,10 +744,7 @@ export const muscleDetails = {
   herculean: { friendlyName: "Herculean" },
 } as const satisfies Record<BodyMuscleTypes, { friendlyName: string }>;
 export const imgBasePath = "/imgs";
-export const FORMS_OPTS: Record<
-  QuestionId,
-  object | ((...args: any[]) => object)
-> = {
+export const FORMS_OPTS = {
   stl: {
     "semi-realistic": {
       friendlyName: "Semi-Realistic",
@@ -541,17 +775,17 @@ export const FORMS_OPTS: Record<
                 key === "female"
                   ? "fem-warr"
                   : key === "masculine"
-                  ? "male-knight"
-                  : "nb-priest"
+                    ? "male-knight"
+                    : "nb-priest"
               }.${styleCode === "sr" ? "jpeg" : "png"}`,
             },
-          ])
+          ]),
         ))(st),
-    ])
+    ]),
   ),
   msc: (
     gnd: GenderAbbr | Gender = "fm",
-    stl: StyleSets = "anm"
+    stl: StyleSets = "anm",
   ): {
     [K in BodyMuscleTypes]: {
       friendlyName: string;
@@ -561,8 +795,8 @@ export const FORMS_OPTS: Record<
     gnd = gdAbbrs.includes(gnd as any)
       ? gnd
       : gds.includes(gnd as any)
-      ? GdAbbr[gnd as Gender]
-      : "fm";
+        ? GdAbbr[gnd as Gender]
+        : "fm";
     return mscLvls.reduce(
       (acc, mscLvl) => {
         acc[mscLvl] = {
@@ -571,8 +805,8 @@ export const FORMS_OPTS: Record<
             Object.values(GdAbbr).includes(gnd as GdAbbr)
               ? gnd
               : gnd in GdAbbr
-              ? GdAbbr[gnd as keyof typeof GdAbbr]
-              : "fm"
+                ? GdAbbr[gnd as keyof typeof GdAbbr]
+                : "fm"
           }/${mscLvl}.png` as any,
         };
         return acc;
@@ -582,7 +816,7 @@ export const FORMS_OPTS: Record<
           friendlyName: string;
           src: `${typeof imgBasePath}/muscle/${string}.${ImageFormat}`;
         };
-      }
+      },
     );
   },
   bft: (() => {

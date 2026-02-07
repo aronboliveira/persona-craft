@@ -30,7 +30,7 @@ export default function EyeLashesCurlForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     curlOptions = useMemo<DeepAnatomicOption<EyeLashesCurl>[]>(() => {
-      const basePath = "/imgs/head/eyelashes-curl",
+      const basePath = "/imgs/head/eye/lashes/curl",
         labelMap: Record<EyeLashesCurl, string> = {
           straight: "Straight",
           "slightly-downward-curled": "Slightly downward-curled",
@@ -53,10 +53,10 @@ export default function EyeLashesCurlForm(): JSX.Element {
         dispatch(
           updateEyelash({
             curl: value,
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedCurl = state.character.head?.eye?.lashes?.curl as
       | EyeLashesCurl

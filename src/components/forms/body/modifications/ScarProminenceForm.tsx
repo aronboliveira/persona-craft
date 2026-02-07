@@ -1,18 +1,19 @@
-import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import GenericErrorComponent from "../../errors/GenericErrorComponent";
+import GenericErrorComponent from "../../../errors/GenericErrorComponent";
 import { useCallback, useMemo, RefObject, ChangeEvent, JSX } from "react";
-import { imgBasePath, scrPrms } from "../../../lib/data/opts";
-import { ScarProminence } from "../../../lib/declarations/types/anatomy";
-import { updateBodyModifications } from "../../../redux/mainStore/slices/promptSlice";
-import { CLASSES } from "../../../lib/data/classes";
-import { useAppDispatch, useAppSelector } from "../../../redux/mainStore/hooks";
-import { RootState } from "../../../redux/mainStore";
-import { useOptFormCtx } from "../../../lib/hooks/contexts/useOptFormCtx";
-import OptionFieldset from "../../bloc/OptionFieldset";
-import OptionFigure from "../../bloc/OptionFigure";
-import Forms from "../../../pages/Forms";
-import { bodyModificationsSelector } from "../../../redux/mainStore/selectors/characterSelectors";
+import { imgBasePath, scrPrms } from "../../../../lib/data/opts";
+import { ScarProminence } from "../../../../lib/declarations/types/anatomy";
+import { updateBodyModifications } from "../../../../redux/mainStore/slices/promptSlice";
+import { CLASSES } from "../../../../lib/data/classes";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../../../redux/mainStore/hooks";
+import { useOptFormCtx } from "../../../../lib/hooks/contexts/useOptFormCtx";
+import OptionFieldset from "../../../bloc/OptionFieldset";
+import OptionFigure from "../../../bloc/OptionFigure";
+import Forms from "../../../../pages/Forms";
+import { bodyModificationsSelector } from "../../../../redux/mainStore/selectors/characterSelectors";
 
 export default function ScarProminenceForm(): JSX.Element {
   const { formRef } = useOptFormCtx({
@@ -20,8 +21,7 @@ export default function ScarProminenceForm(): JSX.Element {
     objectFit: "contain",
   });
   const dispatch = useAppDispatch();
-  const rootState = useAppSelector((s: RootState) => s);
-  const bodyMods = bodyModificationsSelector(rootState);
+  const bodyMods = useAppSelector(bodyModificationsSelector);
 
   const options = useMemo(
     () =>

@@ -30,7 +30,8 @@ export default function EyebrowArchHeightForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     heightOptions = useMemo<DeepAnatomicOption<EyebrowArchHeight>[]>(() => {
-      const basePath = "/imgs/head/eyebrow-arch-height",
+      // ! MISSING IMAGE - using default placeholder
+      const basePath = "public/imgs/dall-e-cuca.jpeg",
         labelMap: Record<EyebrowArchHeight, string> = {
           "very-low": "Very low",
           low: "Low",
@@ -39,12 +40,12 @@ export default function EyebrowArchHeightForm(): JSX.Element {
           "very-high": "Very high",
         },
         uniqueHeights = Array.from(
-          new Set(eyeBrwArchHgt)
+          new Set(eyeBrwArchHgt),
         ) as EyebrowArchHeight[];
       return uniqueHeights.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: basePath,
       }));
     }, []),
     handleHeightChange = useCallback<
@@ -57,10 +58,10 @@ export default function EyebrowArchHeightForm(): JSX.Element {
             arch: {
               height: value,
             },
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedHeight = state.character.head?.eye?.brow?.arch?.height as
       | EyebrowArchHeight

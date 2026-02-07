@@ -30,7 +30,7 @@ export default function EyebrowUnibrowForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     unibrowOptions = useMemo<DeepAnatomicOption<Unibrow>[]>(() => {
-      const basePath = "/imgs/head/eyebrow-unibrow",
+      const basePath = "/imgs/head/brow/uni",
         labelMap: Record<Unibrow, string> = {
           absent: "Absent",
           faint: "Faint",
@@ -38,11 +38,18 @@ export default function EyebrowUnibrowForm(): JSX.Element {
           bushy: "Bushy",
           full: "Full",
         },
+        fileMap: Record<Unibrow, string> = {
+          absent: "skt_eye_ubrw_null.png",
+          faint: "skt_eye_ubrw_ft.png",
+          partial: "skt_eye_ubrw_pt.png",
+          bushy: "skt_eye_ubrw_bs.png",
+          full: "skt_eye_ubrw_f.png",
+        },
         uniqueUnibrows = Array.from(new Set(eyeBrwUnb)) as Unibrow[];
       return uniqueUnibrows.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handleUnibrowChange = useCallback<
@@ -53,10 +60,10 @@ export default function EyebrowUnibrowForm(): JSX.Element {
         dispatch(
           updateBrow({
             unibrow: value,
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedUnibrow = state.character.head?.eye?.brow?.unibrow as
       | Unibrow

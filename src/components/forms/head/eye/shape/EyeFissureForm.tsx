@@ -30,18 +30,24 @@ export default function EyeFissureForm(): JSX.Element {
     dispatch = useAppDispatch(),
     state = useAppSelector((s: RootState) => s.prompt as PromptState),
     fissureOptions = useMemo<DeepAnatomicOption<EyeFissure>[]>(() => {
-      const basePath = "/imgs/head/eye-fissure",
+      const basePath = "/imgs/head/eye/ball/fissure",
         labelMap: Record<EyeFissure, string> = {
           round: "Round",
           almond: "Almond",
           wide: "Wide",
           narrow: "Narrow",
         },
+        fileMap: Record<EyeFissure, string> = {
+          narrow: "skt_eye_fissure_0_narrow.png",
+          wide: "skt_eye_fissure_1_wide.png",
+          almond: "skt_eye_fissure_2_almond.png",
+          round: "skt_eye_fissure_3_round.png",
+        },
         uniqueFissures = Array.from(new Set(eyeFs)) as EyeFissure[];
       return uniqueFissures.map(key => ({
         key,
         friendlyName: labelMap[key],
-        src: `${basePath}/${key}.png`,
+        src: `${basePath}/${fileMap[key]}`,
       }));
     }, []),
     handleFissureChange = useCallback<
@@ -52,10 +58,10 @@ export default function EyeFissureForm(): JSX.Element {
         dispatch(
           updateEyeShape({
             fissure: value,
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
     selectedFissure = state.character.head?.eye?.shape?.fissure as
       | EyeFissure

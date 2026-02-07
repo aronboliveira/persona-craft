@@ -14,8 +14,6 @@ import { HairLength } from "../../../lib/declarations/types/anatomy";
 import { updateHair } from "../../../redux/mainStore/slices/promptSlice";
 import { CLASSES } from "../../../lib/data/classes";
 import { useAppDispatch, useAppSelector } from "../../../redux/mainStore/hooks";
-import { RootState } from "../../../redux/mainStore";
-import { PromptState } from "../../../lib/declarations/interfaces/redux";
 import { useOptFormCtx } from "../../../lib/hooks/contexts/useOptFormCtx";
 import OptionFieldset from "../../bloc/OptionFieldset";
 import OptionFigure from "../../bloc/OptionFigure";
@@ -27,6 +25,7 @@ import ErrorHandler from "../../../lib/utils/ErrorHandler";
 import {
   genderAbbrSelector,
   hairTextureSelector,
+  hairSelector,
 } from "../../../redux/mainStore/selectors/characterSelectors";
 import { BlobValidator } from "../../../lib/utils/BlobValidator";
 import { defaultCharacter } from "../../../redux/data/defaults";
@@ -38,9 +37,9 @@ export default function HairLengthForm(): JSX.Element {
       objectFit: "contain",
     }) as DeepOptional<ReturnType<typeof useOptFormCtx>> & {},
     dispatch = useAppDispatch(),
-    state = useAppSelector((s: RootState) => s.prompt as PromptState),
-    gender = genderAbbrSelector(state),
-    texture = hairTextureSelector(state),
+    hair = useAppSelector(hairSelector),
+    gender = useAppSelector(genderAbbrSelector),
+    texture = useAppSelector(hairTextureSelector),
     [isLoading, setIsLoading] = useState<boolean>(true),
     [lengthOptions, setLengthOptions] = useState<
       DeepAnatomicOption<HairLength>[]
@@ -54,9 +53,9 @@ export default function HairLengthForm(): JSX.Element {
           0,
           /[-_\s]+/.test(defaultCharacter.hair.texture)
             ? defaultCharacter.hair.texture.indexOf(
-                defaultCharacter.hair.texture.match(/[-_\s]+/)![0]
+                defaultCharacter.hair.texture.match(/[-_\s]+/)![0],
               )
-            : defaultCharacter.hair.texture.length
+            : defaultCharacter.hair.texture.length,
         )}/${defaultCharacter.hair.length}.png`,
       },
     ]);
@@ -67,7 +66,7 @@ export default function HairLengthForm(): JSX.Element {
           /[-_\s]+/.test(texture)
             ? texture.indexOf(texture.match(/[-_\s]+/)![0]) + 1
             : 0,
-          texture.length
+          texture.length,
         ),
         otherGenders = gdAbbrs.filter(g => g !== gender),
         otherTextures = hrTxt
@@ -75,8 +74,8 @@ export default function HairLengthForm(): JSX.Element {
           .map(t =>
             t.slice(
               /[-_\s]+/.test(t) ? t.indexOf(t.match(/[-_\s]+/)![0]) + 1 : 0,
-              t.length
-            )
+              t.length,
+            ),
           ),
         labelMap: Record<HairLength, string> = {
           bald: "Bald",
@@ -93,14 +92,12 @@ export default function HairLengthForm(): JSX.Element {
         try {
           let foundPath: string | null = null;
           foundPath = await BlobValidator.testImagePath(
-            `/imgs/hair/length/${gender}/${slicedTexture}/${length}`
+            `/imgs/hair/length/${gender}/${slicedTexture}/${length}`,
           );
-          console.log("FOUND PATH");
-          console.log(foundPath);
           if (!foundPath) {
             for (const otherTexture of otherTextures) {
               foundPath = await BlobValidator.testImagePath(
-                `/imgs/hair/length/${gender}/${otherTexture}/${length}`
+                `/imgs/hair/length/${gender}/${otherTexture}/${length}`,
               );
               if (foundPath) break;
             }
@@ -108,7 +105,7 @@ export default function HairLengthForm(): JSX.Element {
           if (!foundPath) {
             for (const otherGender of otherGenders) {
               foundPath = await BlobValidator.testImagePath(
-                `/imgs/hair/length/${otherGender}/${slicedTexture}/${length}`
+                `/imgs/hair/length/${otherGender}/${slicedTexture}/${length}`,
               );
               if (foundPath) break;
             }
@@ -117,7 +114,7 @@ export default function HairLengthForm(): JSX.Element {
             outerLoop: for (const otherGender of otherGenders) {
               for (const otherTexture of otherTextures) {
                 foundPath = await BlobValidator.testImagePath(
-                  `/imgs/hair/length/${otherGender}/${otherTexture}/${length}`
+                  `/imgs/hair/length/${otherGender}/${otherTexture}/${length}`,
                 );
                 if (foundPath) break outerLoop;
               }
@@ -159,12 +156,12 @@ export default function HairLengthForm(): JSX.Element {
         dispatch(
           updateHair({
             length: value,
-          })
+          }),
         );
       },
-      [dispatch]
+      [dispatch],
     ),
-    selectedLength = state.character.hair?.length as HairLength | undefined;
+    selectedLength = hair?.length as HairLength | undefined;
   return (
     <ErrorBoundary
       onError={(error, errorInfo) => {

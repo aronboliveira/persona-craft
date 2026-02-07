@@ -245,3 +245,122 @@ export type ForeheadHairlineShape =
   | "u-shaped"
   | "asymmetrical";
 export type ForeheadHeight = BasicHeightVariation | "very-tall";
+// ─── Nose ───────────────────────────────────────────────
+export type NoseShape =
+  | "button"
+  | "celestial"
+  | "snub"
+  | "greek"
+  | "roman"
+  | "aquiline"
+  | "hawk"
+  | "nubian"
+  | "bulbous"
+  | "flat"
+  | "fleshy";
+export type NoseBridgeWidth = BasicWidthVariation;
+export type NoseBridgeHeight = BasicHeightVariation;
+export type NoseNostrilSize = NarrowedSizeVariation;
+export type NoseNostrilFlare = "minimal" | "moderate" | "wide";
+export type NoseLength = BasicLengthVariation;
+export type NoseTipAngle = "upturned" | "neutral" | "downturned";
+// ─── Ear ────────────────────────────────────────────────
+export type EarSize = NarrowedSizeVariation;
+export type EarShape = "round" | "pointed" | "square" | "oval" | "triangular";
+export type EarLobe = "attached" | "partially-attached" | "free";
+export type EarAngle = "flat" | "slightly-protruding" | "protruding";
+export type EarWidth = BasicWidthVariation;
+// ─── Ethnicity & Skin ──────────────────────────────────
+export type Ethnicity =
+  | "east-asian"
+  | "south-asian"
+  | "southeast-asian"
+  | "west-african"
+  | "east-african"
+  | "north-african"
+  | "european"
+  | "middle-eastern"
+  | "latin-american"
+  | "indigenous-american"
+  | "pacific-islander"
+  | "mixed";
+export type SkinTone =
+  | "porcelain"
+  | "ivory"
+  | "fair"
+  | "light"
+  | "light-medium"
+  | "medium"
+  | "olive"
+  | "tan"
+  | "caramel"
+  | "brown"
+  | "dark-brown"
+  | "deep-brown"
+  | "ebony";
+export type SkinUndertone = "warm" | "neutral" | "cool";
+// ─── Body Modifications ────────────────────────────────
+export type TattooStyle =
+  | "traditional"
+  | "neo-traditional"
+  | "tribal"
+  | "japanese"
+  | "blackwork"
+  | "dotwork"
+  | "watercolor"
+  | "geometric"
+  | "realism"
+  | "minimalist"
+  | "lettering"
+  | "none";
+export type TattooPlacement =
+  | "face"
+  | "neck"
+  | "chest"
+  | "back"
+  | "upper-arm"
+  | "forearm"
+  | "hand"
+  | "thigh"
+  | "calf"
+  | "ankle"
+  | "full-sleeve"
+  | "half-sleeve"
+  | "none";
+export type TattooCoverage =
+  | "none"
+  | "minimal"
+  | "moderate"
+  | "heavy"
+  | "full-body";
+export type PiercingType =
+  | "ear-lobe"
+  | "ear-helix"
+  | "ear-tragus"
+  | "ear-industrial"
+  | "nostril"
+  | "septum"
+  | "lip"
+  | "labret"
+  | "eyebrow"
+  | "tongue"
+  | "navel"
+  | "bridge"
+  | "none";
+export type ScarType =
+  | "linear"
+  | "burn"
+  | "keloid"
+  | "pitted"
+  | "surgical"
+  | "none";
+export type ScarPlacement =
+  | "face"
+  | "neck"
+  | "chest"
+  | "back"
+  | "arms"
+  | "legs"
+  | "hands"
+  | "none";
+export type ScarProminence = "faded" | "visible" | "prominent" | "none";

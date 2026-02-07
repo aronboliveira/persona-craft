@@ -1,4 +1,3 @@
-import React from "react";
 import type { JSX, CSSProperties } from "react"; // * added CSSProperties to type inline style objects
 
 export default function GenericErrorComponent({

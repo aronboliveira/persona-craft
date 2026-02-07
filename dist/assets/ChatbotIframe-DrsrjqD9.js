@@ -1,1 +1,0 @@
-import{r as t,j as r}from"./index-DT8Lnc3b.js";const o=t.memo(()=>r.jsx("iframe",{src:"http://127.0.0.1:8002/view-chainlit/",title:"Chainlit Chat",style:{width:"80%",height:"49vh",border:"none"},sandbox:"allow-same-origin allow-scripts allow-forms"}));export{o as default};

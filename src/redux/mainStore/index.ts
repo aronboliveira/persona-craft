@@ -3,35 +3,36 @@ import promptReducer from "./slices/promptSlice";
 import formStrategyReducer from "./slices/formStrategySlice";
 import tipsReducer from "./slices/tipsSlice";
 import { slitConsistencyMiddleware } from "./middlewares";
+
 export const STG_KEY = "promptCreatorPromptState";
+
+const rootReducer = combineReducers({
+  prompt: promptReducer,
+  formStrategy: formStrategyReducer,
+  tips: tipsReducer,
+});
+
+const loadPreloadedState = ():
+  | Partial<ReturnType<typeof rootReducer>>
+  | undefined => {
+  try {
+    const raw = sessionStorage.getItem(STG_KEY);
+    if (!raw) return undefined;
+    return JSON.parse(raw) as Partial<ReturnType<typeof rootReducer>>;
+  } catch (error) {
+    console.error("Failed to parse forms state from sessionStorage:", error);
+    return undefined;
+  }
+};
+
 export const formsStore = configureStore({
   devTools: import.meta.env.DEV,
-  preloadedState: ((): any => {
-    try {
-      const raw = sessionStorage.getItem(STG_KEY);
-      if (!raw) return undefined;
-      const parsed = JSON.parse(raw) as any;
-      return parsed;
-    } catch (error) {
-      console.error("Failed to parse forms state from sessionStorage:", error);
-      return undefined;
-    }
-  })(),
-  reducer: combineReducers({
-    prompt: promptReducer, // ? promptSlice.reducer
-    formStrategy: formStrategyReducer,
-    tips: tipsReducer,
-  }) as any,
+  preloadedState: loadPreloadedState(),
+  reducer: rootReducer,
   middleware: getDefaultMiddleware => {
-    console.log("MIDDLEWARE");
     return getDefaultMiddleware({
       serializableCheck: false,
     }).concat(slitConsistencyMiddleware);
-  },
-  enhancers: (getDefaultEnhancers: any): any => {
-    console.log("ENHANCERS");
-    console.log();
-    return [...getDefaultEnhancers()];
   },
 });
 let timer: number | undefined;
