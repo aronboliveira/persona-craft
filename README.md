@@ -2,7 +2,7 @@
 
 A type-safe character builder and prompt assistant for generative image workflows with comprehensive test coverage and production-ready architecture.
 
-https://persona-craft-prompt-br.netlify.app/[https://persona-craft-prompt-br.netlify.app/]
+https://persona-craft-prompt-br.netlify.app/
 
 ## 🏗️ Architecture Overview
 
@@ -1026,4 +1026,5 @@ python manage.py runserver
 这种结构化方法确保新功能无缝集成，同时维护系统的类型安全保证、可维护性和一致的用户体验。
 
 </details>
+
 
