@@ -1,5 +1,11 @@
 # Character Prompt Creator
 
+## ⚠️ HALTED Work in Progress — Architecture Showcase
+This repository demonstrates advanced frontend architecture patterns (Redux Toolkit, type-safe anatomy modeling, error boundaries, i18n, and 70%+ test coverage). The UI is not fully functional in its current state.
+Looking for the working version? → prompt-shape-creator.netlify.app
+
+---
+
 A type-safe character builder and prompt assistant for generative image workflows with comprehensive test coverage and production-ready architecture.
 
 https://persona-craft-prompt-br.netlify.app/
